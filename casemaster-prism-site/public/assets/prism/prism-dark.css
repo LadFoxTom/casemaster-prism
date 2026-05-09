@@ -1,0 +1,107 @@
+/* Dark theme — opt in via <html data-theme="dark">.
+ * This file is also published as a standalone stylesheet (ui-dark.css)
+ * so users can include it conditionally.
+ */
+
+[data-theme="dark"] {
+  --cms-primary:        #60a5fa;
+  --cms-primary-hover:  #3b82f6;
+  --cms-primary-active: #2563eb;
+  --cms-primary-fade:   rgb(96 165 250 / 0.15);
+
+  --cms-success:        #4ade80;
+  --cms-success-fade:   rgb(74 222 128 / 0.15);
+  --cms-warning:        #fbbf24;
+  --cms-warning-fade:   rgb(251 191 36 / 0.15);
+  --cms-danger:         #f87171;
+  --cms-danger-fade:    rgb(248 113 113 / 0.15);
+  --cms-info:           #38bdf8;
+  --cms-info-fade:      rgb(56 189 248 / 0.15);
+
+  --cms-bg:             #0b1220;
+  --cms-surface:        #111827;
+  --cms-surface-2:      #1e293b;
+  --cms-surface-hover:  #1f2a3d;
+  --cms-border:         #1f2937;
+  --cms-border-strong:  #334155;
+  --cms-text:           #f1f5f9;
+  --cms-text-muted:     #94a3b8;
+  --cms-text-faint:     #64748b;
+  --cms-link:           #60a5fa;
+
+  --cms-shadow-xs: 0 1px 1px 0 rgb(0 0 0 / 0.30);
+  --cms-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.40);
+  --cms-shadow:    0 4px 12px -2px rgb(0 0 0 / 0.50);
+  --cms-shadow-lg: 0 20px 40px -10px rgb(0 0 0 / 0.65);
+  --cms-shadow-focus: 0 0 0 3px rgb(96 165 250 / 0.35);
+}
+
+/* Adjust BS4 components that don't pick up tokens automatically */
+
+[data-theme="dark"] body { background: var(--cms-bg); color: var(--cms-text); }
+
+[data-theme="dark"] .table,
+[data-theme="dark"] .cms-table {
+  color: var(--cms-text);
+}
+
+[data-theme="dark"] .modal-backdrop {
+  background: rgb(0 0 0 / 0.7);
+}
+
+[data-theme="dark"] .form-control,
+[data-theme="dark"] .custom-select {
+  background: var(--cms-surface);
+  color: var(--cms-text);
+  border-color: var(--cms-border-strong);
+}
+
+[data-theme="dark"] .form-control::-moz-placeholder {
+  color: var(--cms-text-faint);
+}
+
+[data-theme="dark"] .form-control::placeholder {
+  color: var(--cms-text-faint);
+}
+
+[data-theme="dark"] .btn-secondary,
+[data-theme="dark"] .btn-outline-secondary {
+  background: var(--cms-surface-2);
+  border-color: var(--cms-border-strong);
+  color: var(--cms-text);
+}
+
+[data-theme="dark"] .btn-secondary:hover,
+[data-theme="dark"] .btn-outline-secondary:hover {
+  background: var(--cms-surface-hover);
+}
+
+[data-theme="dark"] .badge-light {
+  background: var(--cms-surface-2);
+  color: var(--cms-text);
+}
+
+[data-theme="dark"] kbd,
+[data-theme="dark"] .cms-kbd {
+  background: var(--cms-surface-2);
+  border-color: var(--cms-border-strong);
+  color: var(--cms-text);
+}
+
+[data-theme="dark"] .cms-toast {
+  background: var(--cms-surface);
+  color: var(--cms-text);
+  border-color: var(--cms-border-strong);
+}
+
+/* Auto dark when user prefers it AND no explicit theme is set */
+
+@media (prefers-color-scheme: dark) {
+  :root[data-theme="auto"] {
+    color-scheme: dark;
+  }
+  :root[data-theme="auto"] body {
+    background: #0b1220;
+    color: #f1f5f9;
+  }
+}

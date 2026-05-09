@@ -1,0 +1,217 @@
+/* Docs subsite styles. Reuses the landing-page chrome where possible. */
+
+@import url('../../assets/site.css');
+
+body {
+  background: var(--bg);
+}
+
+/* Legacy docs-shell — the global nav now lives in #gnav-host so the
+ * old per-docs sidebar is redundant. The .docs-content element is a
+ * direct child of <body>'s second grid column. Keep these declarations
+ * for backwards-compat but they're no-ops on stripped pages. */
+.docs-shell {
+  display: contents;
+}
+.docs-sidebar { display: none; }
+
+.docs-search {
+  width: 100%;
+  padding: 0.5rem 0.7rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: var(--text);
+  margin-bottom: 1rem;
+}
+
+.docs-nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.88rem;
+}
+.docs-nav .docs-nav-section {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  padding: 0.85rem 0.65rem 0.4rem;
+  margin-top: 0.5rem;
+}
+.docs-nav .docs-nav-section:first-child { margin-top: 0; }
+.docs-nav a {
+  display: block;
+  padding: 0.35rem 0.7rem;
+  border-radius: 6px;
+  color: var(--muted);
+  text-decoration: none;
+  font-weight: 500;
+}
+.docs-nav a:hover {
+  color: var(--text);
+  background: var(--surface);
+  text-decoration: none;
+}
+.docs-nav a.is-current {
+  color: var(--link);
+  background: var(--surface);
+  font-weight: 600;
+}
+.docs-nav a.is-hidden { display: none; }
+
+.docs-content {
+  padding: 2.25rem 2.25rem 5rem;
+  min-width: 0;
+  max-width: 920px;
+  margin: 0;
+  width: 100%;
+}
+@media (max-width: 980px) {
+  .docs-content { padding: 4rem 1.25rem 3rem; }
+}
+
+.docs-breadcrumb {
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+.docs-breadcrumb a { color: var(--muted); text-decoration: none; }
+.docs-breadcrumb a:hover { color: var(--link); text-decoration: none; }
+
+.docs-content h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.4rem;
+  scroll-margin-top: 80px;
+}
+.docs-content h1 + .docs-lead {
+  font-size: 1.05rem;
+  color: var(--muted);
+  margin: 0 0 2rem;
+}
+.docs-content h2 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin: 2.5rem 0 0.75rem;
+  scroll-margin-top: 80px;
+}
+.docs-content h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 1.75rem 0 0.5rem;
+  scroll-margin-top: 80px;
+}
+.docs-content h2 .anchor,
+.docs-content h3 .anchor {
+  margin-left: 0.4rem;
+  color: var(--muted);
+  font-weight: 400;
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 0.85em;
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity 160ms;
+}
+.docs-content h2:hover .anchor,
+.docs-content h3:hover .anchor { opacity: 1; }
+
+.docs-content p { line-height: 1.65; margin: 0 0 1rem; }
+.docs-content ul, .docs-content ol { line-height: 1.65; margin: 0 0 1rem; padding-left: 1.4rem; }
+.docs-content li { margin-bottom: 0.4rem; }
+
+.docs-content table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+}
+.docs-content thead th {
+  background: var(--surface-2);
+  text-align: left;
+  padding: 0.55rem 0.85rem;
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+}
+.docs-content tbody td {
+  padding: 0.6rem 0.85rem;
+  border-top: 1px solid var(--border);
+  vertical-align: top;
+}
+.docs-content tbody tr:hover { background: var(--surface); }
+
+.docs-callout {
+  border-left: 3px solid var(--link);
+  background: var(--surface);
+  padding: 0.85rem 1.1rem;
+  border-radius: 0 8px 8px 0;
+  margin: 1.5rem 0;
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+.docs-callout.is-warning { border-left-color: #f59e0b; }
+.docs-callout.is-danger  { border-left-color: #dc2626; }
+.docs-callout.is-success { border-left-color: #16a34a; }
+.docs-callout strong { display: block; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.25rem; color: var(--text); }
+
+.docs-content .toc {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.85rem 1.1rem;
+  font-size: 0.88rem;
+  margin: 0 0 2rem;
+}
+.docs-content .toc-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin-bottom: 0.4rem;
+}
+.docs-content .toc ol {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+.docs-content .toc a { text-decoration: none; }
+.docs-content .toc a:hover { text-decoration: underline; }
+
+.docs-footer-nav {
+  margin-top: 4rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.9rem;
+}
+.docs-footer-nav a {
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.85rem 1rem;
+  text-decoration: none;
+  color: var(--text);
+}
+.docs-footer-nav a:hover { background: var(--surface-2); text-decoration: none; }
+.docs-footer-nav a small {
+  display: block;
+  color: var(--muted);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.25rem;
+}
+.docs-footer-nav .next { text-align: right; }

@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Docs · casemaster-prism</title>
+<meta name="description" content="Documentation for casemaster-prism — drop-in design system for CaseMaster apps.">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#2563eb">
+<meta property="og:title" content="casemaster-prism">
+<meta property="og:description" content="Drop-in design system for CaseMaster apps.">
+<meta property="og:image" content="../assets/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="../assets/og-card.png">
+<link rel="stylesheet" href="./assets/docs.css">
+</head>
+<body>
+<div id="gnav-host" data-root="../"></div>
+
+<main class="docs-content">
+    <p class="docs-breadcrumb"><a href="../">Home</a> &nbsp;/&nbsp; Docs</p>
+
+    <h1>Documentation</h1>
+    <p class="docs-lead">
+      casemaster-prism is a drop-in design system + progressive-enhancement
+      JS layer for CaseMaster apps. It works on both runtimes
+      (<code>CaseMaster.Web.exe</code> and <code>cms-vercel</code>),
+      requires no <code>.cms</code> source changes, and ships with three
+      preset themes plus a variant catalogue you call from existing
+      qualifiers.
+    </p>
+
+    <div class="docs-callout">
+      <strong>New here?</strong>
+      Start with <a href="./getting-started.html">Getting started</a> —
+      the 30-second integration. Then pick a runtime under
+      <em>Integrate</em>.
+    </div>
+
+    <h2 id="layout">How the docs are organised</h2>
+    <ul>
+      <li><strong>Start here</strong> — overview, install, first run.</li>
+      <li><strong>Theming</strong> — preset themes, design tokens,
+        variant classes, density.</li>
+      <li><strong>Enhancers</strong> — one page per progressive-enhancement
+        module (tables, forms, toasts, command palette, etc.) with
+        live demos and opt-out details.</li>
+      <li><strong>Integrate</strong> — runtime-specific recipes for
+        wiring prism into a real app, plus the full configuration
+        reference.</li>
+      <li><strong>Migrate &amp; troubleshoot</strong> — adopt prism
+        on an existing app without breaking anything; common gotchas;
+        rollback.</li>
+    </ul>
+
+    <h2 id="quick-links">Quick links</h2>
+    <table>
+      <thead><tr><th>Want to…</th><th>Page</th></tr></thead>
+      <tbody>
+        <tr><td>Install in 30 seconds</td><td><a href="./getting-started.html">Getting started</a></td></tr>
+        <tr><td>Switch to Linear / Tabler / Material</td><td><a href="./themes.html">Preset themes</a></td></tr>
+        <tr><td>Pass a variant class through a qualifier</td><td><a href="./variants.html">Variants</a></td></tr>
+        <tr><td>Disable an enhancer on one page</td><td><a href="./configuration.html">Configuration</a></td></tr>
+        <tr><td>Wire it into <code>CaseMaster.Web.exe</code></td><td><a href="./integration-dotnet.html">.NET runtime</a></td></tr>
+        <tr><td>Wire it into <code>cms-vercel</code></td><td><a href="./integration-vercel.html">cms-vercel</a></td></tr>
+        <tr><td>Adopt on an existing app safely</td><td><a href="./migration.html">Migration guide</a></td></tr>
+        <tr><td>Diagnose a conflict</td><td><a href="./troubleshooting.html">Troubleshooting</a></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="status">Project status</h2>
+    <p>
+      casemaster-prism is at <strong>v0.3.0</strong>. The API is stable
+      enough to use in production, but minor bumps may still tweak
+      visuals. SemVer kicks in at v1.0; until then, pin to a specific
+      minor in production.
+    </p>
+    <p>
+      See <a href="../../ROADMAP.md" target="_blank" rel="noopener">ROADMAP.md</a>
+      for the public phase plan.
+    </p>
+
+    <div class="docs-footer-nav">
+      <a class="next" href="./getting-started.html">
+        <small>Next →</small>
+        Getting started
+      </a>
+    </div>
+  </main>
+
+<script src="./assets/docs.js"></script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,963 @@
+﻿<!DOCTYPE html>
+				<html lang="en" dir="ltr">
+				<head>
+					<meta charset="utf-8">
+					<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+					<script src="http://localhost:5051/static/lib/jquery/jquery.min.js?v=1.0.0"></script>
+
+					<link rel="stylesheet" href="http://localhost:5051/static/lib/fullcalendar/core/main.min.css?v=1.0.0">
+					<script src="http://localhost:5051/static/lib/fullcalendar/core/main.min.js?v=1.0.0"></script>
+					<script src="http://localhost:5051/static/lib/fullcalendar/core/locales/en-gb.js?v=1.0.0"></script>
+					<link rel="stylesheet" href="http://localhost:5051/static/lib/fullcalendar/bootstrap/main.min.css?v=1.0.0">
+					<script src="http://localhost:5051/static/lib/fullcalendar/bootstrap/main.min.js?v=1.0.0"></script>
+					<link rel="stylesheet" href="http://localhost:5051/static/lib/fullcalendar/daygrid/main.min.css?v=1.0.0">
+					<script src="http://localhost:5051/static/lib/fullcalendar/daygrid/main.min.js?v=1.0.0"></script>
+					<link rel="stylesheet" href="http://localhost:5051/static/lib/fullcalendar/timegrid/main.min.css?v=1.0.0">
+					<script src="http://localhost:5051/static/lib/fullcalendar/timegrid/main.min.js?v=1.0.0"></script>
+					<link rel="stylesheet" href="http://localhost:5051/static/lib/fullcalendar/list/main.min.css?v=1.0.0">
+					<script src="http://localhost:5051/static/lib/fullcalendar/list/main.min.js?v=1.0.0"></script>
+					<script src="http://localhost:5051/static/lib/fullcalendar/interaction/main.min.js?v=1.0.0"></script>
+
+					<link rel="stylesheet" href="http://localhost:5051/static/lib/select2/css/select2.min.css?v=1.0.0">
+					<script src="http://localhost:5051/static/lib/select2/js/select2.min.js?v=1.0.0"></script>
+					<script src="http://localhost:5051/static/lib/select2/js/i18n/en.js?v=1.0.0"></script>
+					<script src="http://localhost:5051/static/lib/signature_pad/signature_pad.umd.min.js?v=1.0.0"></script>
+	<link rel="stylesheet" href="http://localhost:5051/static/lib/bootstrap/dist/css/bootstrap.min.css?v=1.0.0">
+					<script src="http://localhost:5051/static/lib/bootstrap/dist/js/bootstrap.bundle.min.js?v=1.0.0"></script>
+					<link rel="stylesheet" href="http://localhost:5051/static/lib/font-awesome/css/all.min.css?v=1.0.0">
+
+					<link rel="stylesheet" href="http://localhost:5051/static/css/cm.css?v=1.0.0">
+
+	<link rel="stylesheet" href="http://localhost:5051/static/css/app.css?v=1.0.0">
+					<script src="http://localhost:5051/static/js/cmPre.js?v=1.0.0"></script>
+					<script src="http://localhost:5051/static/js/appPre.js?v=1.0.0"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-primary" aria-label='Main navigation'>
+<a class="navbar-brand" href="http://localhost:5051"><img class='mx-2' width='38' src='http://localhost:5051/static/images/logo/navbar.png?v=1.0.0'>
+Casemaster WMS</a>
+</nav>
+<main>
+<script>$(document).ready(function() {$("main").last().addClass("pb-4")});</script>
+<div class='container'>
+
+<style>
+  /* The framework's navbar is fixed-top with height ~56px; sit under it. */
+  .wms-sidebar {
+      position: fixed;
+      top: 56px;
+      left: 0;
+      bottom: 0;
+      width: 220px;
+      background: #f8f9fa;
+      border-right: 1px solid #dee2e6;
+      overflow-y: auto;
+      padding: 0.75rem 0;
+      z-index: 100;
+      font-size: 0.92rem;
+  }
+  .wms-sidebar h6 {
+      color: #6c757d;
+      text-transform: uppercase;
+      font-size: 0.7rem;
+      letter-spacing: 0.06em;
+      padding: 0.5rem 1rem 0.25rem;
+      margin: 0;
+  }
+  .wms-sidebar a {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1rem;
+      color: #212529;
+      text-decoration: none;
+      border-left: 3px solid transparent;
+  }
+  .wms-sidebar a:hover {
+      background: #e9ecef;
+      color: #0d6efd;
+  }
+  .wms-sidebar a.active {
+      background: #e7f1ff;
+      color: #0d6efd;
+      border-left-color: #0d6efd;
+      font-weight: 600;
+  }
+  .wms-sidebar .wms-icon {
+      display: inline-block;
+      width: 1.4rem;
+      text-align: center;
+      font-size: 1rem;
+  }
+  .wms-sidebar .wms-divider {
+      border-top: 1px solid #dee2e6;
+      margin: 0.6rem 0;
+  }
+  /* Push the framework <main> right of the sidebar. */
+  body > main { padding-left: 240px; }
+  body > main > .container { max-width: none; }
+
+  /* Mobile: collapse to icon strip */
+  @media (max-width: 991.98px) {
+      .wms-sidebar { width: 56px; }
+      .wms-sidebar h6, .wms-sidebar .wms-label { display: none; }
+      .wms-sidebar a { justify-content: center; padding: 0.5rem 0; }
+      body > main { padding-left: 64px; }
+  }
+</style>
+<aside class="wms-sidebar">
+    <h6>Operations</h6>
+    <a href="http://localhost:5051/page/wms"           class=""><span class="wms-icon">ð </span><span class="wms-label">Dashboard</span></a>
+    <a href="http://localhost:5051/page/wms/inbound"   class=""><span class="wms-icon">ð¦</span><span class="wms-label">Inbound</span></a>
+    <a href="http://localhost:5051/page/wms/stock"     class="active"><span class="wms-icon">ð</span><span class="wms-label">Stock</span></a>
+    <a href="http://localhost:5051/page/wms/outbound"  class=""><span class="wms-icon">ð</span><span class="wms-label">Outbound</span></a>
+
+    <div class="wms-divider"></div>
+    <h6>Reverse &amp; counts</h6>
+    <a href="http://localhost:5051/page/wms/reverse"   class=""><span class="wms-icon">â©</span><span class="wms-label">Returns</span></a>
+    <a href="http://localhost:5051/page/wms/counts"    class=""><span class="wms-icon">ð§®</span><span class="wms-label">Cycle counts</span></a>
+    <a href="http://localhost:5051/page/wms/replen"    class=""><span class="wms-icon">ð</span><span class="wms-label">Replenishment</span></a>
+
+    <div class="wms-divider"></div>
+    <h6>Quality &amp; yard</h6>
+    <a href="http://localhost:5051/page/wms/quality"   class=""><span class="wms-icon">â</span><span class="wms-label">Quality</span></a>
+    <a href="http://localhost:5051/page/wms/yard"      class=""><span class="wms-icon">ð</span><span class="wms-label">Yard &amp; dock</span></a>
+    <a href="http://localhost:5051/page/wms/billing"   class=""><span class="wms-icon">ð°</span><span class="wms-label">3PL billing</span></a>
+
+    <div class="wms-divider"></div>
+    <h6>System</h6>
+    <a href="http://localhost:5051/page/wms/setup"     class=""><span class="wms-icon">â</span><span class="wms-label">Setup</span></a>
+    <a href="http://localhost:5051/page/wms/db_admin"  class=""><span class="wms-icon">ð </span><span class="wms-label">DB admin</span></a>
+</aside>
+
+<p><a href="../wms" class="btn btn-sm btn-outline-secondary">&larr; Dashboard</a></p>
+<p class='h4 my-4'>
+&#128202; Stock
+</p>
+<p class="mb-3">
+    <a href="stock/f/adjust" class="btn btn-sm btn-warning">Adjust inventory</a>
+    <a href="stock/f/move" class="btn btn-sm btn-info">Move stock</a>
+</p>
+<form action="http://localhost:5051/page/wms/stock?__h=739af0227212315bb60d4d69314d4ff6" method="GET" onsubmit='$(this).submit(function(){{return false;}});return true;'
+>
+
+<style>
+  /* The framework's navbar is fixed-top with height ~56px; sit under it. */
+  .wms-sidebar {
+      position: fixed;
+      top: 56px;
+      left: 0;
+      bottom: 0;
+      width: 220px;
+      background: #f8f9fa;
+      border-right: 1px solid #dee2e6;
+      overflow-y: auto;
+      padding: 0.75rem 0;
+      z-index: 100;
+      font-size: 0.92rem;
+  }
+  .wms-sidebar h6 {
+      color: #6c757d;
+      text-transform: uppercase;
+      font-size: 0.7rem;
+      letter-spacing: 0.06em;
+      padding: 0.5rem 1rem 0.25rem;
+      margin: 0;
+  }
+  .wms-sidebar a {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1rem;
+      color: #212529;
+      text-decoration: none;
+      border-left: 3px solid transparent;
+  }
+  .wms-sidebar a:hover {
+      background: #e9ecef;
+      color: #0d6efd;
+  }
+  .wms-sidebar a.active {
+      background: #e7f1ff;
+      color: #0d6efd;
+      border-left-color: #0d6efd;
+      font-weight: 600;
+  }
+  .wms-sidebar .wms-icon {
+      display: inline-block;
+      width: 1.4rem;
+      text-align: center;
+      font-size: 1rem;
+  }
+  .wms-sidebar .wms-divider {
+      border-top: 1px solid #dee2e6;
+      margin: 0.6rem 0;
+  }
+  /* Push the framework <main> right of the sidebar. */
+  body > main { padding-left: 240px; }
+  body > main > .container { max-width: none; }
+
+  /* Mobile: collapse to icon strip */
+  @media (max-width: 991.98px) {
+      .wms-sidebar { width: 56px; }
+      .wms-sidebar h6, .wms-sidebar .wms-label { display: none; }
+      .wms-sidebar a { justify-content: center; padding: 0.5rem 0; }
+      body > main { padding-left: 64px; }
+  }
+</style>
+<aside class="wms-sidebar">
+    <h6>Operations</h6>
+    <a href="http://localhost:5051/page/wms"           class=""><span class="wms-icon">ð </span><span class="wms-label">Dashboard</span></a>
+    <a href="http://localhost:5051/page/wms/inbound"   class=""><span class="wms-icon">ð¦</span><span class="wms-label">Inbound</span></a>
+    <a href="http://localhost:5051/page/wms/stock"     class="active"><span class="wms-icon">ð</span><span class="wms-label">Stock</span></a>
+    <a href="http://localhost:5051/page/wms/outbound"  class=""><span class="wms-icon">ð</span><span class="wms-label">Outbound</span></a>
+
+    <div class="wms-divider"></div>
+    <h6>Reverse &amp; counts</h6>
+    <a href="http://localhost:5051/page/wms/reverse"   class=""><span class="wms-icon">â©</span><span class="wms-label">Returns</span></a>
+    <a href="http://localhost:5051/page/wms/counts"    class=""><span class="wms-icon">ð§®</span><span class="wms-label">Cycle counts</span></a>
+    <a href="http://localhost:5051/page/wms/replen"    class=""><span class="wms-icon">ð</span><span class="wms-label">Replenishment</span></a>
+
+    <div class="wms-divider"></div>
+    <h6>Quality &amp; yard</h6>
+    <a href="http://localhost:5051/page/wms/quality"   class=""><span class="wms-icon">â</span><span class="wms-label">Quality</span></a>
+    <a href="http://localhost:5051/page/wms/yard"      class=""><span class="wms-icon">ð</span><span class="wms-label">Yard &amp; dock</span></a>
+    <a href="http://localhost:5051/page/wms/billing"   class=""><span class="wms-icon">ð°</span><span class="wms-label">3PL billing</span></a>
+
+    <div class="wms-divider"></div>
+    <h6>System</h6>
+    <a href="http://localhost:5051/page/wms/setup"     class=""><span class="wms-icon">â</span><span class="wms-label">Setup</span></a>
+    <a href="http://localhost:5051/page/wms/db_admin"  class=""><span class="wms-icon">ð </span><span class="wms-label">DB admin</span></a>
+</aside>
+
+<div class='row form-group'>
+<div class='col col-md-6'>
+<div class='form-group'>
+<label for='q' class='control-label'>Search items / locations (substring SKU, item name, location code or barcode)</label>
+<input type='text' name='q' class='form-control' placeholder='e.g. SKU-001 or PCK-A01'>
+</div>
+</div>
+</div>
+<button name="__submit" type="submit" value="submit" class="btn btn-primary" onclick="onClickSubmit(this);;">Search</button>
+</form>
+<h5 class="mt-4">Items (top by SKU)</h5>
+<table class='table table-sm table-striped table-bordered table-hover'>
+<thead class='bg-primary text-light'>
+<tr>
+<th scope='col'>
+<span>
+Tenant id</span>
+</th>
+<th scope='col'>
+<span>
+Sku</span>
+</th>
+<th scope='col'>
+<span>
+Name</span>
+</th>
+<th scope='col'>
+<span>
+Description</span>
+</th>
+<th scope='col'>
+<span>
+Long description</span>
+</th>
+<th scope='col'>
+<span>
+Category id</span>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/item?id=1&__h=a9efb2396fe4a89a13f04ce1d5c10273');">
+<td class='text-right'>1</td>
+<td>SKU-001</td>
+<td>Widget A</td>
+<td>Standard widget, blue</td>
+<td></td>
+<td>CONS</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/item?id=2&__h=db33c987f936ca40759cc6f85b221c95');">
+<td class='text-right'>1</td>
+<td>SKU-002</td>
+<td>Widget B</td>
+<td>Standard widget, red</td>
+<td></td>
+<td>CONS</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/item?id=3&__h=f82d0c9a66c3813aa4a816c7f295d7f9');">
+<td class='text-right'>1</td>
+<td>SKU-003</td>
+<td>Gadget Pro</td>
+<td>Premium gadget</td>
+<td></td>
+<td>CONS</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/item?id=4&__h=75398ea5f52ee43897770af70d21ac6a');">
+<td class='text-right'>1</td>
+<td>SKU-004</td>
+<td>Gizmo X</td>
+<td>Compact gizmo</td>
+<td></td>
+<td>CONS</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/item?id=5&__h=6f3b08cc85b1d62e1213ed0fd2234a7e');">
+<td class='text-right'>1</td>
+<td>SKU-005</td>
+<td>Tool Kit Standard</td>
+<td>15-piece tool kit</td>
+<td></td>
+<td>CONS</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/item?id=6&__h=f4eeb6153d18837aa83120aff8b6acc3');">
+<td class='text-right'>1</td>
+<td>SKU-006</td>
+<td>Sensor Module</td>
+<td>IoT sensor, lot tracked</td>
+<td></td>
+<td>CONS</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/item?id=7&__h=8baa4a7789c0892e5c481598291d70dc');">
+<td class='text-right'>1</td>
+<td>SKU-007</td>
+<td>Cable 2m</td>
+<td>USB-C cable 2m</td>
+<td></td>
+<td>CONS</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/item?id=8&__h=210c10a32337044e6fcf311b567941e3');">
+<td class='text-right'>1</td>
+<td>SKU-008</td>
+<td>Battery Pack</td>
+<td>Lithium-ion 5000mAh hazmat</td>
+<td></td>
+<td>CONS</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/item?id=9&__h=16929605f52c5b34b7be9c0b6f3b15fc');">
+<td class='text-right'>1</td>
+<td>SKU-009</td>
+<td>Display Unit</td>
+<td>OLED 7&quot; display</td>
+<td></td>
+<td>CONS</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/item?id=10&__h=d4d9fd55b8693a4bec38883957f560d5');">
+<td class='text-right'>1</td>
+<td>SKU-010</td>
+<td>Replacement Part R-12</td>
+<td>Spare R-12 component</td>
+<td></td>
+<td>CONS</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/item?id=11&__h=01275d09a1a5702f12c275501590af51');">
+<td class='text-right'>1</td>
+<td>SKU-011</td>
+<td>Premium Headset</td>
+<td>Wireless premium headset</td>
+<td></td>
+<td>CONS</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/item?id=12&__h=3a461bcb60dd76220ba2f4f89aada68f');">
+<td class='text-right'>1</td>
+<td>SKU-012</td>
+<td>Quick Charger</td>
+<td>Multi-port USB charger</td>
+<td></td>
+<td>CONS</td>
+</tr>
+</tbody>
+</table>
+<h5 class="mt-4">Locations (by pick sequence)</h5>
+<table class='table table-sm table-striped table-bordered table-hover'>
+<thead class='bg-primary text-light'>
+<tr>
+<th scope='col'>
+<span>
+Tenant id</span>
+</th>
+<th scope='col'>
+<span>
+Warehouse id</span>
+</th>
+<th scope='col'>
+<span>
+Zone id</span>
+</th>
+<th scope='col'>
+<span>
+Aisle id</span>
+</th>
+<th scope='col'>
+<span>
+Code</span>
+</th>
+<th scope='col'>
+<span>
+Barcode</span>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/location?id=1&__h=326113eff29fe42ff4d818d31df6810f');">
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>PCK</td>
+<td></td>
+<td>PCK-A01</td>
+<td>PCK-A01</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/location?id=2&__h=7f4393635c4a5f1bf192b04b1c3aec11');">
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>PCK</td>
+<td></td>
+<td>PCK-A02</td>
+<td>PCK-A02</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/location?id=3&__h=8148240cddf648ec9e32c2f76bd1e022');">
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>PCK</td>
+<td></td>
+<td>PCK-A03</td>
+<td>PCK-A03</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/location?id=4&__h=d10e952470b48192e4296c139b21d4ae');">
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>PCK</td>
+<td></td>
+<td>PCK-A04</td>
+<td>PCK-A04</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/location?id=5&__h=29bfe252d164cc97bf0eb478723ae50d');">
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>PCK</td>
+<td></td>
+<td>PCK-A05</td>
+<td>PCK-A05</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/location?id=6&__h=8532c35e37d465f6bfbed34aefcdb3dc');">
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>PCK</td>
+<td></td>
+<td>PCK-A06</td>
+<td>PCK-A06</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/location?id=7&__h=82eadd510ac0c8a20105d14348929e48');">
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>PCK</td>
+<td></td>
+<td>PCK-A07</td>
+<td>PCK-A07</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/location?id=8&__h=7384b0054e3a3caa7534f31605c3aa22');">
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>PCK</td>
+<td></td>
+<td>PCK-A08</td>
+<td>PCK-A08</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/location?id=9&__h=78032a09b3da2630116591c2fff93f2f');">
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>PCK</td>
+<td></td>
+<td>PCK-B01</td>
+<td>PCK-B01</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/location?id=10&__h=9cdb0d5786aec6a50bb8fe20b1b0e875');">
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>PCK</td>
+<td></td>
+<td>PCK-B02</td>
+<td>PCK-B02</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/location?id=11&__h=187b83f038c284fa3b56d2482a35cf17');">
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>PCK</td>
+<td></td>
+<td>PCK-B03</td>
+<td>PCK-B03</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/location?id=12&__h=4cbc46986468702e7fe3f96ce191af2d');">
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>PCK</td>
+<td></td>
+<td>PCK-B04</td>
+<td>PCK-B04</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/location?id=13&__h=fc1d7ad1dd6f397740fc1ccc131eb374');">
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>PCK</td>
+<td></td>
+<td>PCK-B05</td>
+<td>PCK-B05</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/location?id=14&__h=026860118c58f20e907c7990f1203e7e');">
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>PCK</td>
+<td></td>
+<td>PCK-B06</td>
+<td>PCK-B06</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/location?id=15&__h=cfe12ad899887f171fa178abb1c7d72e');">
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>PCK</td>
+<td></td>
+<td>PCK-B07</td>
+<td>PCK-B07</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/location?id=16&__h=34ca6994f12b40ca97943d7975401ad9');">
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>PCK</td>
+<td></td>
+<td>PCK-B08</td>
+<td>PCK-B08</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/location?id=17&__h=43a9845a90de5feb48b17a92b81e468f');">
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>PCK</td>
+<td></td>
+<td>PCK-C01</td>
+<td>PCK-C01</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/location?id=18&__h=b1ed95e59265e6905bd6b0f616c1141b');">
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>PCK</td>
+<td></td>
+<td>PCK-C02</td>
+<td>PCK-C02</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/location?id=19&__h=dfbc6d9e2adaf93cf22c44de11d1029e');">
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>PCK</td>
+<td></td>
+<td>PCK-C03</td>
+<td>PCK-C03</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/location?id=20&__h=10639ab78c150188df5dc961f11fde33');">
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>PCK</td>
+<td></td>
+<td>PCK-C04</td>
+<td>PCK-C04</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/location?id=21&__h=f10f2a4d233fb616785097451f03c9c2');">
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>PCK</td>
+<td></td>
+<td>PCK-C05</td>
+<td>PCK-C05</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/location?id=22&__h=4342e77dab7f0528b36fcc54af64acea');">
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>PCK</td>
+<td></td>
+<td>PCK-C06</td>
+<td>PCK-C06</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/location?id=23&__h=a6958a1bc37aacbe1fc9349fb662f802');">
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>PCK</td>
+<td></td>
+<td>PCK-C07</td>
+<td>PCK-C07</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/location?id=24&__h=4a3f6560f39c5410deaba65d8e089908');">
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>PCK</td>
+<td></td>
+<td>PCK-C08</td>
+<td>PCK-C08</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/location?id=25&__h=6fd825b242232ec5c41a6bcdb5ca59f7');">
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>RES</td>
+<td></td>
+<td>RES-01</td>
+<td>RES-01</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/location?id=26&__h=72019c278c4a7e90445d27b95a4b82d4');">
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>RES</td>
+<td></td>
+<td>RES-02</td>
+<td>RES-02</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/location?id=27&__h=c0fb2e0c3e0f6e5daf86a9480de13e61');">
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>RES</td>
+<td></td>
+<td>RES-03</td>
+<td>RES-03</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/location?id=28&__h=d89bfae34ddf56496ebcb092b15bc27d');">
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>RES</td>
+<td></td>
+<td>RES-04</td>
+<td>RES-04</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/location?id=29&__h=58c7a2fbddedd4ef93d33a1d7016df7e');">
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>RES</td>
+<td></td>
+<td>RES-05</td>
+<td>RES-05</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/location?id=30&__h=59cfe715a61c52a2b5894bc6d1aa4799');">
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>RES</td>
+<td></td>
+<td>RES-06</td>
+<td>RES-06</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/location?id=31&__h=53a42465543c3e64bc6ea7dcd7c1c206');">
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>RES</td>
+<td></td>
+<td>RES-07</td>
+<td>RES-07</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/location?id=32&__h=e2c75a39b2b42fabed81e78f3140182a');">
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>RES</td>
+<td></td>
+<td>RES-08</td>
+<td>RES-08</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/location?id=33&__h=33e98d5ce388f5e97c1c70a5480ea65b');">
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>REC</td>
+<td></td>
+<td>REC-01</td>
+<td>REC-01</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/location?id=34&__h=e870334486f247e937d0e9323ca90be5');">
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>REC</td>
+<td></td>
+<td>REC-02</td>
+<td>REC-02</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/location?id=35&__h=8bf7059aa4ff2847193c409969262f9c');">
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>PAK</td>
+<td></td>
+<td>PAK-01</td>
+<td>PAK-01</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/location?id=36&__h=9d84e2adc5e5929b93f725fd9287b5af');">
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>PAK</td>
+<td></td>
+<td>PAK-02</td>
+<td>PAK-02</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/location?id=37&__h=5ef9076ae24413101d8bc3548b318403');">
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>SHP</td>
+<td></td>
+<td>SHP-01</td>
+<td>SHP-01</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/location?id=38&__h=0308d2fb47898185515726bc66aa2604');">
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>RET</td>
+<td></td>
+<td>RET-01</td>
+<td>RET-01</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/location?id=39&__h=af207bcf26da7302e4ef2b194b85e4e7');">
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>QAR</td>
+<td></td>
+<td>QAR-01</td>
+<td>QAR-01</td>
+</tr>
+<tr class='cursor-pointer' onmouseup="event.stopPropagation();rowLinkOpen(event, 'http://localhost:5051/page/wms/stock/f/location?id=40&__h=734ff993944dbd1fcbb540a47fbda58e');">
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>PUT</td>
+<td></td>
+<td>PUT-01</td>
+<td>PUT-01</td>
+</tr>
+</tbody>
+</table>
+<h5 class="mt-4">Top inventory rows by quantity on hand</h5>
+<table class='table table-sm table-striped table-bordered'>
+<thead class='bg-primary text-light'>
+<tr>
+<th scope='col'>
+<span>
+Tenant id</span>
+</th>
+<th scope='col'>
+<span>
+Warehouse id</span>
+</th>
+<th scope='col'>
+<span>
+Location id</span>
+</th>
+<th scope='col'>
+<span>
+Item id</span>
+</th>
+<th scope='col'>
+<span>
+License plate id</span>
+</th>
+<th scope='col'>
+<span>
+Lot id</span>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>PCK-A06</td>
+<td>SKU-006</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>PCK-A07</td>
+<td>SKU-007</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>PCK-B02</td>
+<td>SKU-010</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>PCK-A01</td>
+<td>SKU-001</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>PCK-B04</td>
+<td>SKU-012</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>PCK-A02</td>
+<td>SKU-002</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>PCK-A03</td>
+<td>SKU-003</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>PCK-A04</td>
+<td>SKU-004</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>PCK-B01</td>
+<td>SKU-009</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>REC-01</td>
+<td>SKU-001</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>PCK-A08</td>
+<td>SKU-008</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>PCK-A05</td>
+<td>SKU-005</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>PCK-B03</td>
+<td>SKU-011</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>REC-01</td>
+<td>SKU-002</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>REC-01</td>
+<td>SKU-005</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 class="mt-4">Low stock (â¤ 10 on hand)</h5>
+<table class='table table-sm table-striped table-bordered'>
+<thead class='bg-primary text-light'>
+<tr>
+<th scope='col'>
+<span>
+Tenant id</span>
+</th>
+<th scope='col'>
+<span>
+Warehouse id</span>
+</th>
+<th scope='col'>
+<span>
+Location id</span>
+</th>
+<th scope='col'>
+<span>
+Item id</span>
+</th>
+<th scope='col'>
+<span>
+License plate id</span>
+</th>
+<th scope='col'>
+<span>
+Lot id</span>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>REC-01</td>
+<td>SKU-005</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>REC-01</td>
+<td>SKU-002</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<script>document.addEventListener('keydown', function(event) {
+    if (event.ctrlKey && event.altKey && event.code === 'KeyV') {
+        const link = document.createElement('a');
+        link.href = 'vscode://file/C:\\casemaster-frontend-package\\Casemaster-WMS\\casemaster-runtime\\page\\wms/stock.cms:15:1';
+        link.style.display = 'none';
+        link.target = '_self';
+
+        document.body.appendChild(link);
+        link.click();
+
+        document.body.removeChild(link);
+    }
+});</script>
+</main>
+<div id='cmModal' class='modal fade' data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden='true'>
+<div id='cmModalDialog' class='modal-dialog modal-lg' role="document">
+<div class='modal-content'>
+<div class='modal-header'>
+<div id='cmModalTitle' class='modal-title h5'>
+</div>
+<button id="cmModalClose" type="button" class="close" data-dismiss="modal"><i class='fas fa-times'></i></button>
+</div>
+<div id='cmModalBody' class='modal-body'>
+<div class='embed-responsive embed-responsive-16by9'>
+<iframe id='cmModalIFrame' class='embed-responsive-item'></iframe>
+</div>
+</div>
+</div>
+</div>
+</div>
+	<script src="http://localhost:5051/static/js/cm.js?v=1.0.0"></script>
+					<script src="http://localhost:5051/static/js/app.js?v=1.0.0"></script>
+</body>
+</html>
+

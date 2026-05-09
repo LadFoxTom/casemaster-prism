@@ -1,0 +1,44 @@
+/* Badges — pill chips for status / count */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.2em 0.55em;
+  font-size: var(--cms-text-xs);
+  font-weight: 600;
+  line-height: 1;
+  border-radius: 999px;
+  letter-spacing: 0.02em;
+  vertical-align: 1px;
+}
+
+.badge-primary   { background: var(--cms-primary-fade); color: var(--cms-primary-active); }
+.badge-success   { background: var(--cms-success-fade); color: #166534; }
+.badge-warning   { background: var(--cms-warning-fade); color: #92400e; }
+.badge-danger    { background: var(--cms-danger-fade);  color: #991b1b; }
+.badge-info      { background: var(--cms-info-fade);    color: #155e75; }
+.badge-secondary { background: var(--cms-surface-2);    color: var(--cms-text-muted); }
+.badge-light     { background: var(--cms-surface-2);    color: var(--cms-text); }
+.badge-dark      { background: var(--cms-text);         color: var(--cms-surface); }
+
+/* Soft-square variant — opt in via class */
+.badge.cms-badge-square {
+  border-radius: var(--cms-radius-sm);
+  font-size: var(--cms-text-xs);
+  padding: 0.25em 0.5em;
+}
+
+/* Status dot — used inline before label text */
+.cms-status-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--cms-text-faint);
+  margin-right: 0.4em;
+  vertical-align: 1px;
+}
+.cms-status-dot.is-online    { background: var(--cms-success); box-shadow: 0 0 0 3px var(--cms-success-fade); }
+.cms-status-dot.is-warning   { background: var(--cms-warning); }
+.cms-status-dot.is-offline   { background: var(--cms-danger); }

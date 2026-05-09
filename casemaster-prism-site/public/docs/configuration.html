@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Configuration reference · casemaster-prism docs</title>
+<meta name="description" content="Configuration reference — casemaster-prism docs">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#2563eb">
+<meta property="og:title" content="casemaster-prism">
+<meta property="og:description" content="Drop-in design system for CaseMaster apps.">
+<meta property="og:image" content="../assets/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="../assets/og-card.png">
+<link rel="stylesheet" href="assets/docs.css">
+</head>
+<body>
+<div id="gnav-host" data-root="../"></div>
+
+<main class="docs-content">
+    <p class="docs-breadcrumb"><a href="../">Home</a> &nbsp;/&nbsp; <a href="index.html">Docs</a> &nbsp;/&nbsp; Configuration reference</p>
+
+    <h1>Configuration reference</h1>
+    <p class="docs-lead">Disable any enhancer at runtime via <code>window.cmsUi</code>. Disable a single element with <code>data-cms-no-enhance</code>.</p>
+
+    <h2 id='global'>Global config</h2>
+<pre><code>&lt;script&gt;
+  window.cmsUi = {
+    tables:     { search: true, sort: true, csvExport: false },
+    forms:      { tomSelect: true, flatpickr: true, selectThreshold: 8 },
+    shortcuts:  true,
+    command:    true,
+    inlineEdit: false,
+    confirm:    true,
+    loading:    true,
+    toasts:     true,
+    modalLinks: true,
+  };
+&lt;/script&gt;
+&lt;script type="module" src="/static/lib/prism/prism.js"&gt;&lt;/script&gt;</code></pre>
+
+    <h2 id='reference'>Reference</h2>
+    <table>
+      <thead><tr><th>Key</th><th>Default</th><th>Effect when off</th></tr></thead>
+      <tbody>
+        <tr><td><code>tables</code></td><td>on</td><td>No sortable headers, no toolbar.</td></tr>
+        <tr><td><code>tables.search</code></td><td>on</td><td>Toolbar shown, but no filter input.</td></tr>
+        <tr><td><code>tables.sort</code></td><td>on</td><td>Headers no longer clickable to sort.</td></tr>
+        <tr><td><code>tables.csvExport</code></td><td>on</td><td>No CSV button.</td></tr>
+        <tr><td><code>tables.columnToggle</code></td><td>on</td><td>No Columns button.</td></tr>
+        <tr><td><code>tables.minRowsToEnhance</code></td><td><code>2</code></td><td>Tables with fewer rows are skipped (no toolbar).</td></tr>
+        <tr><td><code>forms</code></td><td>on</td><td>Bare <code>&lt;select&gt;</code> / <code>&lt;input type=date&gt;</code>.</td></tr>
+        <tr><td><code>forms.tomSelect</code></td><td>on</td><td>Selects stay native.</td></tr>
+        <tr><td><code>forms.flatpickr</code></td><td>on</td><td>Date inputs stay native.</td></tr>
+        <tr><td><code>forms.selectThreshold</code></td><td><code>8</code></td><td>Selects with fewer options stay native unless tagged <code>data-cms-search</code>.</td></tr>
+        <tr><td><code>confirm</code></td><td>on</td><td><code>data-cms-confirm</code> ignored.</td></tr>
+        <tr><td><code>loading</code></td><td>on</td><td>No top progress bar.</td></tr>
+        <tr><td><code>toasts</code></td><td>on</td><td><code>cms-toast</code> events ignored; <code>X-Cms-Toast</code> header ignored.</td></tr>
+        <tr><td><code>shortcuts</code></td><td>on</td><td><code>/</code>, <code>?</code>, <code>g X</code> chords inert.</td></tr>
+        <tr><td><code>command</code></td><td>on</td><td><kbd>Cmd</kbd>+<kbd>K</kbd> palette disabled.</td></tr>
+        <tr><td><code>modalLinks</code></td><td>on</td><td><code>data-cms-modal-link</code> falls back to navigation.</td></tr>
+        <tr><td><code>inlineEdit</code></td><td>on</td><td><code>data-cms-inline-edit</code> cells become static.</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id='per-element'>Per-element opt-out</h2>
+    <p>Skip a single element with <code>data-cms-no-enhance</code>:</p>
+<pre><code>&lt;table class='table table-striped' data-cms-no-enhance&gt;...&lt;/table&gt;
+
+&lt;select class='form-control' data-cms-no-enhance&gt;...&lt;/select&gt;
+
+&lt;a href='/delete/42' data-cms-no-enhance&gt;Skip enhancer&lt;/a&gt;</code></pre>
+    <p>Skip an entire subtree by adding the attribute on a wrapper:</p>
+<pre><code>&lt;div data-cms-no-enhance&gt;
+  &lt;!-- nothing inside this is enhanced --&gt;
+&lt;/div&gt;</code></pre>
+
+    <h2 id='attrs'>Body-level attributes</h2>
+    <table>
+      <thead><tr><th>Attribute</th><th>Set on</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr><td><code>data-cms-theme</code></td><td><code>&lt;html&gt;</code></td><td>Apply a brand preset (linear / tabler / material / custom).</td></tr>
+        <tr><td><code>data-cms-density</code></td><td><code>&lt;html&gt;</code></td><td>Compact or comfortable controls.</td></tr>
+        <tr><td><code>data-theme</code></td><td><code>&lt;html&gt;</code></td><td>light / dark / auto.</td></tr>
+        <tr><td><code>dir</code></td><td><code>&lt;html&gt;</code></td><td>RTL flips toolbar / sidebar / dropdowns.</td></tr>
+        <tr><td><code>data-cms-runtime</code></td><td><code>&lt;body&gt;</code> (set by prism)</td><td>Diagnostic — shows detected runtime (dotnet / vercel / unknown).</td></tr>
+        <tr><td><code>data-cms-ui-version</code></td><td><code>&lt;body&gt;</code> (set by prism)</td><td>Bundle version, e.g. <code>0.3.0</code>.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="docs-footer-nav"><a href="./variants.html"><small>← Previous</small>Variants & density</a><a class="next" href="./integration-dotnet.html"><small>Next →</small>.NET integration</a></div>
+  </main>
+
+<script>
+  // Inject the sidebar HTML manually (relative path differs per depth)
+  (function () {
+    fetch('_sidebar.html').then((r) => r.text()).then((h) => {
+      const host = document.getElementById('docs-sidebar-host');
+      if (!host) return;
+      host.innerHTML = h;
+      const here = location.pathname.split('/').pop();
+      host.querySelectorAll('a[href]').forEach((a) => {
+        const t = a.getAttribute('href').split('/').pop();
+        if (t === here) a.classList.add('is-current');
+      });
+      const search = host.querySelector('.docs-search');
+      if (search) search.addEventListener('input', () => {
+        const q = search.value.trim().toLowerCase();
+        host.querySelectorAll('.docs-nav a').forEach((a) => {
+          a.classList.toggle('is-hidden', !!q && !a.textContent.toLowerCase().includes(q));
+        });
+      });
+    });
+  })();
+</script>
+<script src="assets/docs.js"></script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>

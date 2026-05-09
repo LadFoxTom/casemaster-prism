@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Migrate · casemaster-prism</title>
+<meta name="description" content="Adopt casemaster-prism on an existing CaseMaster app without breaking layouts. What changes, what to watch for, how to roll back.">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#2563eb">
+<meta property="og:title" content="casemaster-prism">
+<meta property="og:description" content="Drop-in design system for CaseMaster apps.">
+<meta property="og:image" content="../assets/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="../assets/og-card.png">
+<link rel="stylesheet" href="../assets/site.css">
+<style>
+  body { background: var(--bg); }
+
+  .mig-hero {
+    padding: 4rem 1.5rem 2rem;
+    text-align: center;
+    max-width: 820px;
+    margin: 0 auto;
+  }
+  .mig-hero h1 {
+    font-size: 2.4rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin: 0 0 0.85rem;
+  }
+  .mig-hero .lead {
+    font-size: 1.05rem;
+    color: var(--muted);
+    margin: 0 0 1.5rem;
+  }
+
+  main.mig-shell {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem 5rem;
+  }
+
+  .mig-section {
+    margin: 3rem 0;
+  }
+  .mig-section h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 0.4rem;
+    letter-spacing: -0.01em;
+  }
+  .mig-section .lead-2 {
+    color: var(--muted);
+    margin: 0 0 1.5rem;
+    max-width: 760px;
+  }
+
+  .mig-checklist {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    box-shadow: var(--shadow);
+    counter-reset: c;
+    list-style: none;
+    margin: 0;
+  }
+  .mig-checklist li {
+    counter-increment: c;
+    padding: 0.65rem 0 0.65rem 2.5rem;
+    border-top: 1px solid var(--border);
+    position: relative;
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+  .mig-checklist li:first-child { border-top: 0; }
+  .mig-checklist li::before {
+    content: counter(c);
+    position: absolute;
+    left: 0;
+    top: 0.7rem;
+    width: 1.6rem;
+    height: 1.6rem;
+    background: var(--surface-2);
+    color: var(--muted);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+  .mig-checklist li strong { color: var(--text); }
+
+  .mig-diff {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  @media (max-width: 720px) { .mig-diff { grid-template-columns: 1fr; } }
+  .mig-diff-pane {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .mig-diff-label {
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--border);
+    padding: 0.6rem 0.85rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .mig-diff-label .dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; opacity: 0.6; }
+  .mig-diff-frame { height: 480px; background: #fff; }
+  .mig-diff-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+
+  .mig-rollback {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    box-shadow: var(--shadow);
+  }
+  .mig-rollback strong { display: block; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; color: #16a34a; margin-bottom: 0.5rem; }
+
+  .mig-cta {
+    text-align: center;
+    margin: 4rem 0 2rem;
+  }
+  .mig-cta a {
+    display: inline-block;
+    background: var(--link);
+    color: #fff;
+    padding: 0.85rem 1.6rem;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 500;
+  }
+</style>
+</head>
+<body>
+<div id="gnav-host" data-root="../"></div>
+
+<section class="mig-hero">
+  <h1>Adopt prism on an existing app — safely.</h1>
+  <p class="lead">
+    A two-line install ships visible improvements without touching
+    your <code>.cms</code> source. This page summarises what changes,
+    what to watch for, and how to roll back if anything looks off.
+  </p>
+</section>
+
+<main class="mig-shell">
+
+  <section class="mig-section">
+    <h2>Pre-flight checklist</h2>
+    <p class="lead-2">Five things to verify <em>before</em> you install. Skipping any of these is the most common cause of post-install surprises.</p>
+    <ol class="mig-checklist">
+      <li><strong>Confirm Bootstrap 4.</strong> prism is built for the BS4 markup the runtimes emit. BS5 / BS3 apps aren't supported yet.</li>
+      <li><strong>Inventory your custom CSS.</strong> Anything that uses <code>!important</code> on a Bootstrap class will beat prism's tokens — that's intentional and means your app overrides win.</li>
+      <li><strong>Inventory custom JS.</strong> Look for jQuery DataTables, custom datepickers, custom row-click handlers. Tag those targets <code>data-cms-no-enhance</code> before installing.</li>
+      <li><strong>Branding image.</strong> If the navbar uses a coloured logo (not white-on-primary), test against <code>--cms-primary</code>. Override the token if needed.</li>
+      <li><strong>Pick a theme baseline.</strong> Default keeps the BS4 feel; Tabler is closest to typical admin UX; Material is the biggest visual departure.</li>
+    </ol>
+  </section>
+
+  <section class="mig-section">
+    <h2>What changes — see it side by side</h2>
+    <p class="lead-2">
+      A typical inventory list page, before and after a two-line install.
+      Same Bootstrap 4 markup; the only difference is the prism CSS being loaded.
+    </p>
+    <div class="mig-diff">
+      <div class="mig-diff-pane">
+        <div class="mig-diff-label" style="color:#94a3b8"><span class="dot"></span>Before</div>
+        <div class="mig-diff-frame"><iframe src="../sandbox.html?demo=toolbar-table" loading="lazy" title="bare BS4 table"></iframe></div>
+      </div>
+      <div class="mig-diff-pane">
+        <div class="mig-diff-label" style="color:var(--link)"><span class="dot"></span>After</div>
+        <div class="mig-diff-frame"><iframe src="../sandbox.html?demo=toolbar-table&amp;ui=1" loading="lazy" title="cms-ui table"></iframe></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mig-section">
+    <h2>What changes — the surface map</h2>
+    <p class="lead-2">Every visible delta on a typical CaseMaster page.</p>
+    <table style="width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;font-size:0.9rem;box-shadow:var(--shadow)">
+      <thead style="background:var(--surface-2)">
+        <tr>
+          <th style="text-align:left;padding:0.6rem 0.85rem;border-bottom:1px solid var(--border);font-size:0.72rem;text-transform:uppercase;letter-spacing:0.04em;color:var(--muted);font-weight:600">Surface</th>
+          <th style="text-align:left;padding:0.6rem 0.85rem;border-bottom:1px solid var(--border);font-size:0.72rem;text-transform:uppercase;letter-spacing:0.04em;color:var(--muted);font-weight:600">Before</th>
+          <th style="text-align:left;padding:0.6rem 0.85rem;border-bottom:1px solid var(--border);font-size:0.72rem;text-transform:uppercase;letter-spacing:0.04em;color:var(--muted);font-weight:600">After prism</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td style="padding:0.6rem 0.85rem;border-top:1px solid var(--border)">Tables</td><td style="padding:0.6rem 0.85rem;border-top:1px solid var(--border)">Sharp, harsh stripes, blue header.</td><td style="padding:0.6rem 0.85rem;border-top:1px solid var(--border)">Soft surface, muted-grey uppercase header, hover tint, sortable.</td></tr>
+        <tr><td style="padding:0.6rem 0.85rem;border-top:1px solid var(--border)">Buttons</td><td style="padding:0.6rem 0.85rem;border-top:1px solid var(--border)">BS4 default radii (4 px) and saturated colours.</td><td style="padding:0.6rem 0.85rem;border-top:1px solid var(--border)">8 px radii, slightly muted hover, focus rings.</td></tr>
+        <tr><td style="padding:0.6rem 0.85rem;border-top:1px solid var(--border)">Inputs</td><td style="padding:0.6rem 0.85rem;border-top:1px solid var(--border)">BS4 default 4 px radius, blue focus ring.</td><td style="padding:0.6rem 0.85rem;border-top:1px solid var(--border)">8 px radius, primary-coloured focus ring tied to <code>--cms-primary</code>.</td></tr>
+        <tr><td style="padding:0.6rem 0.85rem;border-top:1px solid var(--border)">Cards</td><td style="padding:0.6rem 0.85rem;border-top:1px solid var(--border)">Plain white panel with hairline border.</td><td style="padding:0.6rem 0.85rem;border-top:1px solid var(--border)">Same panel + soft shadow, rounded corners.</td></tr>
+        <tr><td style="padding:0.6rem 0.85rem;border-top:1px solid var(--border)">Navbar</td><td style="padding:0.6rem 0.85rem;border-top:1px solid var(--border)"><code>bg-primary</code> = BS4 blue.</td><td style="padding:0.6rem 0.85rem;border-top:1px solid var(--border)"><code>bg-primary</code> = your <code>--cms-primary</code>.</td></tr>
+        <tr><td style="padding:0.6rem 0.85rem;border-top:1px solid var(--border)">Modals</td><td style="padding:0.6rem 0.85rem;border-top:1px solid var(--border)">Sharp 4 px corners.</td><td style="padding:0.6rem 0.85rem;border-top:1px solid var(--border)">14 px corners, larger drop shadow, blurred backdrop.</td></tr>
+        <tr><td style="padding:0.6rem 0.85rem;border-top:1px solid var(--border)">Pagination</td><td style="padding:0.6rem 0.85rem;border-top:1px solid var(--border)">BS4 attached buttons.</td><td style="padding:0.6rem 0.85rem;border-top:1px solid var(--border)">Detached buttons with subtle borders.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="mig-section">
+    <h2>Gradual adoption</h2>
+    <p class="lead-2">All-or-nothing isn't required. Two strategies for risk-averse teams:</p>
+
+    <h3>Theme only first</h3>
+    <p>Skip the JS bundle on the first pass:</p>
+<pre><code>/* app.css */
+@import url('/static/lib/prism/prism.min.css');
+/* leave app.js alone for now */</code></pre>
+    <p>You get the visual lift without any behavioural changes. Roll out the JS bundle in a second deploy once you've shaken out the visual side.</p>
+
+    <h3>Per-page opt-out</h3>
+    <p>Disable prism on a single fragile page even though it's installed globally:</p>
+<pre><code>&lt;body data-cms-no-enhance&gt;</code></pre>
+    <p>The whole page renders bare BS4. Useful for legacy reports / wizards while you migrate the rest.</p>
+  </section>
+
+  <section class="mig-section">
+    <h2>Roll back</h2>
+    <p class="lead-2">Two commented lines is all it takes. No migrations to undo, no leftover state.</p>
+
+    <div class="mig-rollback">
+      <strong>Roll back</strong>
+      <pre style="margin:0"><code>/* app.css */
+/* @import url('/static/lib/prism/prism.min.css'); */</code></pre>
+      <pre style="margin:.6rem 0 0"><code>// app.js
+// document.body.appendChild(s);  // (was the prism injection)</code></pre>
+    </div>
+  </section>
+
+  <div class="mig-cta">
+    <a href="../docs/migration.html">Read the long-form migration guide →</a>
+  </div>
+</main>
+
+<script src="../assets/site.js"></script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>

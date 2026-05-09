@@ -1,0 +1,42 @@
+# Dependencies
+node_modules/
+
+# Build artefacts (built from src/; not part of the repo)
+dist/
+*.tsbuildinfo
+
+# Test runs (regenerated; large screenshots churn)
+playwright-report/
+test-results/
+test/smoke/screenshots/
+test/integration/visual.spec.ts-snapshots/
+
+# Local env / cache
+.env
+.env.local
+.vite/
+.cache/
+.turbo/
+
+# Editor
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Misc
+*.log
+
+# Test rigs — these are large CaseMaster.Web.exe binaries and a parallel
+# cms-vercel monorepo used for end-to-end testing only. Not part of the
+# package, not part of the deployable site. ~1 GB combined.
+Casemaster-WMS/
+casemaster-vercel-wms-test1/
+
+# Note: casemaster-prism-site/ vendors two things that are tracked
+# intentionally so a clone-and-deploy works without a build step:
+#   - public/lib/prism/  (the compiled prism CSS + JS)
+#   - packages/runtime/  (the cms-vercel runtime, pre-compiled)
+# Both are refreshed by scripts but committed for deploy reproducibility.

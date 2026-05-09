@@ -1,0 +1,228 @@
+/* @casemaster/ui — variant classes.
+ *
+ * Pass these through any qualifier that accepts a class string. The
+ * naming convention is:
+ *   .cms-{component}-{variant}      structural variant
+ *   .btn-{intent}                   button intent
+ *   [data-cms-density="X"]          page-level density preset
+ *
+ * Authors call these from .cms code via:
+ *   <@page/data/table tableClass: 'cms-table-elevated cms-table-compact'>
+ *   <@page/button     class: 'btn btn-soft-primary btn-pill'>
+ *   <@page/alert      class: 'alert alert-success cms-alert-subtle'>
+ */
+
+/* ──────────────── Tables ──────────────── */
+
+/* Comfortable density — more vertical breathing room */
+.cms-table-comfortable tbody td { padding: 0.95rem 1.1rem !important; }
+.cms-table-comfortable thead th  { padding: 0.85rem 1.1rem !important; }
+
+/* Compact density — dense list view */
+.cms-table-compact tbody td { padding: 0.4rem 0.8rem !important; font-size: var(--cms-text-xs) !important; }
+.cms-table-compact thead th  { padding: 0.45rem 0.8rem !important; font-size: 0.7rem !important; }
+
+/* Elevated — drops the table out of any card and gives it its own surface */
+.cms-table-elevated {
+  box-shadow: var(--cms-shadow-lg) !important;
+  border-radius: var(--cms-radius-lg) !important;
+}
+
+/* Flush — no outer border / shadow, just internal stripes & hover */
+.cms-table-flush {
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+.cms-table-flush thead th { border-bottom: 2px solid var(--cms-border-strong) !important; }
+
+/* Hover-only — no zebra stripes, just hover highlight */
+.cms-table-hover-only.table-striped tbody tr:nth-of-type(odd),
+.cms-table-hover-only.table-striped tbody tr:nth-of-type(odd):hover {
+  background: var(--cms-surface) !important;
+}
+.cms-table-hover-only tbody tr:hover { background: var(--cms-primary-fade) !important; }
+
+/* ──────────────── Buttons ──────────────── */
+
+/* Ghost — text-only until hover; great for icon bars / toolbars */
+.btn-ghost,
+.btn-ghost-primary,
+.btn-ghost-danger,
+.btn-ghost-success {
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+.btn-ghost         { color: var(--cms-text); }
+.btn-ghost-primary { color: var(--cms-primary); }
+.btn-ghost-danger  { color: var(--cms-danger); }
+.btn-ghost-success { color: var(--cms-success); }
+.btn-ghost:hover:not(:disabled)         { background: var(--cms-surface-hover) !important; }
+.btn-ghost-primary:hover:not(:disabled) { background: var(--cms-primary-fade) !important; }
+.btn-ghost-danger:hover:not(:disabled)  { background: var(--cms-danger-fade) !important; }
+.btn-ghost-success:hover:not(:disabled) { background: var(--cms-success-fade) !important; }
+
+/* Soft — tinted background with full-saturation text. Linear / Stripe style. */
+.btn-soft-primary { background: var(--cms-primary-fade) !important; color: var(--cms-primary-active) !important; border-color: transparent !important; }
+.btn-soft-success { background: var(--cms-success-fade) !important; color: #166534 !important; border-color: transparent !important; }
+.btn-soft-danger  { background: var(--cms-danger-fade)  !important; color: #991b1b !important; border-color: transparent !important; }
+.btn-soft-warning { background: var(--cms-warning-fade) !important; color: #92400e !important; border-color: transparent !important; }
+.btn-soft-info    { background: var(--cms-info-fade)    !important; color: #155e75 !important; border-color: transparent !important; }
+.btn-soft-primary:hover:not(:disabled) { background: rgb(37 99 235 / 0.16) !important; }
+.btn-soft-success:hover:not(:disabled) { background: rgb(22 163 74 / 0.16) !important; }
+.btn-soft-danger:hover:not(:disabled)  { background: rgb(220 38 38 / 0.16) !important; }
+.btn-soft-warning:hover:not(:disabled) { background: rgb(245 158 11 / 0.20) !important; }
+.btn-soft-info:hover:not(:disabled)    { background: rgb(8 145 178 / 0.16) !important; }
+
+/* Pill — fully rounded */
+.btn-pill { border-radius: 999px !important; padding-left: 1.2rem !important; padding-right: 1.2rem !important; }
+
+/* Square — sharp corners */
+.btn-square { border-radius: 0 !important; }
+
+/* Icon-only — square aspect ratio, no text. Pair with [aria-label]. */
+.btn-icon-only {
+  width: var(--cms-control-h);
+  padding: 0 !important;
+  justify-content: center;
+}
+.btn-icon-only.btn-sm { width: var(--cms-control-h-sm); }
+.btn-icon-only.btn-lg { width: var(--cms-control-h-lg); }
+
+/* Button group cohesion */
+.btn-group .btn:not(:first-child) { border-top-left-radius: 0 !important; border-bottom-left-radius: 0 !important; }
+.btn-group .btn:not(:last-child)  { border-top-right-radius: 0 !important; border-bottom-right-radius: 0 !important; }
+
+/* ──────────────── Cards ──────────────── */
+
+/* Elevated — bigger shadow, no border */
+.cms-card-elevated {
+  box-shadow: var(--cms-shadow-lg) !important;
+  border: none !important;
+}
+
+/* Outlined — strong border, no shadow */
+.cms-card-outlined {
+  box-shadow: none !important;
+  border: 1px solid var(--cms-border-strong) !important;
+}
+
+/* Status strip — coloured left edge to flag state */
+.cms-card-status-primary,
+.cms-card-status-success,
+.cms-card-status-warning,
+.cms-card-status-danger,
+.cms-card-status-info {
+  border-left-width: 3px !important;
+  border-left-style: solid !important;
+}
+.cms-card-status-primary { border-left-color: var(--cms-primary) !important; }
+.cms-card-status-success { border-left-color: var(--cms-success) !important; }
+.cms-card-status-warning { border-left-color: var(--cms-warning) !important; }
+.cms-card-status-danger  { border-left-color: var(--cms-danger)  !important; }
+.cms-card-status-info    { border-left-color: var(--cms-info)    !important; }
+
+/* Interactive — hover lift, for link cards */
+.cms-card-interactive {
+  cursor: pointer;
+  transition: transform var(--cms-dur) var(--cms-ease), box-shadow var(--cms-dur) var(--cms-ease);
+}
+.cms-card-interactive:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--cms-shadow-lg) !important;
+}
+
+/* ──────────────── Alerts ──────────────── */
+
+/* Subtle — minimal background, just a coloured left bar + text */
+.cms-alert-subtle.alert {
+  background: transparent !important;
+  border-left-width: 3px !important;
+  border-left-style: solid !important;
+  border-top: 0 !important;
+  border-right: 0 !important;
+  border-bottom: 0 !important;
+  border-radius: 0 !important;
+  padding-left: 1rem !important;
+  box-shadow: none !important;
+}
+.cms-alert-subtle.alert-primary { border-left-color: var(--cms-primary); color: var(--cms-text); }
+.cms-alert-subtle.alert-success { border-left-color: var(--cms-success); color: var(--cms-text); }
+.cms-alert-subtle.alert-warning { border-left-color: var(--cms-warning); color: var(--cms-text); }
+.cms-alert-subtle.alert-danger  { border-left-color: var(--cms-danger);  color: var(--cms-text); }
+.cms-alert-subtle.alert-info    { border-left-color: var(--cms-info);    color: var(--cms-text); }
+
+/* Soft — tinted background, no border, rounded */
+.cms-alert-soft.alert {
+  border: none !important;
+  border-radius: var(--cms-radius-lg) !important;
+}
+
+/* ──────────────── Inputs ──────────────── */
+
+/* Filled — coloured surface, only bottom border on focus */
+.cms-input-filled.form-control {
+  background: var(--cms-surface-2) !important;
+  border-color: transparent !important;
+  border-radius: var(--cms-radius) var(--cms-radius) 0 0 !important;
+  border-bottom: 1px solid var(--cms-border-strong) !important;
+}
+.cms-input-filled.form-control:focus {
+  background: var(--cms-surface) !important;
+  border-bottom-color: var(--cms-primary) !important;
+  box-shadow: 0 1px 0 0 var(--cms-primary) !important;
+}
+
+/* Underlined — Material-style, just a bottom rule */
+.cms-input-underlined.form-control {
+  background: transparent !important;
+  border: none !important;
+  border-bottom: 1px solid var(--cms-border-strong) !important;
+  border-radius: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  box-shadow: none !important;
+}
+.cms-input-underlined.form-control:focus {
+  border-bottom-color: var(--cms-primary) !important;
+  box-shadow: 0 1px 0 0 var(--cms-primary) !important;
+}
+
+/* ──────────────── Density preset ──────────────── */
+
+/* Page-level: <html data-cms-density="compact"> shrinks all interactive
+ * controls and tightens spacing. Useful for back-office dashboards. */
+[data-cms-density="compact"] {
+  --cms-control-h:    30px;
+  --cms-control-h-sm: 24px;
+  --cms-control-h-lg: 36px;
+  --cms-space-3: 0.5rem;
+  --cms-space-4: 0.75rem;
+  --cms-space-6: 1rem;
+  --cms-text-md: 0.92rem;
+}
+[data-cms-density="compact"] .btn   { padding: 0.3rem 0.7rem; }
+[data-cms-density="compact"] .form-control,
+[data-cms-density="compact"] .custom-select { padding: 0.3rem 0.6rem; font-size: var(--cms-text-xs); }
+[data-cms-density="compact"] .table.table-striped tbody td,
+[data-cms-density="compact"] .table.table-bordered tbody td,
+[data-cms-density="compact"] .cms-table tbody td { padding: 0.45rem 0.75rem; font-size: var(--cms-text-xs); }
+[data-cms-density="compact"] .card-body { padding: var(--cms-space-3); }
+
+/* Comfortable — opposite end. Larger touch targets. */
+[data-cms-density="comfortable"] {
+  --cms-control-h:    44px;
+  --cms-control-h-sm: 36px;
+  --cms-control-h-lg: 52px;
+  --cms-space-3: 1rem;
+  --cms-space-4: 1.4rem;
+  --cms-space-6: 2rem;
+}
+[data-cms-density="comfortable"] .btn   { padding: 0.7rem 1.3rem; font-size: var(--cms-text-md); }
+[data-cms-density="comfortable"] .form-control,
+[data-cms-density="comfortable"] .custom-select { padding: 0.6rem 0.9rem; font-size: var(--cms-text-md); }
+[data-cms-density="comfortable"] .table.table-striped tbody td,
+[data-cms-density="comfortable"] .table.table-bordered tbody td,
+[data-cms-density="comfortable"] .cms-table tbody td { padding: 0.95rem 1.1rem; }
+[data-cms-density="comfortable"] .card-body { padding: var(--cms-space-4); }

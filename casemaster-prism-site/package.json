@@ -1,0 +1,22 @@
+{
+  "name": "casemaster-prism-site",
+  "version": "0.3.0",
+  "private": true,
+  "type": "module",
+  "description": "Marketing + docs site for casemaster-prism. Deployed as a cms-vercel app.",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "dev":   "node dev-server.mjs",
+    "//deploy": "Use `npx vercel deploy --prod` directly. We deliberately don't expose `npm run dev` because Vercel CLI v50+ recurses if it finds a `dev` script that runs `vercel dev`.",
+    "deploy": "vercel deploy --prod"
+  },
+  "dependencies": {
+    "@vercel/node": "^3.2.0",
+    "pg": "^8.13.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "typescript": "^5.4.0",
+    "vercel": "^39.0.0"
+  }
+}

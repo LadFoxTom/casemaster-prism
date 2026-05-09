@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Preset themes · casemaster-prism docs</title>
+<meta name="description" content="Preset themes — casemaster-prism docs">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#2563eb">
+<meta property="og:title" content="casemaster-prism">
+<meta property="og:description" content="Drop-in design system for CaseMaster apps.">
+<meta property="og:image" content="../assets/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="../assets/og-card.png">
+<link rel="stylesheet" href="assets/docs.css">
+</head>
+<body>
+<div id="gnav-host" data-root="../"></div>
+
+<main class="docs-content">
+    <p class="docs-breadcrumb"><a href="../">Home</a> &nbsp;/&nbsp; <a href="index.html">Docs</a> &nbsp;/&nbsp; Preset themes</p>
+
+    <h1>Preset themes</h1>
+    <p class="docs-lead">Three named brand presets, each one swapping the entire token set with a single attribute on <code>&lt;html&gt;</code>.</p>
+
+    <h2 id='at-a-glance'>At a glance</h2>
+    <table>
+      <thead><tr><th>Preset</th><th>Activate</th><th>Feel</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Default</strong></td><td>(none)</td><td>Tabler-ish blue with neutral palette. Good baseline for new apps.</td></tr>
+        <tr><td><strong>Linear</strong></td><td><code>data-cms-theme="linear"</code></td><td>Dark by default. Violet accent (<code>#5e6ad2</code>). Inter type. Hairline borders, 6&nbsp;px radii. Tight controls.</td></tr>
+        <tr><td><strong>Tabler</strong></td><td><code>data-cms-theme="tabler"</code></td><td>Light. Tabler blue (<code>#206bc4</code>). 4&nbsp;px radii. Defined elevation tiers. Light + dark variants.</td></tr>
+        <tr><td><strong>Material</strong></td><td><code>data-cms-theme="material"</code></td><td>Material You. Tonal-purple (<code>#6750a4</code>). 12&nbsp;px radii. Roboto. Larger 40&nbsp;px controls. Light + dark.</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id='applying'>Applying a preset</h2>
+    <p>Set the attribute on <code>&lt;html&gt;</code> in your shell. The cleanest place is from <code>app.js</code>:</p>
+<pre><code>document.documentElement.setAttribute('data-cms-theme', 'linear');
+document.documentElement.setAttribute('data-cms-density', 'compact');</code></pre>
+
+    <p>For cms-vercel, hand it through the runtime <code>themeMode</code> option (light/dark only) and inject the preset attribute via your shell template. Custom shells set the attribute directly.</p>
+
+    <h2 id='dark-mode'>Combining with dark mode</h2>
+    <p><code>data-cms-theme</code> and <code>data-theme</code> are independent. Combine them freely:</p>
+<pre><code>&lt;html data-cms-theme="material" data-theme="dark"&gt;</code></pre>
+    <p>Linear is dark-only by default — the preset overrides every neutral with the Linear palette regardless of <code>data-theme</code>. Tabler and Material define both light and dark variants.</p>
+
+    <h2 id='custom'>Building a custom preset</h2>
+    <p>Override every neutral inside a single attribute selector and ship it as part of your app's CSS:</p>
+<pre><code>:root[data-cms-theme="acme"] {
+  --cms-primary:        #ff6f3c;
+  --cms-primary-hover:  #d75a2e;
+  --cms-primary-active: #b04a26;
+  --cms-primary-fade:   rgb(255 111 60 / 0.12);
+
+  --cms-bg:        #fbf7f2;
+  --cms-surface:   #ffffff;
+  --cms-surface-2: #f4ede4;
+  --cms-border:    #e6dccd;
+  --cms-text:      #1d1813;
+  --cms-text-muted:#6f5a47;
+
+  --cms-radius: 10px;
+  --cms-font:   "Söhne", ui-sans-serif, system-ui, sans-serif;
+}</code></pre>
+    <p>Then activate with <code>&lt;html data-cms-theme="acme"&gt;</code>. See <a href='./tokens.html'>Design tokens</a> for the full variable list.</p>
+
+    <div class="docs-footer-nav"><a href="./getting-started.html"><small>← Previous</small>Getting started</a><a class="next" href="./tokens.html"><small>Next →</small>Design tokens</a></div>
+  </main>
+
+<script>
+  // Inject the sidebar HTML manually (relative path differs per depth)
+  (function () {
+    fetch('_sidebar.html').then((r) => r.text()).then((h) => {
+      const host = document.getElementById('docs-sidebar-host');
+      if (!host) return;
+      host.innerHTML = h;
+      const here = location.pathname.split('/').pop();
+      host.querySelectorAll('a[href]').forEach((a) => {
+        const t = a.getAttribute('href').split('/').pop();
+        if (t === here) a.classList.add('is-current');
+      });
+      const search = host.querySelector('.docs-search');
+      if (search) search.addEventListener('input', () => {
+        const q = search.value.trim().toLowerCase();
+        host.querySelectorAll('.docs-nav a').forEach((a) => {
+          a.classList.toggle('is-hidden', !!q && !a.textContent.toLowerCase().includes(q));
+        });
+      });
+    });
+  })();
+</script>
+<script src="assets/docs.js"></script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>

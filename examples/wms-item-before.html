@@ -1,0 +1,212 @@
+﻿<!DOCTYPE html>
+				<html lang="en" dir="ltr">
+				<head>
+					<meta charset="utf-8">
+					<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+					<script src="http://localhost:5051/static/lib/jquery/jquery.min.js?v=1.0.0"></script>
+
+					<link rel="stylesheet" href="http://localhost:5051/static/lib/fullcalendar/core/main.min.css?v=1.0.0">
+					<script src="http://localhost:5051/static/lib/fullcalendar/core/main.min.js?v=1.0.0"></script>
+					<script src="http://localhost:5051/static/lib/fullcalendar/core/locales/en-gb.js?v=1.0.0"></script>
+					<link rel="stylesheet" href="http://localhost:5051/static/lib/fullcalendar/bootstrap/main.min.css?v=1.0.0">
+					<script src="http://localhost:5051/static/lib/fullcalendar/bootstrap/main.min.js?v=1.0.0"></script>
+					<link rel="stylesheet" href="http://localhost:5051/static/lib/fullcalendar/daygrid/main.min.css?v=1.0.0">
+					<script src="http://localhost:5051/static/lib/fullcalendar/daygrid/main.min.js?v=1.0.0"></script>
+					<link rel="stylesheet" href="http://localhost:5051/static/lib/fullcalendar/timegrid/main.min.css?v=1.0.0">
+					<script src="http://localhost:5051/static/lib/fullcalendar/timegrid/main.min.js?v=1.0.0"></script>
+					<link rel="stylesheet" href="http://localhost:5051/static/lib/fullcalendar/list/main.min.css?v=1.0.0">
+					<script src="http://localhost:5051/static/lib/fullcalendar/list/main.min.js?v=1.0.0"></script>
+					<script src="http://localhost:5051/static/lib/fullcalendar/interaction/main.min.js?v=1.0.0"></script>
+
+					<link rel="stylesheet" href="http://localhost:5051/static/lib/select2/css/select2.min.css?v=1.0.0">
+					<script src="http://localhost:5051/static/lib/select2/js/select2.min.js?v=1.0.0"></script>
+					<script src="http://localhost:5051/static/lib/select2/js/i18n/en.js?v=1.0.0"></script>
+					<script src="http://localhost:5051/static/lib/signature_pad/signature_pad.umd.min.js?v=1.0.0"></script>
+	<link rel="stylesheet" href="http://localhost:5051/static/lib/bootstrap/dist/css/bootstrap.min.css?v=1.0.0">
+					<script src="http://localhost:5051/static/lib/bootstrap/dist/js/bootstrap.bundle.min.js?v=1.0.0"></script>
+					<link rel="stylesheet" href="http://localhost:5051/static/lib/font-awesome/css/all.min.css?v=1.0.0">
+
+					<link rel="stylesheet" href="http://localhost:5051/static/css/cm.css?v=1.0.0">
+
+	<link rel="stylesheet" href="http://localhost:5051/static/css/app.css?v=1.0.0">
+					<script src="http://localhost:5051/static/js/cmPre.js?v=1.0.0"></script>
+					<script src="http://localhost:5051/static/js/appPre.js?v=1.0.0"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-primary" aria-label='Main navigation'>
+<a class="navbar-brand" href="http://localhost:5051"><img class='mx-2' width='38' src='http://localhost:5051/static/images/logo/navbar.png?v=1.0.0'>
+Casemaster WMS</a>
+</nav>
+<main>
+<script>$(document).ready(function() {$("main").last().addClass("pb-4")});</script>
+<div class='container'>
+<p class='h4 my-4'>
+Item
+</p>
+<p><a href="../wms" class="btn btn-sm btn-outline-secondary">&larr; WMS dashboard</a></p>
+<p class="text-muted">12 row(s) in <code>item</code>.</p>
+<table class='table table-sm table-striped table-bordered'>
+<thead class='bg-primary text-light'>
+<tr>
+<th scope='col'>
+<span>
+Tenant id</span>
+</th>
+<th scope='col'>
+<span>
+Sku</span>
+</th>
+<th scope='col'>
+<span>
+Name</span>
+</th>
+<th scope='col'>
+<span>
+Description</span>
+</th>
+<th scope='col'>
+<span>
+Long description</span>
+</th>
+<th scope='col'>
+<span>
+Category id</span>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class='text-right'>1</td>
+<td>SKU-001</td>
+<td>Widget A</td>
+<td>Standard widget, blue</td>
+<td></td>
+<td>CONS</td>
+</tr>
+<tr>
+<td class='text-right'>1</td>
+<td>SKU-002</td>
+<td>Widget B</td>
+<td>Standard widget, red</td>
+<td></td>
+<td>CONS</td>
+</tr>
+<tr>
+<td class='text-right'>1</td>
+<td>SKU-003</td>
+<td>Gadget Pro</td>
+<td>Premium gadget</td>
+<td></td>
+<td>CONS</td>
+</tr>
+<tr>
+<td class='text-right'>1</td>
+<td>SKU-004</td>
+<td>Gizmo X</td>
+<td>Compact gizmo</td>
+<td></td>
+<td>CONS</td>
+</tr>
+<tr>
+<td class='text-right'>1</td>
+<td>SKU-005</td>
+<td>Tool Kit Standard</td>
+<td>15-piece tool kit</td>
+<td></td>
+<td>CONS</td>
+</tr>
+<tr>
+<td class='text-right'>1</td>
+<td>SKU-006</td>
+<td>Sensor Module</td>
+<td>IoT sensor, lot tracked</td>
+<td></td>
+<td>CONS</td>
+</tr>
+<tr>
+<td class='text-right'>1</td>
+<td>SKU-007</td>
+<td>Cable 2m</td>
+<td>USB-C cable 2m</td>
+<td></td>
+<td>CONS</td>
+</tr>
+<tr>
+<td class='text-right'>1</td>
+<td>SKU-008</td>
+<td>Battery Pack</td>
+<td>Lithium-ion 5000mAh hazmat</td>
+<td></td>
+<td>CONS</td>
+</tr>
+<tr>
+<td class='text-right'>1</td>
+<td>SKU-009</td>
+<td>Display Unit</td>
+<td>OLED 7&quot; display</td>
+<td></td>
+<td>CONS</td>
+</tr>
+<tr>
+<td class='text-right'>1</td>
+<td>SKU-010</td>
+<td>Replacement Part R-12</td>
+<td>Spare R-12 component</td>
+<td></td>
+<td>CONS</td>
+</tr>
+<tr>
+<td class='text-right'>1</td>
+<td>SKU-011</td>
+<td>Premium Headset</td>
+<td>Wireless premium headset</td>
+<td></td>
+<td>CONS</td>
+</tr>
+<tr>
+<td class='text-right'>1</td>
+<td>SKU-012</td>
+<td>Quick Charger</td>
+<td>Multi-port USB charger</td>
+<td></td>
+<td>CONS</td>
+</tr>
+</tbody>
+</table>
+</div>
+<script>document.addEventListener('keydown', function(event) {
+    if (event.ctrlKey && event.altKey && event.code === 'KeyV') {
+        const link = document.createElement('a');
+        link.href = 'vscode://file/C:\\Casemaster-WMS\\casemaster-runtime\\page\\wms/item.cms:6:1';
+        link.style.display = 'none';
+        link.target = '_self';
+
+        document.body.appendChild(link);
+        link.click();
+
+        document.body.removeChild(link);
+    }
+});</script>
+</main>
+<div id='cmModal' class='modal fade' data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden='true'>
+<div id='cmModalDialog' class='modal-dialog modal-lg' role="document">
+<div class='modal-content'>
+<div class='modal-header'>
+<div id='cmModalTitle' class='modal-title h5'>
+</div>
+<button id="cmModalClose" type="button" class="close" data-dismiss="modal"><i class='fas fa-times'></i></button>
+</div>
+<div id='cmModalBody' class='modal-body'>
+<div class='embed-responsive embed-responsive-16by9'>
+<iframe id='cmModalIFrame' class='embed-responsive-item'></iframe>
+</div>
+</div>
+</div>
+</div>
+</div>
+	<script src="http://localhost:5051/static/js/cm.js?v=1.0.0"></script>
+					<script src="http://localhost:5051/static/js/app.js?v=1.0.0"></script>
+</body>
+</html>
+

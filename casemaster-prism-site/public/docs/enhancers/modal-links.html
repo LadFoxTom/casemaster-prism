@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Modal-link drawer · casemaster-prism docs</title>
+<meta name="description" content="Modal-link drawer — casemaster-prism docs">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#2563eb">
+<meta property="og:title" content="casemaster-prism">
+<meta property="og:description" content="Drop-in design system for CaseMaster apps.">
+<meta property="og:image" content="../../assets/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="../../assets/og-card.png">
+<link rel="stylesheet" href="../assets/docs.css">
+</head>
+<body>
+<div id="gnav-host" data-root="../../"></div>
+
+<main class="docs-content">
+    <p class="docs-breadcrumb"><a href="../../">Home</a> &nbsp;/&nbsp; <a href="../index.html">Docs</a> &nbsp;/&nbsp; Enhancers &nbsp;/&nbsp; Modal-link drawer</p>
+
+    <h1>Modal-link drawer</h1>
+    <p class="docs-lead">Open detail pages in a slide-in modal instead of a full page navigation.</p>
+
+    <h2 id='usage'>Usage</h2>
+<pre><code>&lt;a href="/inventory/42" data-cms-modal-link&gt;View&lt;/a&gt;</code></pre>
+    <p>The fetched page's <code>&lt;main&gt;</code> / <code>&lt;article&gt;</code> / <code>.cms-content</code> body is extracted and rendered in a right-side drawer. The MutationObserver re-runs other enhancers over the new content so tables/forms inside it work.</p>
+
+    <h2 id='custom-title'>Custom title</h2>
+<pre><code>&lt;a href="/inventory/42"
+   data-cms-modal-link
+   data-cms-modal-title="Item A-100"&gt;View&lt;/a&gt;</code></pre>
+
+    <h2 id='conflict'>Coexistence with the .NET runtime's <code>#cmModal</code></h2>
+    <p>The .NET runtime ships its own iframe-modal as <code>#cmModal</code>. Modal-link doesn't touch it — it's strictly opt-in via <code>data-cms-modal-link</code>. Use the runtime's mechanism for one, prism's for the other; they don't interfere.</p>
+
+    <div class="docs-footer-nav"><a href="./shortcuts.html"><small>← Previous</small>Shortcuts</a><a class="next" href="./inline-edit.html"><small>Next →</small>Inline edit</a></div>
+  </main>
+
+<script>
+  // Inject the sidebar HTML manually (relative path differs per depth)
+  (function () {
+    fetch('../_sidebar.html').then((r) => r.text()).then((h) => {
+      const host = document.getElementById('docs-sidebar-host');
+      if (!host) return;
+      host.innerHTML = h;
+      const here = location.pathname.split('/').pop();
+      host.querySelectorAll('a[href]').forEach((a) => {
+        const t = a.getAttribute('href').split('/').pop();
+        if (t === here) a.classList.add('is-current');
+      });
+      const search = host.querySelector('.docs-search');
+      if (search) search.addEventListener('input', () => {
+        const q = search.value.trim().toLowerCase();
+        host.querySelectorAll('.docs-nav a').forEach((a) => {
+          a.classList.toggle('is-hidden', !!q && !a.textContent.toLowerCase().includes(q));
+        });
+      });
+    });
+  })();
+</script>
+<script src="../assets/docs.js"></script>
+<script src="../../assets/nav.js"></script>
+</body>
+</html>

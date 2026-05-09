@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Troubleshooting · casemaster-prism docs</title>
+<meta name="description" content="Troubleshooting — casemaster-prism docs">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#2563eb">
+<meta property="og:title" content="casemaster-prism">
+<meta property="og:description" content="Drop-in design system for CaseMaster apps.">
+<meta property="og:image" content="../assets/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="../assets/og-card.png">
+<link rel="stylesheet" href="assets/docs.css">
+</head>
+<body>
+<div id="gnav-host" data-root="../"></div>
+
+<main class="docs-content">
+    <p class="docs-breadcrumb"><a href="../">Home</a> &nbsp;/&nbsp; <a href="index.html">Docs</a> &nbsp;/&nbsp; Troubleshooting</p>
+
+    <h1>Troubleshooting</h1>
+    <p class="docs-lead">Common problems and their fix paths.</p>
+
+    <h2 id='no-changes'>I installed prism but I don't see any visual change</h2>
+    <p>99% of the time this is browser cache. The .NET runtime hardcodes <code>?v=1.0.0</code> on <code>app.css</code> / <code>app.js</code>; if you visited the page before installing, your browser keeps serving the old empty content.</p>
+    <p><strong>Fix:</strong> hard-reload (<kbd>Ctrl</kbd>+<kbd>F5</kbd>). If that doesn't work, DevTools → Network tab → tick "Disable cache" → refresh.</p>
+
+    <h2 id='select2-double'>My selects are wrapped twice (Select2 + Tom Select)</h2>
+    <p>Shouldn't happen — prism's forms enhancer checks for <code>.select2-hidden-accessible</code> and skips. If you do see double-wrapping, the runtime probably loaded Select2 <em>after</em> prism, breaking the order.</p>
+    <p><strong>Fix:</strong> ensure <code>app.js</code> (where prism is injected) is the very last script in the page. On the .NET runtime that's the default; on cms-vercel it's controlled by the shell template.</p>
+
+    <h2 id='cmdk-eaten'>Cmd+K does nothing</h2>
+    <p>Three things to check:</p>
+    <ul>
+      <li><strong>Focus trap.</strong> If a modal or another widget has captured the keystroke, prism never sees it. Click outside the modal first.</li>
+      <li><strong>Browser shortcut conflict.</strong> Some extensions bind <kbd>Cmd</kbd>+<kbd>K</kbd>. Disable them or rebind via <code>window.cmsUi.shortcuts.openCommand</code>.</li>
+      <li><strong>Disabled in config.</strong> <code>window.cmsUi = { command: false }</code>.</li>
+    </ul>
+
+    <h2 id='dark-flicker'>Dark mode flickers on page load</h2>
+    <p>The browser paints light then switches when JS sets <code>data-theme="dark"</code>. Set the attribute server-side or in an inline <code>&lt;script&gt;</code> in <code>&lt;head&gt;</code> before the body renders.</p>
+<pre><code>&lt;script&gt;
+  if (localStorage.getItem('theme') === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }
+&lt;/script&gt;</code></pre>
+
+    <h2 id='print-broken'>Tables print with grey backgrounds</h2>
+    <p>Most browsers strip background colours by default when printing. If yours doesn't, add to your app CSS:</p>
+<pre><code>@media print {
+  .table { background: white !important; box-shadow: none !important; }
+}</code></pre>
+
+    <h2 id='still-stuck'>Still stuck?</h2>
+    <p>Open an issue on the GitHub repo with: a minimal page that reproduces the issue, the runtime + version, and the browser. We'll triage.</p>
+
+    <div class="docs-footer-nav"><a href="./migration.html"><small>← Previous</small>Migration guide</a><a class="next" href="./faq.html"><small>Next →</small>FAQ</a></div>
+  </main>
+
+<script>
+  // Inject the sidebar HTML manually (relative path differs per depth)
+  (function () {
+    fetch('_sidebar.html').then((r) => r.text()).then((h) => {
+      const host = document.getElementById('docs-sidebar-host');
+      if (!host) return;
+      host.innerHTML = h;
+      const here = location.pathname.split('/').pop();
+      host.querySelectorAll('a[href]').forEach((a) => {
+        const t = a.getAttribute('href').split('/').pop();
+        if (t === here) a.classList.add('is-current');
+      });
+      const search = host.querySelector('.docs-search');
+      if (search) search.addEventListener('input', () => {
+        const q = search.value.trim().toLowerCase();
+        host.querySelectorAll('.docs-nav a').forEach((a) => {
+          a.classList.toggle('is-hidden', !!q && !a.textContent.toLowerCase().includes(q));
+        });
+      });
+    });
+  })();
+</script>
+<script src="assets/docs.js"></script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>

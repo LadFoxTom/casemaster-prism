@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Design tokens · casemaster-prism docs</title>
+<meta name="description" content="Design tokens — casemaster-prism docs">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#2563eb">
+<meta property="og:title" content="casemaster-prism">
+<meta property="og:description" content="Drop-in design system for CaseMaster apps.">
+<meta property="og:image" content="../assets/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="../assets/og-card.png">
+<link rel="stylesheet" href="assets/docs.css">
+</head>
+<body>
+<div id="gnav-host" data-root="../"></div>
+
+<main class="docs-content">
+    <p class="docs-breadcrumb"><a href="../">Home</a> &nbsp;/&nbsp; <a href="index.html">Docs</a> &nbsp;/&nbsp; Design tokens</p>
+
+    <h1>Design tokens</h1>
+    <p class="docs-lead">Every visual decision in prism is a CSS variable. Override one in your app's CSS and every component picks it up — no recompile, no fork.</p>
+
+    <h2 id='palette'>Palette</h2>
+    <table>
+      <thead><tr><th>Variable</th><th>Default (light)</th><th>Used by</th></tr></thead>
+      <tbody>
+        <tr><td><code>--cms-primary</code></td><td><code>#2563eb</code></td><td>btn-primary, navbar bg, focus rings, active nav, sort indicator…</td></tr>
+        <tr><td><code>--cms-primary-hover</code></td><td><code>#1d4ed8</code></td><td>btn-primary :hover</td></tr>
+        <tr><td><code>--cms-primary-active</code></td><td><code>#1e40af</code></td><td>btn-primary :active</td></tr>
+        <tr><td><code>--cms-primary-fade</code></td><td><code>rgb(37 99 235 / .08)</code></td><td>row hover, badge bg, soft button bg…</td></tr>
+        <tr><td><code>--cms-success / --cms-success-fade</code></td><td><code>#16a34a</code></td><td>btn-success, badge-success, alert-success</td></tr>
+        <tr><td><code>--cms-warning / --cms-warning-fade</code></td><td><code>#f59e0b</code></td><td>btn-warning, badge-warning, alert-warning</td></tr>
+        <tr><td><code>--cms-danger / --cms-danger-fade</code></td><td><code>#dc2626</code></td><td>btn-danger, badge-danger, alert-danger</td></tr>
+        <tr><td><code>--cms-info / --cms-info-fade</code></td><td><code>#0891b2</code></td><td>btn-info, badge-info, alert-info</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id='neutrals'>Neutrals</h2>
+    <table>
+      <thead><tr><th>Variable</th><th>Default (light)</th><th>Used by</th></tr></thead>
+      <tbody>
+        <tr><td><code>--cms-bg</code></td><td><code>#f8fafc</code></td><td>page background</td></tr>
+        <tr><td><code>--cms-surface</code></td><td><code>#ffffff</code></td><td>cards, tables, modals, navbar</td></tr>
+        <tr><td><code>--cms-surface-2</code></td><td><code>#f1f5f9</code></td><td>striped rows, table heads, kbd, palette panel</td></tr>
+        <tr><td><code>--cms-surface-hover</code></td><td><code>#f8fafc</code></td><td>hover backgrounds in lists</td></tr>
+        <tr><td><code>--cms-border</code></td><td><code>#e2e8f0</code></td><td>card / table borders</td></tr>
+        <tr><td><code>--cms-border-strong</code></td><td><code>#cbd5e1</code></td><td>input borders, scrollbar thumb</td></tr>
+        <tr><td><code>--cms-text</code></td><td><code>#0f172a</code></td><td>body text, headings</td></tr>
+        <tr><td><code>--cms-text-muted</code></td><td><code>#64748b</code></td><td>captions, table head text</td></tr>
+        <tr><td><code>--cms-text-faint</code></td><td><code>#94a3b8</code></td><td>placeholders, sort indicators</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id='geometry'>Geometry, type, motion</h2>
+    <table>
+      <thead><tr><th>Variable</th><th>Default</th></tr></thead>
+      <tbody>
+        <tr><td><code>--cms-radius / --cms-radius-sm / --cms-radius-lg</code></td><td><code>8px / 4px / 14px</code></td></tr>
+        <tr><td><code>--cms-control-h / --cms-control-h-sm / --cms-control-h-lg</code></td><td><code>36px / 28px / 44px</code></td></tr>
+        <tr><td><code>--cms-font</code></td><td>system stack</td></tr>
+        <tr><td><code>--cms-font-mono</code></td><td>system mono stack</td></tr>
+        <tr><td><code>--cms-text-xs / -sm / -md / -lg</code></td><td><code>0.75 / 0.875 / 1 / 1.125rem</code></td></tr>
+        <tr><td><code>--cms-shadow-xs / -sm / / -lg</code></td><td>three elevation tiers</td></tr>
+        <tr><td><code>--cms-shadow-focus</code></td><td>focus-ring shadow</td></tr>
+        <tr><td><code>--cms-dur / --cms-dur-slow</code></td><td><code>160ms / 280ms</code> (collapses to 0 under <code>prefers-reduced-motion</code>)</td></tr>
+        <tr><td><code>--cms-ease / --cms-ease-in / --cms-ease-out</code></td><td>cubic-bezier curves</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id='dark-mode'>Dark mode</h2>
+    <p>Set <code>data-theme="dark"</code> on <code>&lt;html&gt;</code>. prism redefines every token under the dark selector — no further work needed.</p>
+<pre><code>&lt;html data-theme="dark"&gt;</code></pre>
+    <p>Auto mode that follows the OS setting:</p>
+<pre><code>&lt;html data-theme="auto"&gt;</code></pre>
+
+    <div class="docs-footer-nav"><a href="./themes.html"><small>← Previous</small>Preset themes</a><a class="next" href="./variants.html"><small>Next →</small>Variants & density</a></div>
+  </main>
+
+<script>
+  // Inject the sidebar HTML manually (relative path differs per depth)
+  (function () {
+    fetch('_sidebar.html').then((r) => r.text()).then((h) => {
+      const host = document.getElementById('docs-sidebar-host');
+      if (!host) return;
+      host.innerHTML = h;
+      const here = location.pathname.split('/').pop();
+      host.querySelectorAll('a[href]').forEach((a) => {
+        const t = a.getAttribute('href').split('/').pop();
+        if (t === here) a.classList.add('is-current');
+      });
+      const search = host.querySelector('.docs-search');
+      if (search) search.addEventListener('input', () => {
+        const q = search.value.trim().toLowerCase();
+        host.querySelectorAll('.docs-nav a').forEach((a) => {
+          a.classList.toggle('is-hidden', !!q && !a.textContent.toLowerCase().includes(q));
+        });
+      });
+    });
+  })();
+</script>
+<script src="assets/docs.js"></script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>

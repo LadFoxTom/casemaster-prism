@@ -1,0 +1,12 @@
+{
+  "name": "casemaster-prism",
+  "short_name": "prism",
+  "description": "Drop-in design system for CaseMaster apps.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#2563eb",
+  "icons": [
+    { "src": "favicon.svg", "type": "image/svg+xml", "sizes": "any", "purpose": "any maskable" }
+  ]
+}

@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Dashboard · casemaster-prism template</title>
+
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#2563eb">
+<meta property="og:title" content="casemaster-prism">
+<meta property="og:description" content="Drop-in design system for CaseMaster apps.">
+<meta property="og:image" content="../assets/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="../assets/og-card.png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="../assets/prism/prism.min.css">
+
+<style>
+  body { margin: 0; }
+  .tpl-shell { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
+  .tpl-main  { padding: 1.5rem 2rem; background: var(--cms-bg); overflow-x: auto; }
+  .tpl-bar   {
+    display: flex; align-items: center; gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    padding: 0.5rem 0.75rem;
+    background: var(--cms-surface);
+    border: 1px solid var(--cms-border);
+    border-radius: 8px;
+    font-size: 0.78rem;
+  }
+  .tpl-bar-label { color: var(--cms-text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.65rem; }
+  .tpl-bar a { color: var(--cms-text-muted); text-decoration: none; font-size: 0.85rem; }
+  .tpl-bar a:hover { color: var(--cms-text); }
+  .tpl-bar-spacer { flex: 1; }
+  .tpl-pill { background: transparent; border: 1px solid transparent; color: var(--cms-text); font-size: 0.78rem; padding: 0.25rem 0.55rem; border-radius: 5px; cursor: pointer; }
+  .tpl-pill.is-active { background: var(--cms-primary); color: #fff; }
+
+  @media (max-width: 768px) {
+    .tpl-shell { grid-template-columns: 1fr; }
+    .wms-sidebar, .cms-sidebar { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="tpl-shell">
+
+  <!-- ───────────────── Sidebar ─────────────────── -->
+  <aside class="wms-sidebar">
+    <div class="px-3 py-2" style="font-weight:700;font-size:1rem;color:var(--cms-text)">casemaster-prism</div>
+    <div class="sidebar-header">Operations</div>
+    <ul class="nav flex-column">
+      <li class="nav-item"><a class="nav-link active" href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+      <li class="nav-item"><a class="nav-link" href="list-detail.html"><i class="fas fa-boxes"></i> Inventory</a></li>
+      <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-arrow-down"></i> Inbound</a></li>
+      <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-arrow-up"></i> Outbound</a></li>
+      <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-undo"></i> Returns</a></li>
+    </ul>
+    <div class="sidebar-header">System</div>
+    <ul class="nav flex-column">
+      <li class="nav-item"><a class="nav-link" href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+      <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-question-circle"></i> Help</a></li>
+    </ul>
+  </aside>
+
+  <!-- ───────────────── Main ───────────────── -->
+  <main class="tpl-main">
+
+    <!-- Theme picker bar — applies to this template's <html> -->
+    <div class="tpl-bar">
+      <span class="tpl-bar-label">Preset</span>
+      <button class="tpl-pill is-active" data-preset="">Default</button>
+      <button class="tpl-pill" data-preset="linear">Linear</button>
+      <button class="tpl-pill" data-preset="tabler">Tabler</button>
+      <button class="tpl-pill" data-preset="material">Material</button>
+      <span class="tpl-bar-label" style="margin-left:1rem">Density</span>
+      <button class="tpl-pill is-active" data-density="">Default</button>
+      <button class="tpl-pill" data-density="compact">Compact</button>
+      <button class="tpl-pill" data-density="comfortable">Comfy</button>
+      <span class="tpl-bar-spacer"></span>
+      <span class="tpl-bar-label">Mode</span>
+      <button class="tpl-pill is-active" data-theme="">Light</button>
+      <button class="tpl-pill" data-theme="dark">Dark</button>
+      <a href="../" style="margin-left:1rem">← Back to landing</a>
+    </div>
+
+    <h2 class="mb-1">Dashboard</h2>
+    <p class="text-muted mb-4">Overview of warehouse operations and exception queues.</p>
+
+    <!-- KPI tiles -->
+    <div class="row mb-4">
+      <div class="col-md-3 col-sm-6 mb-3">
+        <div class="card cms-stat-card cms-card-status-primary">
+          <div class="card-body">
+            <div class="cms-stat-label">Open POs</div>
+            <div class="cms-stat-value">142</div>
+            <div class="cms-stat-trend up">↑ 12 % week-on-week</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 mb-3">
+        <div class="card cms-stat-card cms-card-status-success">
+          <div class="card-body">
+            <div class="cms-stat-label">Picks today</div>
+            <div class="cms-stat-value">3,420</div>
+            <div class="cms-stat-trend up">↑ vs target</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 mb-3">
+        <div class="card cms-stat-card cms-card-status-warning">
+          <div class="card-body">
+            <div class="cms-stat-label">Backorders</div>
+            <div class="cms-stat-value">7</div>
+            <div class="cms-stat-trend down">↓ 3 from yesterday</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 mb-3">
+        <div class="card cms-stat-card cms-card-status-danger">
+          <div class="card-body">
+            <div class="cms-stat-label">Open NCRs</div>
+            <div class="cms-stat-value">2</div>
+            <div class="cms-stat-trend">no change</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Recent orders table -->
+      <div class="col-lg-8 mb-4">
+        <div class="card">
+          <div class="card-header">
+            <span>Recent sales orders</span>
+            <a href="#" class="btn btn-soft-primary btn-sm" style="margin-left:auto">View all</a>
+          </div>
+          <table class='table table-sm table-striped table-bordered cms-table-flush mb-0'>
+            <thead class='bg-primary text-light'>
+              <tr><th>Order</th><th>Customer</th><th>Items</th><th>Total</th><th>Status</th><th>Created</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>SO-1043</td><td>Acme Logistics</td><td class='text-right'>12</td><td class='text-right'>$1,248.00</td><td><span class="badge badge-success">Released</span></td><td>2026-05-08</td></tr>
+              <tr><td>SO-1042</td><td>Northwind Bio</td><td class='text-right'>4</td><td class='text-right'>$832.50</td><td><span class="badge badge-info">Allocated</span></td><td>2026-05-08</td></tr>
+              <tr><td>SO-1041</td><td>Brindle Industries</td><td class='text-right'>1</td><td class='text-right'>$95.00</td><td><span class="badge badge-secondary">Validated</span></td><td>2026-05-07</td></tr>
+              <tr><td>SO-1040</td><td>Cresta Foods</td><td class='text-right'>20</td><td class='text-right'>$3,420.00</td><td><span class="badge badge-warning">In Picking</span></td><td>2026-05-07</td></tr>
+              <tr><td>SO-1039</td><td>Lakeshore Hardware</td><td class='text-right'>8</td><td class='text-right'>$564.00</td><td><span class="badge badge-success">Released</span></td><td>2026-05-06</td></tr>
+              <tr><td>SO-1038</td><td>Acme Logistics</td><td class='text-right'>2</td><td class='text-right'>$310.00</td><td><span class="badge badge-secondary">Imported</span></td><td>2026-05-06</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Activity feed -->
+      <div class="col-lg-4 mb-4">
+        <div class="card">
+          <div class="card-header">
+            <span>Today's activity</span>
+          </div>
+          <div class="card-body">
+            <div class="alert alert-success cms-alert-subtle"><strong>Saved.</strong> Inventory adjustment ADJ-2026-0419 posted.</div>
+            <div class="alert alert-warning cms-alert-subtle"><strong>Watch.</strong> 7 items below safety stock.</div>
+            <div class="alert alert-info cms-alert-subtle"><strong>Heads-up.</strong> Replenishment wave queued for 16:00.</div>
+
+            <hr>
+            <h6 class="text-muted text-uppercase small mt-3 mb-2">Status</h6>
+            <p class="d-flex align-items-center mb-1"><span class="cms-status-dot is-online"></span> &nbsp; Pickers online — 47</p>
+            <p class="d-flex align-items-center mb-1"><span class="cms-status-dot is-warning"></span> &nbsp; Throttled — 3</p>
+            <p class="d-flex align-items-center mb-0"><span class="cms-status-dot is-offline"></span> &nbsp; Offline — 1</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+  // Theme picker — toggle data-cms-theme / data-cms-density / data-theme on <html>.
+  document.addEventListener('click', (ev) => {
+    const t = ev.target.closest('.tpl-pill');
+    if (!t) return;
+    const html = document.documentElement;
+    if ('preset' in t.dataset) {
+      document.querySelectorAll('[data-preset]').forEach((b) => b.classList.toggle('is-active', b === t));
+      if (t.dataset.preset) html.setAttribute('data-cms-theme', t.dataset.preset);
+      else                  html.removeAttribute('data-cms-theme');
+    }
+    if ('density' in t.dataset) {
+      document.querySelectorAll('[data-density]').forEach((b) => b.classList.toggle('is-active', b === t));
+      if (t.dataset.density) html.setAttribute('data-cms-density', t.dataset.density);
+      else                   html.removeAttribute('data-cms-density');
+    }
+    if ('theme' in t.dataset) {
+      document.querySelectorAll('[data-theme]').forEach((b) => b.classList.toggle('is-active', b === t));
+      if (t.dataset.theme) html.setAttribute('data-theme', t.dataset.theme);
+      else                 html.removeAttribute('data-theme');
+    }
+  });
+</script>
+
+<script type="module" src="../assets/prism/prism.js"></script>
+
+</body>
+</html>

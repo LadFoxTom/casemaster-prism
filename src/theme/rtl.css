@@ -1,0 +1,88 @@
+/* Right-to-left overrides — opt in via `<html dir="rtl">`.
+ *
+ * The .NET CaseMaster runtime ships its own `rtl.css` for BS4-level
+ * mirrors; this file only adjusts cms-ui's own additions (toolbar
+ * float, toast position, kbd shadows, sidebar borders, dropdown
+ * direction). Layout-level RTL (BS4's grid, .text-right, etc.) is
+ * handled upstream.
+ */
+
+[dir="rtl"] .cms-toast-container {
+  right: auto;
+  left: var(--cms-space-4);
+}
+
+[dir="rtl"] .cms-toast {
+  border-left: 1px solid var(--cms-border);
+  border-right: 3px solid var(--cms-text-faint);
+}
+[dir="rtl"] .cms-toast.kind-success { border-left-color: var(--cms-border); border-right-color: var(--cms-success); }
+[dir="rtl"] .cms-toast.kind-error,
+[dir="rtl"] .cms-toast.kind-danger  { border-left-color: var(--cms-border); border-right-color: var(--cms-danger); }
+[dir="rtl"] .cms-toast.kind-warning { border-left-color: var(--cms-border); border-right-color: var(--cms-warning); }
+[dir="rtl"] .cms-toast.kind-info    { border-left-color: var(--cms-border); border-right-color: var(--cms-info); }
+
+@keyframes cms-toast-in-rtl {
+  from { opacity: 0; transform: translateX(-20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes cms-toast-out-rtl {
+  from { opacity: 1; transform: translateX(0); }
+  to   { opacity: 0; transform: translateX(-20px); }
+}
+[dir="rtl"] .cms-toast            { animation: cms-toast-in-rtl  220ms var(--cms-ease) both; }
+[dir="rtl"] .cms-toast.is-leaving { animation: cms-toast-out-rtl 200ms var(--cms-ease) forwards; }
+
+/* Sidebar: border lives on the inside edge */
+[dir="rtl"] .wms-sidebar,
+[dir="rtl"] .cms-sidebar {
+  border-right: none;
+  border-left: 1px solid var(--cms-border);
+}
+[dir="rtl"] .wms-sidebar ul ul,
+[dir="rtl"] .cms-sidebar ul ul {
+  padding-left: 0;
+  padding-right: 1.25rem;
+  border-left: none;
+  border-right: 1px solid var(--cms-border);
+  margin-left: 0;
+  margin-right: 0.5rem;
+}
+
+/* Table toolbar */
+[dir="rtl"] .cms-table-toolbar .cms-table-count {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+/* Column-toggle dropdown opens from the right edge in RTL */
+[dir="rtl"] .cms-col-toggle-menu {
+  right: auto;
+  left: 0;
+}
+
+/* Sort indicator margin — flip directional whitespace */
+[dir="rtl"] th[data-cms-sortable]::after {
+  margin-left: 0;
+  margin-right: 0.4em;
+}
+
+/* Form chevron on native <select> — mirror */
+[dir="rtl"] select.form-control {
+  background-position: left 0.65rem center;
+  padding-right: 0.75rem;
+  padding-left: 2.25rem;
+}
+
+/* Mobile sidebar slides from the right in RTL */
+@media (max-width: 768px) {
+  [dir="rtl"] .wms-sidebar,
+  [dir="rtl"] .cms-sidebar {
+    inset: 0 0 0 auto;
+    transform: translateX(100%);
+  }
+  [dir="rtl"] .wms-sidebar.show,
+  [dir="rtl"] .cms-sidebar.show {
+    transform: translateX(0);
+  }
+}

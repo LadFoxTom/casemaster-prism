@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Forms · casemaster-prism docs</title>
+<meta name="description" content="Forms — casemaster-prism docs">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#2563eb">
+<meta property="og:title" content="casemaster-prism">
+<meta property="og:description" content="Drop-in design system for CaseMaster apps.">
+<meta property="og:image" content="../../assets/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="../../assets/og-card.png">
+<link rel="stylesheet" href="../assets/docs.css">
+</head>
+<body>
+<div id="gnav-host" data-root="../../"></div>
+
+<main class="docs-content">
+    <p class="docs-breadcrumb"><a href="../../">Home</a> &nbsp;/&nbsp; <a href="../index.html">Docs</a> &nbsp;/&nbsp; Enhancers &nbsp;/&nbsp; Forms</p>
+
+    <h1>Forms</h1>
+    <p class="docs-lead">Tom Select for searchable selects, Flatpickr for date inputs. Coexists with Select2.</p>
+
+    <h2 id='target'>What gets enhanced</h2>
+    <ul>
+      <li><code>&lt;select class="form-control"&gt;</code> with <code>options.length &gt;= selectThreshold</code> (default 8) → Tom Select.</li>
+      <li><code>&lt;select data-cms-search&gt;</code> regardless of size → Tom Select.</li>
+      <li><code>&lt;input type="date"&gt;</code> / <code>type="datetime-local"</code> / <code>type="time"</code> → Flatpickr.</li>
+      <li><code>&lt;input data-cms-date&gt;</code> regardless of type → Flatpickr.</li>
+    </ul>
+
+    <h2 id='skip'>What gets skipped</h2>
+    <ul>
+      <li>Anything carrying <code>.select2-hidden-accessible</code> (Select2 owns it).</li>
+      <li>Anything carrying <code>.flatpickr-input</code>, <code>.hasDatepicker</code> (jQuery UI), or <code>data-cms-no-enhance</code>.</li>
+    </ul>
+
+    <h2 id='lazy'>Lazy loading</h2>
+    <p>Tom Select and Flatpickr modules are loaded as separate chunks (~30&nbsp;KB gz / ~20&nbsp;KB gz) only when the first matching element is found. A page with no enhanceable selects or dates downloads zero of this code.</p>
+
+    <h2 id='config'>Config</h2>
+<pre><code>window.cmsUi = {
+  forms: {
+    tomSelect:       true,
+    flatpickr:       true,
+    selectThreshold: 8,
+  },
+};</code></pre>
+
+    <div class="docs-footer-nav"><a href="./tables.html"><small>← Previous</small>Tables</a><a class="next" href="./confirm.html"><small>Next →</small>Confirm dialog</a></div>
+  </main>
+
+<script>
+  // Inject the sidebar HTML manually (relative path differs per depth)
+  (function () {
+    fetch('../_sidebar.html').then((r) => r.text()).then((h) => {
+      const host = document.getElementById('docs-sidebar-host');
+      if (!host) return;
+      host.innerHTML = h;
+      const here = location.pathname.split('/').pop();
+      host.querySelectorAll('a[href]').forEach((a) => {
+        const t = a.getAttribute('href').split('/').pop();
+        if (t === here) a.classList.add('is-current');
+      });
+      const search = host.querySelector('.docs-search');
+      if (search) search.addEventListener('input', () => {
+        const q = search.value.trim().toLowerCase();
+        host.querySelectorAll('.docs-nav a').forEach((a) => {
+          a.classList.toggle('is-hidden', !!q && !a.textContent.toLowerCase().includes(q));
+        });
+      });
+    });
+  })();
+</script>
+<script src="../assets/docs.js"></script>
+<script src="../../assets/nav.js"></script>
+</body>
+</html>

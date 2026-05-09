@@ -1,0 +1,112 @@
+/* Linear preset — opt in via <html data-cms-theme="linear">.
+ *
+ * Linear is fundamentally a dark product, so this preset overrides
+ * every neutral with the Linear palette regardless of the
+ * data-theme="light|dark" attribute. The accent is Linear's
+ * signature violet (#5e6ad2). Sharp 6 px corners, tight typography,
+ * minimal shadows — favours hairline borders.
+ *
+ * Source palette:
+ *   bg          #08090a
+ *   surface     #1c1d1f
+ *   surface-2   #232527
+ *   border      #2c2d31
+ *   text        #e6e7eb
+ *   muted       #8b8d99
+ *   accent      #5e6ad2
+ */
+
+[data-cms-theme="linear"] {
+  color-scheme: dark;
+
+  --cms-primary:        #5e6ad2;
+  --cms-primary-hover:  #7077e0;
+  --cms-primary-active: #4c54b5;
+  --cms-primary-fade:   rgb(94 106 210 / 0.16);
+
+  --cms-success:        #4cb782;
+  --cms-success-fade:   rgb(76 183 130 / 0.18);
+  --cms-warning:        #f2c94c;
+  --cms-warning-fade:   rgb(242 201 76 / 0.18);
+  --cms-danger:         #eb5757;
+  --cms-danger-fade:    rgb(235 87 87 / 0.18);
+  --cms-info:           #5e6ad2;
+  --cms-info-fade:      rgb(94 106 210 / 0.16);
+
+  --cms-bg:             #08090a;
+  --cms-surface:        #1c1d1f;
+  --cms-surface-2:      #232527;
+  --cms-surface-hover:  #2a2c2f;
+  --cms-border:         #2c2d31;
+  --cms-border-strong:  #3a3b41;
+  --cms-text:           #e6e7eb;
+  --cms-text-muted:     #8b8d99;
+  --cms-text-faint:     #5e6175;
+  --cms-link:           #a8b1ff;
+
+  /* Tight 6 px / 4 px / 8 px radii are part of the Linear feel. */
+  --cms-radius:    6px;
+  --cms-radius-sm: 4px;
+  --cms-radius-lg: 10px;
+
+  --cms-font: "Inter", "Inter Variable", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --cms-text-xs: 0.72rem;
+  --cms-text-sm: 0.8125rem;
+  --cms-text-md: 0.9375rem;
+
+  /* Linear avoids drop-shadows; favours hairline borders. */
+  --cms-shadow-xs: 0 0 0 0 transparent;
+  --cms-shadow-sm: 0 0 0 1px rgb(0 0 0 / 0.4);
+  --cms-shadow:    0 4px 12px -4px rgb(0 0 0 / 0.5);
+  --cms-shadow-lg: 0 16px 40px -12px rgb(0 0 0 / 0.7);
+  --cms-shadow-focus: 0 0 0 3px rgb(94 106 210 / 0.25);
+
+  /* Tight controls */
+  --cms-control-h:    30px;
+  --cms-control-h-sm: 24px;
+  --cms-control-h-lg: 36px;
+}
+
+/* Body should be dark even if data-theme=light */
+[data-cms-theme="linear"] body { background: var(--cms-bg); color: var(--cms-text); }
+
+/* Linear-style soft hover on rows */
+[data-cms-theme="linear"] .cms-table tbody tr:hover,
+[data-cms-theme="linear"] table.table-striped tbody tr:hover {
+  background: rgb(94 106 210 / 0.08) !important;
+}
+
+/* Buttons feel snappier with Linear's slightly darker primary */
+[data-cms-theme="linear"] .btn-primary { box-shadow: 0 0 0 1px rgb(94 106 210 / 0.4); }
+
+/* Form fields blend into surface-2 */
+[data-cms-theme="linear"] .form-control,
+[data-cms-theme="linear"] .custom-select {
+  background: var(--cms-surface-2);
+  color: var(--cms-text);
+  border-color: var(--cms-border);
+}
+[data-cms-theme="linear"] .form-control::placeholder { color: var(--cms-text-faint); }
+
+/* Cards and modals adopt the dark surface palette */
+[data-cms-theme="linear"] .card,
+[data-cms-theme="linear"] .modal-content { background: var(--cms-surface); color: var(--cms-text); }
+[data-cms-theme="linear"] .card-header,
+[data-cms-theme="linear"] .card-footer { background: var(--cms-surface-2); }
+
+/* Toolbar / palette / kbd surface in dark */
+[data-cms-theme="linear"] .cms-cmdk-panel { background: var(--cms-surface); border-color: var(--cms-border); }
+[data-cms-theme="linear"] kbd,
+[data-cms-theme="linear"] .cms-kbd {
+  background: var(--cms-surface-2);
+  color: var(--cms-text);
+  border-color: var(--cms-border-strong);
+  box-shadow: 0 1px 0 var(--cms-border-strong);
+}
+
+/* Navbar — keep it dark too, with white text */
+[data-cms-theme="linear"] .navbar.bg-primary,
+[data-cms-theme="linear"] .navbar.navbar-dark {
+  background: var(--cms-surface) !important;
+  border-bottom-color: var(--cms-border);
+}

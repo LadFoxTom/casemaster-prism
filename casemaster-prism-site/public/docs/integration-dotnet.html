@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>.NET runtime integration · casemaster-prism docs</title>
+<meta name="description" content=".NET runtime integration — casemaster-prism docs">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#2563eb">
+<meta property="og:title" content="casemaster-prism">
+<meta property="og:description" content="Drop-in design system for CaseMaster apps.">
+<meta property="og:image" content="../assets/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="../assets/og-card.png">
+<link rel="stylesheet" href="assets/docs.css">
+</head>
+<body>
+<div id="gnav-host" data-root="../"></div>
+
+<main class="docs-content">
+    <p class="docs-breadcrumb"><a href="../">Home</a> &nbsp;/&nbsp; <a href="index.html">Docs</a> &nbsp;/&nbsp; .NET runtime integration</p>
+
+    <h1>.NET runtime integration</h1>
+    <p class="docs-lead">Vendoring or CDN, app.css / app.js hooks, dark mode, RTL, Select2 coexistence.</p>
+
+    <p>The .NET runtime ships an HTML shell that always loads <code>static/css/app.css</code> and <code>static/js/app.js</code> at the bottom of every page. App authors hook in through those two files; we never patch the framework.</p>
+
+    <h2 id='vendor'>Recommended: vendored static files</h2>
+    <p>Survives <code>git pull</code> of the framework. Works offline. Pinned versions.</p>
+    <h3 id='vendor-drop'>1. Drop the bundle</h3>
+<pre><code># PowerShell — adjust the runtime root path for your install
+$src  = "$env:USERPROFILE\.prism-src\node_modules\casemaster-prism\dist"
+$dst  = "C:\Casemaster-WMS\runtime\static\lib\prism"
+Remove-Item $dst -Recurse -Force -ErrorAction SilentlyContinue
+New-Item   $dst -ItemType Directory | Out-Null
+Copy-Item  "$src\*" $dst -Recurse</code></pre>
+    <p>Or vendor the files directly into your app repo once and check them in — they're stable across patch versions.</p>
+
+    <h3 id='vendor-css'>2. <code>static/css/app.css</code></h3>
+<pre><code>/* App-wide overrides above; everything below is owned by prism. */
+@import url('/static/lib/prism/prism.min.css');
+
+/* Per-app brand override */
+:root { --cms-primary: #0ea5e9; }</code></pre>
+
+    <h3 id='vendor-js'>3. <code>static/js/app.js</code></h3>
+<pre><code>(function () {
+  window.cmsUi = window.cmsUi || {};
+
+  var s = document.createElement('script');
+  s.type = 'module';
+  s.src = '/static/lib/prism/prism.js';
+  document.body.appendChild(s);
+})();</code></pre>
+
+    <h2 id='cdn'>Alternative: CDN reference</h2>
+    <p>Simpler for prototypes; needs outbound HTTPS at request time.</p>
+<pre><code>/* app.css */
+@import url('https://cdn.jsdelivr.net/npm/casemaster-prism@1/dist/prism.min.css');</code></pre>
+<pre><code>// app.js
+const s = document.createElement('script');
+s.type = 'module';
+s.src = 'https://cdn.jsdelivr.net/npm/casemaster-prism@1/dist/prism.js';
+document.body.appendChild(s);</code></pre>
+
+    <h2 id='preset'>Apply a preset theme</h2>
+    <p>The shell is owned by the framework. Set the attribute from <code>app.js</code>:</p>
+<pre><code>document.documentElement.setAttribute('data-cms-theme', 'tabler');
+document.documentElement.setAttribute('data-cms-density', 'comfortable');</code></pre>
+
+    <h2 id='select2'>Coexistence with Select2</h2>
+    <p>The .NET runtime loads scripts in this order:</p>
+<pre><code>jquery.min.js
+select2.min.js
+bootstrap.bundle.min.js
+cm.js
+app.js                ← prism hooks in here</code></pre>
+    <p>By the time prism runs, Select2 has already wrapped its targets and added <code>.select2-hidden-accessible</code> to the underlying <code>&lt;select&gt;</code>. Our forms enhancer skips those — Select2's UX wins. No <code>cm.js</code> collisions because we use <code>data-cms-enhanced</code> flags to mark our work.</p>
+
+    <div class="docs-footer-nav"><a href="./configuration.html"><small>← Previous</small>Configuration</a><a class="next" href="./integration-vercel.html"><small>Next →</small>cms-vercel integration</a></div>
+  </main>
+
+<script>
+  // Inject the sidebar HTML manually (relative path differs per depth)
+  (function () {
+    fetch('_sidebar.html').then((r) => r.text()).then((h) => {
+      const host = document.getElementById('docs-sidebar-host');
+      if (!host) return;
+      host.innerHTML = h;
+      const here = location.pathname.split('/').pop();
+      host.querySelectorAll('a[href]').forEach((a) => {
+        const t = a.getAttribute('href').split('/').pop();
+        if (t === here) a.classList.add('is-current');
+      });
+      const search = host.querySelector('.docs-search');
+      if (search) search.addEventListener('input', () => {
+        const q = search.value.trim().toLowerCase();
+        host.querySelectorAll('.docs-nav a').forEach((a) => {
+          a.classList.toggle('is-hidden', !!q && !a.textContent.toLowerCase().includes(q));
+        });
+      });
+    });
+  })();
+</script>
+<script src="assets/docs.js"></script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>

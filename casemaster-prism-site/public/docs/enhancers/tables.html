@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Tables · casemaster-prism docs</title>
+<meta name="description" content="Tables — casemaster-prism docs">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#2563eb">
+<meta property="og:title" content="casemaster-prism">
+<meta property="og:description" content="Drop-in design system for CaseMaster apps.">
+<meta property="og:image" content="../../assets/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="../../assets/og-card.png">
+<link rel="stylesheet" href="../assets/docs.css">
+</head>
+<body>
+<div id="gnav-host" data-root="../../"></div>
+
+<main class="docs-content">
+    <p class="docs-breadcrumb"><a href="../../">Home</a> &nbsp;/&nbsp; <a href="../index.html">Docs</a> &nbsp;/&nbsp; Enhancers &nbsp;/&nbsp; Tables</p>
+
+    <h1>Tables</h1>
+    <p class="docs-lead">Sortable headers, filter input, CSV export, column toggle, sticky thead. Auto-detected on every BS4 striped table.</p>
+
+    <h2 id='target'>What gets enhanced</h2>
+    <p>Any <code>&lt;table&gt;</code> that matches:</p>
+<pre><code>table.cms-table,
+table.table.table-striped,
+table.table.table-bordered</code></pre>
+    <p>…and is not opted out via <code>data-cms-no-enhance</code> and has at least <code>minRowsToEnhance</code> rows (default 2).</p>
+
+    <h2 id='added'>What we add</h2>
+    <ul>
+      <li>Toolbar above the table: filter input, Columns dropdown, CSV button, row counter.</li>
+      <li><code>data-cms-sortable</code> on every header that doesn't carry <code>data-cms-no-sort</code>.</li>
+      <li><code>data-cms-sort="asc|desc"</code> on the actively sorted column (CSS draws the arrow).</li>
+      <li><code>data-cms-numeric="1"</code> on detected numeric columns (right-aligned, tabular-nums).</li>
+      <li>Empty-state row when the filter has zero matches.</li>
+    </ul>
+
+    <h2 id='opt-out'>Opting out</h2>
+<pre><code>&lt;table class='table table-striped' data-cms-no-enhance&gt;
+  &lt;!-- this table won't get the toolbar --&gt;
+&lt;/table&gt;
+
+&lt;th data-cms-no-sort&gt;Actions&lt;/th&gt;
+&lt;!-- this column won't be sortable --&gt;</code></pre>
+
+    <h2 id='config'>Config</h2>
+<pre><code>window.cmsUi = {
+  tables: {
+    search:           true,
+    sort:             true,
+    csvExport:        true,
+    columnToggle:     true,
+    minRowsToEnhance: 2,
+  },
+};</code></pre>
+
+    <div class="docs-footer-nav"><a href="../variants.html"><small>← Previous</small>Variants</a><a class="next" href="./forms.html"><small>Next →</small>Forms</a></div>
+  </main>
+
+<script>
+  // Inject the sidebar HTML manually (relative path differs per depth)
+  (function () {
+    fetch('../_sidebar.html').then((r) => r.text()).then((h) => {
+      const host = document.getElementById('docs-sidebar-host');
+      if (!host) return;
+      host.innerHTML = h;
+      const here = location.pathname.split('/').pop();
+      host.querySelectorAll('a[href]').forEach((a) => {
+        const t = a.getAttribute('href').split('/').pop();
+        if (t === here) a.classList.add('is-current');
+      });
+      const search = host.querySelector('.docs-search');
+      if (search) search.addEventListener('input', () => {
+        const q = search.value.trim().toLowerCase();
+        host.querySelectorAll('.docs-nav a').forEach((a) => {
+          a.classList.toggle('is-hidden', !!q && !a.textContent.toLowerCase().includes(q));
+        });
+      });
+    });
+  })();
+</script>
+<script src="../assets/docs.js"></script>
+<script src="../../assets/nav.js"></script>
+</body>
+</html>

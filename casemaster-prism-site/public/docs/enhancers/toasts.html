@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Toasts · casemaster-prism docs</title>
+<meta name="description" content="Toasts — casemaster-prism docs">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#2563eb">
+<meta property="og:title" content="casemaster-prism">
+<meta property="og:description" content="Drop-in design system for CaseMaster apps.">
+<meta property="og:image" content="../../assets/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="../../assets/og-card.png">
+<link rel="stylesheet" href="../assets/docs.css">
+</head>
+<body>
+<div id="gnav-host" data-root="../../"></div>
+
+<main class="docs-content">
+    <p class="docs-breadcrumb"><a href="../../">Home</a> &nbsp;/&nbsp; <a href="../index.html">Docs</a> &nbsp;/&nbsp; Enhancers &nbsp;/&nbsp; Toasts</p>
+
+    <h1>Toasts</h1>
+    <p class="docs-lead">Pop-up status messages from server headers, meta tags, custom events, or direct API.</p>
+
+    <h2 id='triggers'>Triggers</h2>
+    <ul>
+      <li><strong>Server response header:</strong> <code>X-Cms-Toast: {"kind":"success","message":"Saved"}</code> via the <code>cmsFetch</code> helper.</li>
+      <li><strong>Meta tag</strong> on initial render (the runtime emits it on POST/redirect):
+<pre><code>&lt;meta name="cms-toast" content='{"kind":"success","message":"Saved"}'&gt;</code></pre></li>
+      <li><strong>Custom event</strong> from anywhere on the page:
+<pre><code>window.dispatchEvent(new CustomEvent('cms-toast', {
+  detail: { kind: 'warning', title: 'Watch', message: 'Low stock' }
+}));</code></pre></li>
+      <li><strong>Direct API:</strong>
+<pre><code>import { showToast } from 'casemaster-prism';
+showToast({ kind: 'success', message: 'Saved' });</code></pre></li>
+    </ul>
+
+    <h2 id='kinds'>Kinds</h2>
+    <p><code>info</code> · <code>success</code> · <code>warning</code> · <code>danger</code> (alias <code>error</code>).</p>
+
+    <h2 id='dismiss'>Auto-dismiss</h2>
+    <p>Toasts auto-dismiss after 5 s by default. Override:</p>
+<pre><code>showToast({
+  kind: 'info',
+  message: 'Sticky',
+  autoDismiss: false,   // requires user click
+});
+
+showToast({
+  kind: 'info',
+  message: 'Two seconds',
+  durationMs: 2000,
+});</code></pre>
+
+    <div class="docs-footer-nav"><a href="./loading.html"><small>← Previous</small>Loading bar</a><a class="next" href="./shortcuts.html"><small>Next →</small>Keyboard shortcuts</a></div>
+  </main>
+
+<script>
+  // Inject the sidebar HTML manually (relative path differs per depth)
+  (function () {
+    fetch('../_sidebar.html').then((r) => r.text()).then((h) => {
+      const host = document.getElementById('docs-sidebar-host');
+      if (!host) return;
+      host.innerHTML = h;
+      const here = location.pathname.split('/').pop();
+      host.querySelectorAll('a[href]').forEach((a) => {
+        const t = a.getAttribute('href').split('/').pop();
+        if (t === here) a.classList.add('is-current');
+      });
+      const search = host.querySelector('.docs-search');
+      if (search) search.addEventListener('input', () => {
+        const q = search.value.trim().toLowerCase();
+        host.querySelectorAll('.docs-nav a').forEach((a) => {
+          a.classList.toggle('is-hidden', !!q && !a.textContent.toLowerCase().includes(q));
+        });
+      });
+    });
+  })();
+</script>
+<script src="../assets/docs.js"></script>
+<script src="../../assets/nav.js"></script>
+</body>
+</html>

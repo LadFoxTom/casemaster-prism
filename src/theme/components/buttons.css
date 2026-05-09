@@ -1,0 +1,138 @@
+/* Buttons — modernise BS4 .btn variants */
+
+.btn {
+  font-family: inherit;
+  font-size: var(--cms-text-sm);
+  font-weight: 500;
+  border-radius: var(--cms-radius);
+  padding: 0.45rem 1rem;
+  height: var(--cms-control-h);
+  line-height: 1.2;
+  border: 1px solid transparent;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition:
+    background var(--cms-dur) var(--cms-ease),
+    border-color var(--cms-dur) var(--cms-ease),
+    color var(--cms-dur) var(--cms-ease),
+    box-shadow var(--cms-dur) var(--cms-ease),
+    transform var(--cms-dur) var(--cms-ease);
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.btn:disabled,
+.btn.disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  pointer-events: auto;
+}
+
+.btn-sm { height: var(--cms-control-h-sm); padding: 0.25rem 0.7rem; font-size: var(--cms-text-xs); }
+.btn-lg { height: var(--cms-control-h-lg); padding: 0.6rem 1.4rem; font-size: var(--cms-text-md); }
+
+/* Primary */
+.btn-primary {
+  background: var(--cms-primary);
+  border-color: var(--cms-primary);
+  color: #fff;
+  box-shadow: var(--cms-shadow-xs);
+}
+.btn-primary:hover:not(:disabled) {
+  background: var(--cms-primary-hover);
+  border-color: var(--cms-primary-hover);
+  color: #fff;
+}
+.btn-primary:active:not(:disabled),
+.btn-primary:focus {
+  background: var(--cms-primary-active) !important;
+  border-color: var(--cms-primary-active) !important;
+  color: #fff !important;
+  box-shadow: var(--cms-shadow-focus) !important;
+}
+
+/* Secondary (outlined neutral) */
+.btn-secondary,
+.btn-outline-secondary {
+  background: var(--cms-surface);
+  border-color: var(--cms-border-strong);
+  color: var(--cms-text);
+}
+.btn-secondary:hover:not(:disabled),
+.btn-outline-secondary:hover:not(:disabled) {
+  background: var(--cms-surface-hover);
+  border-color: var(--cms-text-faint);
+  color: var(--cms-text);
+}
+
+/* Outlines */
+.btn-outline-primary {
+  background: transparent;
+  border-color: var(--cms-primary);
+  color: var(--cms-primary);
+}
+.btn-outline-primary:hover:not(:disabled) {
+  background: var(--cms-primary-fade);
+  color: var(--cms-primary-hover);
+  border-color: var(--cms-primary-hover);
+}
+
+/* Status variants */
+.btn-success { background: var(--cms-success); border-color: var(--cms-success); color: #fff; }
+.btn-success:hover:not(:disabled) { background: #15803d; border-color: #15803d; color: #fff; }
+.btn-danger  { background: var(--cms-danger); border-color: var(--cms-danger); color: #fff; }
+.btn-danger:hover:not(:disabled)  { background: #b91c1c; border-color: #b91c1c; color: #fff; }
+.btn-warning { background: var(--cms-warning); border-color: var(--cms-warning); color: #1f2937; }
+.btn-warning:hover:not(:disabled) { background: #d97706; border-color: #d97706; color: #fff; }
+.btn-info    { background: var(--cms-info); border-color: var(--cms-info); color: #fff; }
+
+/* Link variant */
+.btn-link {
+  color: var(--cms-link);
+  background: transparent;
+  border-color: transparent;
+  padding: 0.45rem 0.5rem;
+}
+.btn-link:hover { color: var(--cms-primary-hover); text-decoration: underline; }
+
+/* Loading state — set by enhancers/loading.ts on submit buttons */
+.btn[aria-busy="true"] {
+  position: relative;
+  pointer-events: none;
+  color: transparent !important;
+}
+.btn[aria-busy="true"]::after {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  top: 50%;
+  left: 50%;
+  margin: -7px 0 0 -7px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: cms-spin 0.7s linear infinite;
+  color: #fff;
+}
+
+@keyframes cms-spin { to { transform: rotate(360deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .btn[aria-busy="true"]::after { animation: none !important; }
+}
+
+/* Icon-only square button */
+.btn-icon {
+  width: var(--cms-control-h);
+  height: var(--cms-control-h);
+  padding: 0;
+  justify-content: center;
+}
+.btn-icon.btn-sm { width: var(--cms-control-h-sm); height: var(--cms-control-h-sm); }

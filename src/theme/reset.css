@@ -1,0 +1,94 @@
+/* @casemaster/ui — minimal reset on top of Bootstrap 4.
+ * Fixes only the most jarring 2017-isms; everything else stays BS4-native.
+ */
+
+html {
+  font-family: var(--cms-font);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background: var(--cms-bg);
+  color: var(--cms-text);
+  font-family: var(--cms-font);
+  font-size: var(--cms-text-sm);
+  line-height: 1.5;
+  margin: 0;
+}
+
+a {
+  color: var(--cms-link);
+  text-decoration: none;
+  transition: color var(--cms-dur) var(--cms-ease);
+}
+
+a:hover {
+  color: var(--cms-primary-hover);
+  text-decoration: underline;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--cms-text);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+code, kbd, samp, pre {
+  font-family: var(--cms-font-mono);
+  font-size: 0.9em;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--cms-border);
+}
+
+::selection {
+  background: var(--cms-primary-fade);
+  color: var(--cms-text);
+}
+
+/* Scrollbar polish (Webkit + Firefox) */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--cms-border-strong) transparent;
+}
+
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-track { background: transparent; }
+*::-webkit-scrollbar-thumb {
+  background: var(--cms-border-strong);
+  border-radius: 999px;
+  border: 2px solid var(--cms-bg);
+}
+*::-webkit-scrollbar-thumb:hover { background: var(--cms-text-muted); }
+
+/* Focus rings (consistent across the package) */
+*:focus-visible {
+  outline: 2px solid var(--cms-primary);
+  outline-offset: 2px;
+  border-radius: var(--cms-radius-sm);
+}
+
+/* BS4 disables outline on .focus / :focus inputs — restore it */
+.form-control:focus,
+.btn:focus,
+.custom-select:focus {
+  box-shadow: var(--cms-shadow-focus) !important;
+  border-color: var(--cms-primary) !important;
+}
+
+/* Bootstrap 4 hardcodes color: #212529 on .table, .modal-content, and a
+ * few others — that breaks dark-theme presets (Linear, dark-mode, etc.).
+ * Re-route everything through the --cms-text token so themes apply. */
+.table,
+.table th,
+.table td,
+.modal-content,
+.dropdown-menu,
+.popover-body { color: var(--cms-text); }
+.text-muted { color: var(--cms-text-muted) !important; }
+.text-dark  { color: var(--cms-text) !important; }
+.text-light { color: var(--cms-text) !important; }

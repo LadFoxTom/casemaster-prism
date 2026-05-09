@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>cms-ui sandbox</title>
+
+<!-- Load the same Bootstrap 4 + Font Awesome stack both runtimes ship. -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<!-- cms-ui assets are appended at runtime when ?ui=1 — see boot script below. -->
+
+<style>
+  body { margin: 0; padding: 1.25rem; }
+  /* Hide overflow chrome that would distract from the demo */
+  .scroll-x { overflow-x: auto; }
+</style>
+</head>
+<body data-cms-no-enhance-init="">
+
+<!-- ─────────────────────── DEMO TEMPLATES ─────────────────────────── -->
+<!-- Each template is identical markup that BOTH the "before" and "after"
+     iframes render. The only difference is whether cms-ui is loaded.    -->
+
+<template id="demo-table">
+  <div class="container">
+    <h6 class="text-muted text-uppercase small">Inventory items</h6>
+    <table class='table table-sm table-striped table-bordered'>
+      <thead class='bg-primary text-light'>
+        <tr><th>SKU</th><th>Name</th><th>Qty</th><th>Updated</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>A-100</td><td>Widget</td><td class='text-right'>120</td><td>2026-05-04</td><td><span class="badge badge-success">In stock</span></td></tr>
+        <tr><td>A-101</td><td>Gadget</td><td class='text-right'>40</td><td>2026-05-06</td><td><span class="badge badge-success">In stock</span></td></tr>
+        <tr><td>B-220</td><td>Sprocket</td><td class='text-right'>1,400</td><td>2026-05-07</td><td><span class="badge badge-success">In stock</span></td></tr>
+        <tr><td>B-221</td><td>Cog</td><td class='text-right'>3</td><td>2026-05-08</td><td><span class="badge badge-warning">Low</span></td></tr>
+        <tr><td>C-330</td><td>Bracket</td><td class='text-right'>200</td><td>2026-04-30</td><td><span class="badge badge-success">In stock</span></td></tr>
+        <tr><td>C-331</td><td>Bolt M8</td><td class='text-right'>0</td><td>2026-04-22</td><td><span class="badge badge-danger">Out</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</template>
+
+<template id="demo-form">
+  <div class="container" style="max-width:540px">
+    <form>
+      <div class="form-group">
+        <label>SKU</label>
+        <input type="text" class="form-control" value="A-100">
+        <small class="form-text">Internal stock-keeping unit. Must be unique.</small>
+      </div>
+      <div class="form-group">
+        <label>Warehouse</label>
+        <select class="form-control" data-cms-search>
+          <option>Main Distribution Centre</option>
+          <option>North Hub</option>
+          <option>South Hub</option>
+          <option>East Annex</option>
+          <option>West Annex</option>
+          <option>Reserve</option>
+          <option>Returns Holding</option>
+          <option>QA Quarantine</option>
+          <option>Bulk Outdoor</option>
+          <option>Pharmaceutical Vault</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Available from</label>
+        <input type="date" class="form-control" value="2026-05-08">
+      </div>
+      <div class="form-group">
+        <label>Notes</label>
+        <textarea class="form-control" rows="3">Pre-pack ready, requires cold chain handling.</textarea>
+      </div>
+      <button class="btn btn-primary" type="button">Save changes</button>
+      <button class="btn btn-secondary" type="button">Cancel</button>
+    </form>
+  </div>
+</template>
+
+<template id="demo-buttons">
+  <div class="container">
+    <div class="mb-3 d-flex flex-wrap" style="gap:.4rem">
+      <button class="btn btn-primary"           type="button">Primary</button>
+      <button class="btn btn-secondary"         type="button">Secondary</button>
+      <button class="btn btn-outline-primary"   type="button">Outline</button>
+      <button class="btn btn-success"           type="button">Success</button>
+      <button class="btn btn-warning"           type="button">Warning</button>
+      <button class="btn btn-danger"            type="button">Danger</button>
+      <button class="btn btn-link"              type="button">Link</button>
+    </div>
+    <div class="mb-3 d-flex align-items-center" style="gap:.4rem">
+      <button class="btn btn-primary btn-sm"    type="button">Small</button>
+      <button class="btn btn-primary"           type="button">Default</button>
+      <button class="btn btn-primary btn-lg"    type="button">Large</button>
+      <button class="btn btn-primary"           type="button" disabled>Disabled</button>
+    </div>
+  </div>
+</template>
+
+<template id="demo-cards">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 mb-3">
+        <!-- card-body around the stat content keeps BS4 baseline padding
+             when cms-ui isn't loaded; cms-stat-card layers on top. -->
+        <div class="card cms-stat-card">
+          <div class="card-body">
+            <div class="cms-stat-label">Open POs</div>
+            <div class="cms-stat-value">142</div>
+            <div class="cms-stat-trend up">↑ 12 % week-on-week</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-3">
+        <div class="card cms-stat-card">
+          <div class="card-body">
+            <div class="cms-stat-label">Backorders</div>
+            <div class="cms-stat-value">7</div>
+            <div class="cms-stat-trend down">↓ 3 from yesterday</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-3">
+        <div class="card">
+          <div class="card-header">Latest receipt</div>
+          <div class="card-body">
+            <h5 class="card-title">RCV-2026-0428</h5>
+            <p class="card-text text-muted">12 lines · 3 partial · zero rejected</p>
+            <a href="#" class="btn btn-outline-primary btn-sm">Inspect</a>
+          </div>
+          <div class="card-footer">Updated 2 minutes ago</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template id="demo-alerts">
+  <div class="container">
+    <div class="alert alert-primary"><strong>Heads-up.</strong> A new replenishment wave is being planned.</div>
+    <div class="alert alert-success"><strong>Saved.</strong> Inventory adjustment posted with reference ADJ-2026-0419.</div>
+    <div class="alert alert-warning"><strong>Watch this.</strong> Two items are below safety stock.</div>
+    <div class="alert alert-danger"><strong>Failed.</strong> Picker connection lost — retrying in 30 s.</div>
+  </div>
+</template>
+
+<template id="demo-badges">
+  <div class="container">
+    <p class="d-flex flex-wrap" style="gap:.4rem">
+      <span class="badge badge-primary">Primary</span>
+      <span class="badge badge-secondary">Secondary</span>
+      <span class="badge badge-success">Success</span>
+      <span class="badge badge-warning">Warning</span>
+      <span class="badge badge-danger">Danger</span>
+      <span class="badge badge-info">Info</span>
+      <span class="badge badge-light">Light</span>
+      <span class="badge badge-dark">Dark</span>
+    </p>
+    <p class="d-flex align-items-center flex-wrap" style="gap:.6rem">
+      <span><span class="cms-status-dot is-online"></span> Online — 47</span>
+      <span><span class="cms-status-dot is-warning"></span> Throttled — 3</span>
+      <span><span class="cms-status-dot is-offline"></span> Offline — 1</span>
+    </p>
+  </div>
+</template>
+
+<template id="demo-pagination">
+  <div class="container">
+    <nav>
+      <ul class="pagination">
+        <li class="page-item disabled"><a class="page-link" href="#">«</a></li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item active"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">4</a></li>
+        <li class="page-item"><a class="page-link" href="#">5</a></li>
+        <li class="page-item"><a class="page-link" href="#">»</a></li>
+      </ul>
+    </nav>
+  </div>
+</template>
+
+<template id="demo-toolbar-table">
+  <!-- Bigger table to exercise the enhancer-driven toolbar -->
+  <div class="container">
+    <table class='table table-sm table-striped table-bordered'>
+      <thead class='bg-primary text-light'>
+        <tr><th>Order</th><th>Customer</th><th>Items</th><th>Total</th><th>Status</th><th>Created</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>SO-1043</td><td>Acme Logistics</td><td class='text-right'>12</td><td class='text-right'>$1,248.00</td><td>Released</td><td>2026-05-08</td></tr>
+        <tr><td>SO-1042</td><td>Northwind Bio</td><td class='text-right'>4</td><td class='text-right'>$832.50</td><td>Allocated</td><td>2026-05-08</td></tr>
+        <tr><td>SO-1041</td><td>Brindle Industries</td><td class='text-right'>1</td><td class='text-right'>$95.00</td><td>Validated</td><td>2026-05-07</td></tr>
+        <tr><td>SO-1040</td><td>Cresta Foods</td><td class='text-right'>20</td><td class='text-right'>$3,420.00</td><td>In Picking</td><td>2026-05-07</td></tr>
+        <tr><td>SO-1039</td><td>Lakeshore Hardware</td><td class='text-right'>8</td><td class='text-right'>$564.00</td><td>Released</td><td>2026-05-06</td></tr>
+        <tr><td>SO-1038</td><td>Acme Logistics</td><td class='text-right'>2</td><td class='text-right'>$310.00</td><td>Imported</td><td>2026-05-06</td></tr>
+        <tr><td>SO-1037</td><td>Halifax Components</td><td class='text-right'>14</td><td class='text-right'>$1,890.00</td><td>Allocated</td><td>2026-05-05</td></tr>
+        <tr><td>SO-1036</td><td>Petersen &amp; Sons</td><td class='text-right'>6</td><td class='text-right'>$721.00</td><td>Validated</td><td>2026-05-05</td></tr>
+      </tbody>
+    </table>
+  </div>
+</template>
+
+<template id="demo-toasts">
+  <div class="container">
+    <p class="text-muted small mb-3">Click a button to fire a toast — the cms-ui frame shows the styled version, the bare frame just logs to the console.</p>
+    <div class="d-flex flex-wrap" style="gap:.4rem">
+      <button class="btn btn-success btn-sm" type="button" data-fire-toast='{"kind":"success","title":"Saved","message":"Inventory ADJ-2026-0419 posted."}'>Success</button>
+      <button class="btn btn-info    btn-sm" type="button" data-fire-toast='{"kind":"info","title":"Heads-up","message":"Replen wave queued."}'>Info</button>
+      <button class="btn btn-warning btn-sm" type="button" data-fire-toast='{"kind":"warning","title":"Low stock","message":"SKU B-221 below safety stock."}'>Warning</button>
+      <button class="btn btn-danger  btn-sm" type="button" data-fire-toast='{"kind":"danger","title":"Picker offline","message":"Retrying in 30 s."}'>Danger</button>
+    </div>
+    <script>
+      document.addEventListener('click', (ev) => {
+        const t = ev.target.closest('[data-fire-toast]');
+        if (!t) return;
+        const data = JSON.parse(t.dataset.fireToast);
+        window.dispatchEvent(new CustomEvent('cms-toast', { detail: data }));
+        if (!window.cmsUi) console.log('[no cms-ui] would toast →', data);
+      });
+    </script>
+  </div>
+</template>
+
+<template id="demo-confirm">
+  <div class="container">
+    <p class="text-muted small mb-3">The "Delete" links carry <code>data-cms-confirm</code>. With cms-ui they intercept the click and show a styled modal; without, they just navigate.</p>
+    <p>
+      <a href="javascript:alert('proceed!')" class="btn btn-danger btn-sm" data-cms-confirm="Delete inventory record A-100? This cannot be undone.">Delete A-100</a>
+      <a href="javascript:alert('proceed!')" class="btn btn-outline-danger btn-sm" data-cms-confirm="Cancel pending receipt RCV-2026-0428?">Cancel receipt</a>
+    </p>
+  </div>
+</template>
+
+<template id="demo-cmdk">
+  <div class="container">
+    <p class="text-muted small mb-3">Press <kbd>Cmd</kbd>+<kbd>K</kbd> (or <kbd>Ctrl</kbd>+<kbd>K</kbd>) inside this frame. Without cms-ui the keystroke is inert; with cms-ui a Linear-style palette opens harvested from the visible nav links.</p>
+    <ul class="cms-sidebar nav flex-column" style="max-width:240px">
+      <li class="nav-item"><a class="nav-link active" href="#"><i class="fas fa-home"></i> Dashboard</a></li>
+      <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-boxes"></i> Inventory</a></li>
+      <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-arrow-down"></i> Inbound</a></li>
+      <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-arrow-up"></i> Outbound</a></li>
+      <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-undo"></i> Returns</a></li>
+      <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-cog"></i> Settings</a></li>
+    </ul>
+  </div>
+</template>
+
+<template id="demo-variants-buttons">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;align-items:center">
+      <div><span class="text-muted small">Solid</span></div>
+      <div class="d-flex flex-wrap" style="gap:.4rem">
+        <button class="btn btn-primary" type="button">Primary</button>
+        <button class="btn btn-success" type="button">Success</button>
+        <button class="btn btn-danger" type="button">Danger</button>
+      </div>
+
+      <div><span class="text-muted small">Soft (<code>btn-soft-*</code>)</span></div>
+      <div class="d-flex flex-wrap" style="gap:.4rem">
+        <button class="btn btn-soft-primary" type="button">Primary</button>
+        <button class="btn btn-soft-success" type="button">Success</button>
+        <button class="btn btn-soft-danger" type="button">Danger</button>
+      </div>
+
+      <div><span class="text-muted small">Ghost (<code>btn-ghost-*</code>)</span></div>
+      <div class="d-flex flex-wrap" style="gap:.4rem">
+        <button class="btn btn-ghost-primary" type="button">Primary</button>
+        <button class="btn btn-ghost-success" type="button">Success</button>
+        <button class="btn btn-ghost-danger" type="button">Danger</button>
+      </div>
+
+      <div><span class="text-muted small">Pill (<code>btn-pill</code>)</span></div>
+      <div class="d-flex flex-wrap" style="gap:.4rem">
+        <button class="btn btn-primary btn-pill" type="button">Primary</button>
+        <button class="btn btn-soft-primary btn-pill" type="button">Soft</button>
+        <button class="btn btn-outline-primary btn-pill" type="button">Outline</button>
+      </div>
+
+      <div><span class="text-muted small">Icon-only (<code>btn-icon-only</code>)</span></div>
+      <div class="d-flex flex-wrap" style="gap:.4rem">
+        <button class="btn btn-primary btn-icon-only" type="button" aria-label="Search"><i class="fas fa-search"></i></button>
+        <button class="btn btn-soft-primary btn-icon-only" type="button" aria-label="Filter"><i class="fas fa-filter"></i></button>
+        <button class="btn btn-ghost btn-icon-only" type="button" aria-label="Settings"><i class="fas fa-cog"></i></button>
+        <button class="btn btn-soft-danger btn-icon-only" type="button" aria-label="Delete"><i class="fas fa-trash"></i></button>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template id="demo-variants-tables">
+  <div class="container">
+    <p class="text-muted small mb-1"><code>cms-table-compact</code></p>
+    <table class='table table-sm table-striped table-bordered cms-table-compact mb-3'>
+      <thead class='bg-primary text-light'><tr><th>SKU</th><th>Name</th><th>Qty</th></tr></thead>
+      <tbody>
+        <tr><td>A-100</td><td>Widget</td><td class='text-right'>120</td></tr>
+        <tr><td>A-101</td><td>Gadget</td><td class='text-right'>40</td></tr>
+        <tr><td>B-220</td><td>Sprocket</td><td class='text-right'>1,400</td></tr>
+      </tbody>
+    </table>
+
+    <p class="text-muted small mb-1"><code>cms-table-comfortable</code></p>
+    <table class='table table-sm table-striped table-bordered cms-table-comfortable mb-3'>
+      <thead class='bg-primary text-light'><tr><th>SKU</th><th>Name</th><th>Qty</th></tr></thead>
+      <tbody>
+        <tr><td>A-100</td><td>Widget</td><td class='text-right'>120</td></tr>
+        <tr><td>A-101</td><td>Gadget</td><td class='text-right'>40</td></tr>
+        <tr><td>B-220</td><td>Sprocket</td><td class='text-right'>1,400</td></tr>
+      </tbody>
+    </table>
+
+    <p class="text-muted small mb-1"><code>cms-table-elevated</code></p>
+    <table class='table table-sm table-striped table-bordered cms-table-elevated mb-3'>
+      <thead class='bg-primary text-light'><tr><th>SKU</th><th>Name</th><th>Qty</th></tr></thead>
+      <tbody>
+        <tr><td>A-100</td><td>Widget</td><td class='text-right'>120</td></tr>
+        <tr><td>A-101</td><td>Gadget</td><td class='text-right'>40</td></tr>
+      </tbody>
+    </table>
+  </div>
+</template>
+
+<template id="demo-variants-cards">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 mb-3">
+        <p class="text-muted small mb-1"><code>cms-card-elevated</code></p>
+        <div class="card cms-card-elevated">
+          <div class="card-body">
+            <div class="card-title">Settlement run</div>
+            <p class="text-muted mb-0">Posts 142 events to ledger.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-3">
+        <p class="text-muted small mb-1"><code>cms-card-outlined</code></p>
+        <div class="card cms-card-outlined">
+          <div class="card-body">
+            <div class="card-title">Compliance review</div>
+            <p class="text-muted mb-0">Q2 audit checklist · 3 of 12 done.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-3">
+        <p class="text-muted small mb-1"><code>cms-card-status-warning</code></p>
+        <div class="card cms-card-status-warning">
+          <div class="card-body">
+            <div class="card-title">Backorder spike</div>
+            <p class="text-muted mb-0">Watch list: 7 items.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template id="demo-variants-alerts">
+  <div class="container">
+    <div class="alert alert-success cms-alert-subtle">
+      <strong>Soft notice.</strong> Inventory adjustment posted with reference ADJ-2026-0419.
+    </div>
+    <div class="alert alert-warning cms-alert-subtle">
+      <strong>Watch.</strong> Two items below safety stock.
+    </div>
+    <div class="alert alert-danger cms-alert-soft">
+      <strong>Soft-bg variant.</strong> Picker connection lost — retrying.
+    </div>
+  </div>
+</template>
+
+<template id="demo-variants-inputs">
+  <div class="container" style="max-width:480px">
+    <div class="form-group">
+      <label>Default</label>
+      <input class="form-control" value="A-100">
+    </div>
+    <div class="form-group">
+      <label>Filled (<code>cms-input-filled</code>)</label>
+      <input class="form-control cms-input-filled" value="A-100">
+    </div>
+    <div class="form-group">
+      <label>Underlined (<code>cms-input-underlined</code>)</label>
+      <input class="form-control cms-input-underlined" value="A-100">
+    </div>
+  </div>
+</template>
+
+<template id="demo-inline-edit">
+  <div class="container">
+    <p class="text-muted small mb-3">Click any cell with a dashed underline. Without cms-ui it does nothing; with cms-ui you get an inline editor that PATCHes back to a mock URL.</p>
+    <table class='table table-sm table-striped table-bordered'>
+      <thead class='bg-primary text-light'>
+        <tr><th>SKU</th><th>Name</th><th>Qty</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>A-100</td>
+          <td data-cms-inline-edit data-cms-edit-field="name" data-cms-edit-url="javascript:void(0)">Widget</td>
+          <td data-cms-inline-edit data-cms-edit-field="qty"  data-cms-edit-type="number" data-cms-edit-url="javascript:void(0)">120</td>
+        </tr>
+        <tr>
+          <td>A-101</td>
+          <td data-cms-inline-edit data-cms-edit-field="name" data-cms-edit-url="javascript:void(0)">Gadget</td>
+          <td data-cms-inline-edit data-cms-edit-field="qty"  data-cms-edit-type="number" data-cms-edit-url="javascript:void(0)">40</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</template>
+
+<!-- ─────────────────────── BOOT ─────────────────────────── -->
+<script>
+  (function () {
+    const params  = new URLSearchParams(location.search);
+    const demo    = params.get('demo')    || 'table';
+    const ui      = params.get('ui') === '1';
+    const accent  = params.get('accent');
+    const dark    = params.get('theme') === 'dark';
+    const preset  = params.get('preset');   // linear | tabler | material
+    const density = params.get('density');  // compact | comfortable
+
+    if (dark)    document.documentElement.setAttribute('data-theme', 'dark');
+    if (preset)  document.documentElement.setAttribute('data-cms-theme', preset);
+    if (density) document.documentElement.setAttribute('data-cms-density', density);
+
+    const tpl = document.getElementById('demo-' + demo);
+    if (!tpl) {
+      document.body.innerHTML = '<p style="color:#dc2626;padding:1rem">Unknown demo: ' + demo + '</p>';
+      return;
+    }
+    document.body.appendChild(tpl.content.cloneNode(true));
+
+    if (ui) {
+      // Optional token overrides before bundle loads.
+      const overrides = [];
+      if (accent) overrides.push('--cms-primary:' + accent);
+      const radius = params.get('radius');
+      if (radius) overrides.push('--cms-radius:' + radius + 'px');
+      if (overrides.length) {
+        const s = document.createElement('style');
+        s.textContent = ':root{' + overrides.join(';') + '}';
+        document.head.appendChild(s);
+      }
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = './assets/prism/prism.min.css';
+      document.head.appendChild(link);
+
+      const script = document.createElement('script');
+      script.type = 'module';
+      script.src = './assets/prism/prism.js';
+      document.body.appendChild(script);
+    }
+  })();
+</script>
+
+</body>
+</html>

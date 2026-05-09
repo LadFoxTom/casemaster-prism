@@ -1,0 +1,254 @@
+/* Extras — empty states, loading skeletons, top-bar progress, command palette,
+ * keyboard hints. Components reference variables from tokens.css.
+ */
+
+/* -------- Empty state -------- */
+.cms-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--cms-space-6) var(--cms-space-4);
+  text-align: center;
+  color: var(--cms-text-muted);
+  gap: var(--cms-space-2);
+  min-height: 200px;
+}
+
+.cms-empty-icon {
+  font-size: 2.4rem;
+  color: var(--cms-text-faint);
+  margin-bottom: var(--cms-space-2);
+  opacity: 0.6;
+}
+
+.cms-empty-title {
+  font-size: var(--cms-text-md);
+  font-weight: 600;
+  color: var(--cms-text);
+  margin: 0;
+}
+
+.cms-empty-message {
+  font-size: var(--cms-text-sm);
+  color: var(--cms-text-muted);
+  max-width: 380px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.cms-empty-actions {
+  margin-top: var(--cms-space-3);
+  display: flex;
+  gap: var(--cms-space-2);
+}
+
+/* -------- Skeleton -------- */
+.cms-skel {
+  background: linear-gradient(
+    90deg,
+    var(--cms-surface-2) 0%,
+    var(--cms-border) 50%,
+    var(--cms-surface-2) 100%
+  );
+  background-size: 200% 100%;
+  border-radius: var(--cms-radius-sm);
+  animation: cms-skel-shimmer 1.4s linear infinite;
+  display: inline-block;
+  height: 1em;
+  width: 100%;
+}
+
+.cms-skel.is-text  { height: 0.85em; border-radius: 4px; }
+.cms-skel.is-title { height: 1.4em; width: 50%; }
+.cms-skel.is-circle{ border-radius: 50%; aspect-ratio: 1 / 1; height: auto; width: 32px; }
+
+@keyframes cms-skel-shimmer {
+  0%   { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+
+/* -------- Top progress bar (set by enhancers/loading.ts) -------- */
+.cms-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--cms-primary);
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform 240ms var(--cms-ease-out), opacity 200ms var(--cms-ease);
+  z-index: var(--cms-z-toast);
+  pointer-events: none;
+}
+
+.cms-progress-bar.is-active   { transform: scaleX(0.8); }
+.cms-progress-bar.is-complete { transform: scaleX(1); opacity: 0; }
+
+/* -------- Command palette (Cmd+K) -------- */
+.cms-cmdk {
+  position: fixed;
+  inset: 0;
+  z-index: var(--cms-z-modal);
+  background: rgb(15 23 42 / 0.55);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 12vh;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--cms-dur) var(--cms-ease);
+}
+.cms-cmdk.is-open { opacity: 1; pointer-events: auto; }
+
+.cms-cmdk-panel {
+  width: min(560px, 92vw);
+  background: var(--cms-surface);
+  border: 1px solid var(--cms-border);
+  border-radius: var(--cms-radius-lg);
+  box-shadow: var(--cms-shadow-lg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  max-height: 70vh;
+  transform: translateY(-8px) scale(0.98);
+  transition: transform var(--cms-dur) var(--cms-ease);
+}
+.cms-cmdk.is-open .cms-cmdk-panel {
+  transform: translateY(0) scale(1);
+}
+
+.cms-cmdk-input {
+  border: 0;
+  border-bottom: 1px solid var(--cms-border);
+  padding: var(--cms-space-3) var(--cms-space-4);
+  font-size: var(--cms-text-md);
+  outline: none;
+  width: 100%;
+  background: transparent;
+  color: var(--cms-text);
+}
+.cms-cmdk-input::placeholder { color: var(--cms-text-faint); }
+
+.cms-cmdk-list {
+  list-style: none;
+  margin: 0;
+  padding: var(--cms-space-2);
+  overflow-y: auto;
+  flex: 1 1 auto;
+}
+.cms-cmdk-item {
+  padding: var(--cms-space-2) var(--cms-space-3);
+  border-radius: var(--cms-radius-sm);
+  font-size: var(--cms-text-sm);
+  color: var(--cms-text);
+  display: flex;
+  align-items: center;
+  gap: var(--cms-space-2);
+  cursor: pointer;
+}
+.cms-cmdk-item.is-active,
+.cms-cmdk-item:hover {
+  background: var(--cms-primary-fade);
+  color: var(--cms-primary);
+}
+.cms-cmdk-item .cms-cmdk-meta {
+  margin-left: auto;
+  color: var(--cms-text-faint);
+  font-size: var(--cms-text-xs);
+}
+
+.cms-cmdk-empty {
+  padding: var(--cms-space-4);
+  color: var(--cms-text-muted);
+  font-size: var(--cms-text-sm);
+  text-align: center;
+}
+
+/* -------- Keyboard hint chip (kbd) -------- */
+kbd,
+.cms-kbd {
+  display: inline-block;
+  padding: 0.1rem 0.4rem;
+  font-family: var(--cms-font-mono);
+  font-size: 0.78em;
+  background: var(--cms-surface-2);
+  border: 1px solid var(--cms-border-strong);
+  border-radius: var(--cms-radius-sm);
+  color: var(--cms-text-muted);
+  box-shadow: 0 1px 0 var(--cms-border-strong);
+  line-height: 1;
+}
+
+/* -------- Inline-edit cell (set by enhancers/inline-edit.ts) --------
+ * Affordance:
+ *   - At rest: a subtle dotted underline so users see the cell is editable.
+ *   - On hover: a pencil icon + dashed outline + soft-fill.
+ * The dotted underline degrades gracefully into invisible text-decoration
+ * if the page disables underlines. */
+
+[data-cms-inline-edit] {
+  cursor: text;
+  border-radius: var(--cms-radius-sm);
+  padding: 0.15rem 0.35rem;
+  margin: -0.15rem -0.35rem;
+  /* text-decoration survives our table CSS's `border: none !important`,
+   * unlike border-bottom. Using underline-style: dotted gives the
+   * "editable" affordance without fighting specificity with table borders. */
+  text-decoration: underline 1px dotted var(--cms-text-faint);
+  text-underline-offset: 3px;
+  transition:
+    background var(--cms-dur) var(--cms-ease),
+    text-decoration-color var(--cms-dur) var(--cms-ease),
+    outline-color var(--cms-dur) var(--cms-ease);
+}
+[data-cms-inline-edit]:hover {
+  background: var(--cms-primary-fade);
+  outline: 1px dashed var(--cms-primary);
+  text-decoration-color: var(--cms-primary);
+}
+[data-cms-inline-edit]:hover::after {
+  content: "✎";
+  margin-left: 0.4em;
+  color: var(--cms-primary);
+  font-size: 0.85em;
+  opacity: 0.85;
+  text-decoration: none;
+}
+[data-cms-inline-edit][aria-busy="true"] {
+  opacity: 0.6;
+  cursor: progress;
+}
+[data-cms-inline-edit][data-editing="1"] {
+  text-decoration: none;
+  outline: none;
+  background: transparent;
+}
+
+/* -------- Tooltip-lite (CSS-only on [title]) -------- */
+.cms-tooltip {
+  position: relative;
+}
+.cms-tooltip[data-cms-tip]:hover::after {
+  content: attr(data-cms-tip);
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--cms-text);
+  color: var(--cms-surface);
+  font-size: var(--cms-text-xs);
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--cms-radius-sm);
+  white-space: nowrap;
+  z-index: var(--cms-z-popover);
+  pointer-events: none;
+}
+
+/* -------- Page-transition fade (used by modal-links) -------- */
+.cms-fade-enter { opacity: 0; }
+.cms-fade-enter-active { opacity: 1; transition: opacity var(--cms-dur) var(--cms-ease); }
+.cms-fade-leave-active { opacity: 0; transition: opacity var(--cms-dur) var(--cms-ease); }

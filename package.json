@@ -1,0 +1,80 @@
+{
+  "name": "casemaster-prism",
+  "version": "0.3.0",
+  "description": "casemaster-prism — drop-in theme, variant catalogue, preset themes (Linear / Tabler / Material), and progressive-enhancement JS for CaseMaster apps on both runtimes (.NET CaseMaster.Web.exe and cms-vercel). One source, many themes; no .cms source changes.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/prism.js",
+  "module": "./dist/prism.js",
+  "types": "./dist/prism.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/prism.d.ts",
+      "import": "./dist/prism.js",
+      "default": "./dist/prism.js"
+    },
+    "./css": "./dist/prism.css",
+    "./css-min": "./dist/prism.min.css",
+    "./dark": "./dist/prism-dark.css",
+    "./js": "./dist/prism.js"
+  },
+  "files": [
+    "dist",
+    "src",
+    "README.md",
+    "integrations"
+  ],
+  "scripts": {
+    "build": "vite build && postcss src/theme/index.css -o dist/prism.css && postcss src/theme/index.css -o dist/prism.min.css --env production && postcss src/theme/dark.css -o dist/prism-dark.css",
+    "build:css": "postcss src/theme/index.css -o dist/prism.css && postcss src/theme/index.css -o dist/prism.min.css --env production && postcss src/theme/dark.css -o dist/prism-dark.css",
+    "build:js": "vite build",
+    "dev": "vite",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "lint": "tsc --noEmit",
+    "preview": "vite preview",
+    "landing": "npx --yes http-server landing-page -p 4000"
+  },
+  "dependencies": {
+    "flatpickr": "^4.6.13",
+    "tom-select": "^2.3.1"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.8.5",
+    "@playwright/test": "^1.40.0",
+    "autoprefixer": "^10.4.16",
+    "cssnano": "^6.0.2",
+    "jsdom": "^29.1.1",
+    "postcss": "^8.4.32",
+    "postcss-cli": "^11.0.0",
+    "postcss-import": "^15.1.0",
+    "terser": "^5.26.0",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.10",
+    "vitest": "^1.1.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "casemaster",
+    "casemaster-prism",
+    "cms",
+    "cms-vercel",
+    "theme",
+    "design-system",
+    "bootstrap",
+    "bootstrap-4",
+    "admin",
+    "dashboard",
+    "linear",
+    "tabler",
+    "material",
+    "tom-select",
+    "flatpickr"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

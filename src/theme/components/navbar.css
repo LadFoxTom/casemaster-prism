@@ -1,0 +1,133 @@
+/* Navbar — top app bar, BS4 .navbar */
+
+.navbar {
+  border-bottom: 1px solid var(--cms-border);
+  height: var(--cms-navbar-h);
+  padding: 0 var(--cms-space-4);
+  box-shadow: var(--cms-shadow-xs);
+  display: flex;
+  align-items: center;
+}
+
+/* For "navbar-light" pages (no dark variant), prefer a white surface. */
+.navbar-light:not(.bg-primary):not(.bg-dark):not(.navbar-dark) {
+  background: var(--cms-surface) !important;
+}
+
+/* For "navbar-dark" / bg-primary pages we keep a primary-coloured bar so
+ * white-on-primary brand logos stay visible. The primary inherits our
+ * --cms-primary token, so retheming the package retones the navbar too. */
+.navbar.bg-primary,
+.navbar.navbar-dark.bg-dark,
+.navbar.navbar-dark {
+  background: var(--cms-primary) !important;
+  border-bottom-color: var(--cms-primary-active);
+  box-shadow: var(--cms-shadow-sm);
+}
+
+.navbar-brand,
+.navbar .navbar-brand {
+  font-weight: 600;
+  font-size: var(--cms-text-md);
+  letter-spacing: -0.01em;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Light navbar → dark text. Dark / primary navbar → keep BS4's white. */
+.navbar-light .navbar-brand { color: var(--cms-text) !important; }
+.navbar-dark  .navbar-brand,
+.navbar.bg-primary .navbar-brand { color: #fff !important; }
+
+.navbar-light .navbar-nav .nav-link {
+  color: var(--cms-text-muted) !important;
+  font-size: var(--cms-text-sm);
+  font-weight: 500;
+  padding: 0.4rem 0.85rem !important;
+  border-radius: var(--cms-radius-sm);
+  transition: background var(--cms-dur) var(--cms-ease), color var(--cms-dur) var(--cms-ease);
+}
+.navbar-light .navbar-nav .nav-link:hover,
+.navbar-light .navbar-nav .nav-link:focus {
+  color: var(--cms-text) !important;
+  background: var(--cms-surface-2);
+}
+.navbar-light .navbar-nav .nav-link.active,
+.navbar-light .navbar-nav .active > .nav-link {
+  color: var(--cms-primary) !important;
+  background: var(--cms-primary-fade);
+}
+
+/* Dark/primary navbar — translucent hover, full-white active link. */
+.navbar-dark .navbar-nav .nav-link {
+  color: rgb(255 255 255 / 0.78) !important;
+  font-size: var(--cms-text-sm);
+  font-weight: 500;
+  padding: 0.4rem 0.85rem !important;
+  border-radius: var(--cms-radius-sm);
+  transition: background var(--cms-dur) var(--cms-ease), color var(--cms-dur) var(--cms-ease);
+}
+.navbar-dark .navbar-nav .nav-link:hover,
+.navbar-dark .navbar-nav .nav-link:focus {
+  color: #fff !important;
+  background: rgb(255 255 255 / 0.10);
+}
+.navbar-dark .navbar-nav .nav-link.active,
+.navbar-dark .navbar-nav .active > .nav-link {
+  color: #fff !important;
+  background: rgb(255 255 255 / 0.15);
+}
+
+/* Right-side action area */
+.navbar .ml-auto,
+.navbar .ms-auto {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--cms-space-2);
+}
+
+/* Dropdown chevron — BS4 emits .dropdown-toggle::after */
+.navbar .dropdown-toggle::after {
+  vertical-align: 0.15em;
+  border-top-color: currentColor;
+  margin-left: 0.45em;
+}
+
+.navbar .dropdown-menu {
+  border: 1px solid var(--cms-border);
+  border-radius: var(--cms-radius);
+  box-shadow: var(--cms-shadow-lg);
+  padding: var(--cms-space-2);
+  margin-top: 6px;
+  font-size: var(--cms-text-sm);
+}
+
+.navbar .dropdown-item {
+  border-radius: var(--cms-radius-sm);
+  padding: 0.4rem 0.75rem;
+  color: var(--cms-text);
+  transition: background var(--cms-dur) var(--cms-ease);
+}
+.navbar .dropdown-item:hover,
+.navbar .dropdown-item:focus {
+  background: var(--cms-surface-hover);
+  color: var(--cms-text);
+}
+.navbar .dropdown-item.active,
+.navbar .dropdown-item:active {
+  background: var(--cms-primary-fade);
+  color: var(--cms-primary);
+}
+
+.navbar .dropdown-divider {
+  border-top: 1px solid var(--cms-border);
+  margin: var(--cms-space-2) 0;
+}
+
+/* Search box if present in navbar */
+.navbar .form-inline .form-control,
+.navbar .form-control {
+  height: var(--cms-control-h-sm);
+  font-size: var(--cms-text-sm);
+}

@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Variants & density · casemaster-prism docs</title>
+<meta name="description" content="Variants & density — casemaster-prism docs">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#2563eb">
+<meta property="og:title" content="casemaster-prism">
+<meta property="og:description" content="Drop-in design system for CaseMaster apps.">
+<meta property="og:image" content="../assets/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="../assets/og-card.png">
+<link rel="stylesheet" href="assets/docs.css">
+</head>
+<body>
+<div id="gnav-host" data-root="../"></div>
+
+<main class="docs-content">
+    <p class="docs-breadcrumb"><a href="../">Home</a> &nbsp;/&nbsp; <a href="index.html">Docs</a> &nbsp;/&nbsp; Variants & density</p>
+
+    <h1>Variants & density</h1>
+    <p class="docs-lead">Modifier classes you call from <code>.cms</code> via existing qualifier props. Density is a page-level preset that re-tones every control.</p>
+
+    <h2 id='calling'>Calling variants from <code>.cms</code></h2>
+    <p>The CaseMaster runtimes already accept class strings through standard qualifiers — no new qualifier system needed:</p>
+<pre><code>&lt;@page/data/table iterator: [items], group: 'list',
+                  tableClass: 'cms-table-elevated cms-table-compact'&gt;
+
+&lt;@page/button class: 'btn btn-soft-primary btn-pill', label: 'Approve'&gt;
+
+&lt;@page/alert  class: 'alert alert-warning cms-alert-subtle',
+              text:  'Two items below safety stock.'&gt;</code></pre>
+
+    <h2 id='tables'>Table variants</h2>
+    <ul>
+      <li><code>cms-table-compact</code> — dense list view, smaller font.</li>
+      <li><code>cms-table-comfortable</code> — generous vertical breathing room.</li>
+      <li><code>cms-table-elevated</code> — higher shadow + larger radii; great when the table sits on a card-less surface.</li>
+      <li><code>cms-table-flush</code> — no outer border or shadow; use inside an existing card body.</li>
+      <li><code>cms-table-hover-only</code> — drops zebra stripes; only the hover row highlights.</li>
+    </ul>
+
+    <h2 id='buttons'>Button variants</h2>
+    <ul>
+      <li><code>btn-soft-{primary,success,danger,warning,info}</code> — tinted background, full-saturation text. Linear / Stripe style.</li>
+      <li><code>btn-ghost-{primary,success,danger}</code> — text-only until hover. Great for icon bars.</li>
+      <li><code>btn-pill</code> — fully rounded.</li>
+      <li><code>btn-square</code> — sharp corners.</li>
+      <li><code>btn-icon-only</code> — square aspect ratio. Pair with <code>aria-label</code>.</li>
+    </ul>
+
+    <h2 id='cards'>Card variants</h2>
+    <ul>
+      <li><code>cms-card-elevated</code> — bigger shadow, no border.</li>
+      <li><code>cms-card-outlined</code> — strong border, no shadow.</li>
+      <li><code>cms-card-status-{primary,success,warning,danger,info}</code> — coloured left strip.</li>
+      <li><code>cms-card-interactive</code> — hover-lift; for link cards.</li>
+      <li><code>cms-stat-card</code> — KPI tile shape (label + value + trend).</li>
+    </ul>
+
+    <h2 id='alerts'>Alert variants</h2>
+    <ul>
+      <li><code>cms-alert-subtle</code> — minimal background, just a coloured left bar.</li>
+      <li><code>cms-alert-soft</code> — tinted background, no border, larger radius.</li>
+    </ul>
+
+    <h2 id='inputs'>Input variants</h2>
+    <ul>
+      <li><code>cms-input-filled</code> — coloured surface, only bottom border on focus.</li>
+      <li><code>cms-input-underlined</code> — Material-style, just a bottom rule.</li>
+    </ul>
+
+    <h2 id='density'>Density preset</h2>
+    <p>Page-level — shrinks or grows every control system-wide:</p>
+<pre><code>&lt;html data-cms-density="compact"&gt;       &lt;!-- back-office dashboards --&gt;
+&lt;html data-cms-density="comfortable"&gt;   &lt;!-- larger touch targets --&gt;</code></pre>
+
+    <div class="docs-footer-nav"><a href="./tokens.html"><small>← Previous</small>Design tokens</a><a class="next" href="./enhancers/tables.html"><small>Next →</small>Tables enhancer</a></div>
+  </main>
+
+<script>
+  // Inject the sidebar HTML manually (relative path differs per depth)
+  (function () {
+    fetch('_sidebar.html').then((r) => r.text()).then((h) => {
+      const host = document.getElementById('docs-sidebar-host');
+      if (!host) return;
+      host.innerHTML = h;
+      const here = location.pathname.split('/').pop();
+      host.querySelectorAll('a[href]').forEach((a) => {
+        const t = a.getAttribute('href').split('/').pop();
+        if (t === here) a.classList.add('is-current');
+      });
+      const search = host.querySelector('.docs-search');
+      if (search) search.addEventListener('input', () => {
+        const q = search.value.trim().toLowerCase();
+        host.querySelectorAll('.docs-nav a').forEach((a) => {
+          a.classList.toggle('is-hidden', !!q && !a.textContent.toLowerCase().includes(q));
+        });
+      });
+    });
+  })();
+</script>
+<script src="assets/docs.js"></script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>

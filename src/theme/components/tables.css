@@ -1,0 +1,176 @@
+/* Tables — both runtimes emit the same Bootstrap 4 shell:
+ *   <table class='table table-sm table-striped table-bordered'>
+ *     <thead class='bg-primary text-light'>
+ *
+ * Verified against the .NET runtime: the page/data/table qualifier
+ * emits `table table-striped table-bordered` by default with NO
+ * `cms-table` marker. We theme that shape directly; an explicit
+ * `cms-table` class is also accepted as an opt-in for apps that add
+ * one.
+ *
+ * The sortable-header arrow uses the data-cms-sort attribute set by
+ * src/enhancers/tables.ts. Same attribute name in both files is the
+ * CSS-JS hand-off point.
+ */
+
+:where(.cms-table, table.table.table-striped, table.table.table-bordered) {
+  background: var(--cms-surface);
+  border: 1px solid var(--cms-border) !important;
+  border-radius: var(--cms-radius);
+  overflow: hidden;
+  box-shadow: var(--cms-shadow-sm);
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+}
+
+/* Header — flatten Bootstrap's bg-primary, replace with subtle gradient */
+:where(.cms-table, table.table.table-striped, table.table.table-bordered) thead.bg-primary,
+:where(.cms-table, table.table.table-striped, table.table.table-bordered) thead {
+  background: var(--cms-surface-2) !important;
+}
+
+:where(.cms-table, table.table.table-striped, table.table.table-bordered) thead th {
+  background: transparent !important;
+  color: var(--cms-text-muted) !important;
+  font-weight: 600;
+  font-size: var(--cms-text-xs);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.65rem 1rem;
+  border: none !important;
+  border-bottom: 1px solid var(--cms-border) !important;
+  position: relative;
+  white-space: nowrap;
+  user-select: none;
+}
+
+/* Sortable headers (set by enhancer) — works regardless of class. */
+[data-cms-sortable] {
+  cursor: pointer;
+  transition: background var(--cms-dur) var(--cms-ease);
+}
+
+th[data-cms-sortable]:hover {
+  background: var(--cms-surface-hover) !important;
+  color: var(--cms-text) !important;
+}
+th[data-cms-sortable]::after {
+  content: "↕";
+  margin-left: 0.4em;
+  opacity: 0.55;
+  font-size: 0.95em;
+  color: var(--cms-text-faint);
+  display: inline-block;
+  transition: opacity var(--cms-dur) var(--cms-ease), color var(--cms-dur) var(--cms-ease);
+}
+th[data-cms-sortable]:hover::after {
+  opacity: 0.9;
+  color: var(--cms-text-muted);
+}
+th[data-cms-sort="asc"]::after  { content: "▲"; opacity: 1; color: var(--cms-primary); }
+th[data-cms-sort="desc"]::after { content: "▼"; opacity: 1; color: var(--cms-primary); }
+
+/* Body */
+:where(.cms-table, table.table.table-striped, table.table.table-bordered) tbody td {
+  padding: 0.6rem 1rem;
+  border: none !important;
+  border-top: 1px solid var(--cms-border) !important;
+  vertical-align: middle;
+  font-size: var(--cms-text-sm);
+}
+
+:where(.cms-table, table.table.table-striped, table.table.table-bordered) tbody tr {
+  transition: background var(--cms-dur) var(--cms-ease);
+}
+
+:where(.cms-table, table.table.table-striped, table.table.table-bordered) tbody tr:hover {
+  background: var(--cms-primary-fade);
+}
+
+/* Stripe override (BS4 striped is too dark) */
+:where(.cms-table, table.table.table-striped) tbody tr:nth-of-type(odd) {
+  background: var(--cms-surface-2) !important;
+}
+:where(.cms-table, table.table.table-striped) tbody tr:nth-of-type(odd):hover {
+  background: var(--cms-primary-fade) !important;
+}
+
+/* Sticky header — works whenever the table sits inside a scroll container.
+ * NOTE: only apply when explicitly opted in to avoid layout surprises in
+ * pages that wrap tables inside fixed-height containers. */
+table[data-cms-sticky] thead {
+  position: sticky;
+  top: 0;
+  z-index: var(--cms-z-sticky);
+}
+
+/* Toolbar (injected by enhancer) */
+.cms-table-toolbar {
+  display: flex;
+  gap: var(--cms-space-2);
+  align-items: center;
+  margin-bottom: var(--cms-space-3);
+  flex-wrap: wrap;
+}
+
+.cms-table-toolbar .cms-table-search {
+  flex: 1 1 180px;
+  max-width: 280px;
+}
+
+.cms-table-toolbar .cms-table-count {
+  color: var(--cms-text-muted);
+  font-size: var(--cms-text-xs);
+  margin-left: auto;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Empty state row (injected when filter has zero matches) */
+.cms-table-empty td {
+  text-align: center;
+  color: var(--cms-text-muted);
+  font-style: italic;
+  padding: var(--cms-space-6) !important;
+}
+
+/* Column-toggle dropdown */
+.cms-col-toggle {
+  position: relative;
+}
+.cms-col-toggle-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 4px);
+  background: var(--cms-surface);
+  border: 1px solid var(--cms-border);
+  border-radius: var(--cms-radius);
+  box-shadow: var(--cms-shadow-lg);
+  padding: var(--cms-space-2);
+  min-width: 180px;
+  z-index: var(--cms-z-popover);
+  display: none;
+}
+.cms-col-toggle.is-open .cms-col-toggle-menu { display: block; }
+.cms-col-toggle-menu label {
+  display: flex;
+  gap: var(--cms-space-2);
+  padding: 0.35rem 0.5rem;
+  border-radius: var(--cms-radius-sm);
+  cursor: pointer;
+  font-size: var(--cms-text-sm);
+  color: var(--cms-text);
+  margin: 0;
+}
+.cms-col-toggle-menu label:hover { background: var(--cms-surface-hover); }
+.cms-col-toggle-menu input { margin: 0; }
+
+/* Numeric-cell alignment (set by enhancer when a column is fully numeric).
+ * The .NET runtime also emits .text-right on numeric cells — leave that
+ * alone, just make our class match its visual. */
+[data-cms-numeric],
+td.text-right,
+th.text-right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}

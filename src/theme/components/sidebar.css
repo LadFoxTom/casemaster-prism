@@ -1,0 +1,110 @@
+/* Sidebar — both runtimes emit <aside class="wms-sidebar"> on app pages.
+ * We also support the generic .cms-sidebar class for future runtimes.
+ */
+
+.wms-sidebar,
+.cms-sidebar {
+  background: var(--cms-surface);
+  border-right: 1px solid var(--cms-border);
+  width: var(--cms-sidebar-w);
+  min-height: 100vh;
+  padding: var(--cms-space-3) var(--cms-space-2);
+  font-size: var(--cms-text-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--cms-space-1);
+  flex-shrink: 0;
+}
+
+.wms-sidebar .sidebar-header,
+.cms-sidebar .sidebar-header {
+  padding: var(--cms-space-2) var(--cms-space-3);
+  font-size: var(--cms-text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--cms-text-faint);
+  font-weight: 600;
+  margin-top: var(--cms-space-3);
+}
+
+.wms-sidebar a,
+.cms-sidebar a,
+.wms-sidebar .nav-link,
+.cms-sidebar .nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0.75rem;
+  color: var(--cms-text-muted);
+  border-radius: var(--cms-radius);
+  text-decoration: none;
+  font-weight: 500;
+  transition:
+    background var(--cms-dur) var(--cms-ease),
+    color var(--cms-dur) var(--cms-ease);
+}
+
+.wms-sidebar a:hover,
+.cms-sidebar a:hover {
+  background: var(--cms-surface-hover);
+  color: var(--cms-text);
+  text-decoration: none;
+}
+
+.wms-sidebar a.active,
+.cms-sidebar a.active,
+.wms-sidebar .nav-link.active,
+.cms-sidebar .nav-link.active {
+  background: var(--cms-primary-fade);
+  color: var(--cms-primary);
+  font-weight: 600;
+}
+
+/* Icons in the sidebar — Font Awesome ships on both runtimes */
+.wms-sidebar a > .fa,
+.wms-sidebar a > .fas,
+.wms-sidebar a > i,
+.cms-sidebar a > .fa,
+.cms-sidebar a > .fas,
+.cms-sidebar a > i {
+  width: 16px;
+  text-align: center;
+  font-size: 0.95em;
+  color: inherit;
+  opacity: 0.85;
+}
+
+/* Sub-section indent */
+.wms-sidebar ul.nav,
+.cms-sidebar ul.nav {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.wms-sidebar ul ul,
+.cms-sidebar ul ul {
+  padding-left: 1.25rem;
+  border-left: 1px solid var(--cms-border);
+  margin-left: 0.5rem;
+}
+
+/* Collapsed mobile sidebar — BS4's .collapse handles toggling. */
+@media (max-width: 768px) {
+  .wms-sidebar,
+  .cms-sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: var(--cms-z-overlay);
+    transform: translateX(-100%);
+    transition: transform var(--cms-dur) var(--cms-ease);
+    box-shadow: var(--cms-shadow-lg);
+  }
+  .wms-sidebar.show,
+  .cms-sidebar.show {
+    transform: translateX(0);
+  }
+}

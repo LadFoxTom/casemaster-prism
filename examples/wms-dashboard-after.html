@@ -1,0 +1,399 @@
+﻿<!DOCTYPE html>
+				<html lang="en" dir="ltr">
+				<head>
+					<meta charset="utf-8">
+					<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+					<script src="http://localhost:5051/static/lib/jquery/jquery.min.js?v=1.0.0"></script>
+
+					<link rel="stylesheet" href="http://localhost:5051/static/lib/fullcalendar/core/main.min.css?v=1.0.0">
+					<script src="http://localhost:5051/static/lib/fullcalendar/core/main.min.js?v=1.0.0"></script>
+					<script src="http://localhost:5051/static/lib/fullcalendar/core/locales/en-gb.js?v=1.0.0"></script>
+					<link rel="stylesheet" href="http://localhost:5051/static/lib/fullcalendar/bootstrap/main.min.css?v=1.0.0">
+					<script src="http://localhost:5051/static/lib/fullcalendar/bootstrap/main.min.js?v=1.0.0"></script>
+					<link rel="stylesheet" href="http://localhost:5051/static/lib/fullcalendar/daygrid/main.min.css?v=1.0.0">
+					<script src="http://localhost:5051/static/lib/fullcalendar/daygrid/main.min.js?v=1.0.0"></script>
+					<link rel="stylesheet" href="http://localhost:5051/static/lib/fullcalendar/timegrid/main.min.css?v=1.0.0">
+					<script src="http://localhost:5051/static/lib/fullcalendar/timegrid/main.min.js?v=1.0.0"></script>
+					<link rel="stylesheet" href="http://localhost:5051/static/lib/fullcalendar/list/main.min.css?v=1.0.0">
+					<script src="http://localhost:5051/static/lib/fullcalendar/list/main.min.js?v=1.0.0"></script>
+					<script src="http://localhost:5051/static/lib/fullcalendar/interaction/main.min.js?v=1.0.0"></script>
+
+					<link rel="stylesheet" href="http://localhost:5051/static/lib/select2/css/select2.min.css?v=1.0.0">
+					<script src="http://localhost:5051/static/lib/select2/js/select2.min.js?v=1.0.0"></script>
+					<script src="http://localhost:5051/static/lib/select2/js/i18n/en.js?v=1.0.0"></script>
+					<script src="http://localhost:5051/static/lib/signature_pad/signature_pad.umd.min.js?v=1.0.0"></script>
+	<link rel="stylesheet" href="http://localhost:5051/static/lib/bootstrap/dist/css/bootstrap.min.css?v=1.0.0">
+					<script src="http://localhost:5051/static/lib/bootstrap/dist/js/bootstrap.bundle.min.js?v=1.0.0"></script>
+					<link rel="stylesheet" href="http://localhost:5051/static/lib/font-awesome/css/all.min.css?v=1.0.0">
+
+					<link rel="stylesheet" href="http://localhost:5051/static/css/cm.css?v=1.0.0">
+
+	<link rel="stylesheet" href="http://localhost:5051/static/css/app.css?v=1.0.0">
+					<script src="http://localhost:5051/static/js/cmPre.js?v=1.0.0"></script>
+					<script src="http://localhost:5051/static/js/appPre.js?v=1.0.0"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-primary" aria-label='Main navigation'>
+<a class="navbar-brand" href="http://localhost:5051"><img class='mx-2' width='38' src='http://localhost:5051/static/images/logo/navbar.png?v=1.0.0'>
+Casemaster WMS</a>
+</nav>
+<main>
+<script>$(document).ready(function() {$("main").last().addClass("pb-4")});</script>
+<div class='container'>
+
+<style>
+  /* The framework's navbar is fixed-top with height ~56px; sit under it. */
+  .wms-sidebar {
+      position: fixed;
+      top: 56px;
+      left: 0;
+      bottom: 0;
+      width: 220px;
+      background: #f8f9fa;
+      border-right: 1px solid #dee2e6;
+      overflow-y: auto;
+      padding: 0.75rem 0;
+      z-index: 100;
+      font-size: 0.92rem;
+  }
+  .wms-sidebar h6 {
+      color: #6c757d;
+      text-transform: uppercase;
+      font-size: 0.7rem;
+      letter-spacing: 0.06em;
+      padding: 0.5rem 1rem 0.25rem;
+      margin: 0;
+  }
+  .wms-sidebar a {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1rem;
+      color: #212529;
+      text-decoration: none;
+      border-left: 3px solid transparent;
+  }
+  .wms-sidebar a:hover {
+      background: #e9ecef;
+      color: #0d6efd;
+  }
+  .wms-sidebar a.active {
+      background: #e7f1ff;
+      color: #0d6efd;
+      border-left-color: #0d6efd;
+      font-weight: 600;
+  }
+  .wms-sidebar .wms-icon {
+      display: inline-block;
+      width: 1.4rem;
+      text-align: center;
+      font-size: 1rem;
+  }
+  .wms-sidebar .wms-divider {
+      border-top: 1px solid #dee2e6;
+      margin: 0.6rem 0;
+  }
+  /* Push the framework <main> right of the sidebar. */
+  body > main { padding-left: 240px; }
+  body > main > .container { max-width: none; }
+
+  /* Mobile: collapse to icon strip */
+  @media (max-width: 991.98px) {
+      .wms-sidebar { width: 56px; }
+      .wms-sidebar h6, .wms-sidebar .wms-label { display: none; }
+      .wms-sidebar a { justify-content: center; padding: 0.5rem 0; }
+      body > main { padding-left: 64px; }
+  }
+</style>
+<aside class="wms-sidebar">
+    <h6>Operations</h6>
+    <a href="http://localhost:5051/page/wms"           class="active"><span class="wms-icon">ð </span><span class="wms-label">Dashboard</span></a>
+    <a href="http://localhost:5051/page/wms/inbound"   class=""><span class="wms-icon">ð¦</span><span class="wms-label">Inbound</span></a>
+    <a href="http://localhost:5051/page/wms/stock"     class=""><span class="wms-icon">ð</span><span class="wms-label">Stock</span></a>
+    <a href="http://localhost:5051/page/wms/outbound"  class=""><span class="wms-icon">ð</span><span class="wms-label">Outbound</span></a>
+
+    <div class="wms-divider"></div>
+    <h6>Reverse &amp; counts</h6>
+    <a href="http://localhost:5051/page/wms/reverse"   class=""><span class="wms-icon">â©</span><span class="wms-label">Returns</span></a>
+    <a href="http://localhost:5051/page/wms/counts"    class=""><span class="wms-icon">ð§®</span><span class="wms-label">Cycle counts</span></a>
+    <a href="http://localhost:5051/page/wms/replen"    class=""><span class="wms-icon">ð</span><span class="wms-label">Replenishment</span></a>
+
+    <div class="wms-divider"></div>
+    <h6>Quality &amp; yard</h6>
+    <a href="http://localhost:5051/page/wms/quality"   class=""><span class="wms-icon">â</span><span class="wms-label">Quality</span></a>
+    <a href="http://localhost:5051/page/wms/yard"      class=""><span class="wms-icon">ð</span><span class="wms-label">Yard &amp; dock</span></a>
+    <a href="http://localhost:5051/page/wms/billing"   class=""><span class="wms-icon">ð°</span><span class="wms-label">3PL billing</span></a>
+
+    <div class="wms-divider"></div>
+    <h6>System</h6>
+    <a href="http://localhost:5051/page/wms/setup"     class=""><span class="wms-icon">â</span><span class="wms-label">Setup</span></a>
+    <a href="http://localhost:5051/page/wms/db_admin"  class=""><span class="wms-icon">ð </span><span class="wms-label">DB admin</span></a>
+</aside>
+
+<div class="jumbotron jumbotron-fluid bg-light p-4 mb-4 rounded">
+    <div class="container">
+        <h1 class="display-4">Casemaster &middot; WMS</h1>
+        <p class="lead">Pick a workflow below â receiving, stock, outbound and reverse flows are first-class. Each center is a hand-built operations view; click through to act on the data.</p>
+        <p class="text-muted small">Backend: PostgreSQL (Neon) &middot; runtime: Casemaster .NET &middot; Android (.apk) intentionally out-of-scope this build.</p>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <div class="col-md-2 col-sm-4 mb-2"><div class="card"><div class="card-body p-2 text-center"><div class="h4 mb-0">12</div><small class="text-muted">Items</small></div></div></div>
+    <div class="col-md-2 col-sm-4 mb-2"><div class="card"><div class="card-body p-2 text-center"><div class="h4 mb-0">40</div><small class="text-muted">Locations</small></div></div></div>
+    <div class="col-md-2 col-sm-4 mb-2"><div class="card"><div class="card-body p-2 text-center"><div class="h4 mb-0">6</div><small class="text-muted">Partners</small></div></div></div>
+    <div class="col-md-2 col-sm-4 mb-2"><div class="card"><div class="card-body p-2 text-center"><div class="h4 mb-0">15</div><small class="text-muted">Inventory rows</small></div></div></div>
+    <div class="col-md-2 col-sm-4 mb-2"><div class="card"><div class="card-body p-2 text-center"><div class="h4 mb-0">2</div><small class="text-muted">LPNs</small></div></div></div>
+    <div class="col-md-2 col-sm-4 mb-2"><div class="card"><div class="card-body p-2 text-center"><div class="h4 mb-0">0</div><small class="text-muted">Lots</small></div></div></div>
+</div>
+<div class="row mb-3">
+    <div class="col-md-3 col-sm-6 mb-2"><div class="card border-primary"><div class="card-body p-2 text-center"><div class="h4 mb-0">1</div><small class="text-muted">Open POs</small></div></div></div>
+    <div class="col-md-3 col-sm-6 mb-2"><div class="card border-primary"><div class="card-body p-2 text-center"><div class="h4 mb-0">0</div><small class="text-muted">ASNs pending</small></div></div></div>
+    <div class="col-md-3 col-sm-6 mb-2"><div class="card border-primary"><div class="card-body p-2 text-center"><div class="h4 mb-0">0</div><small class="text-muted">Receipts in flight</small></div></div></div>
+    <div class="col-md-3 col-sm-6 mb-2"><div class="card border-primary"><div class="card-body p-2 text-center"><div class="h4 mb-0">0</div><small class="text-muted">Putaway tasks</small></div></div></div>
+</div>
+<div class="row mb-3">
+    <div class="col-md-3 col-sm-6 mb-2"><div class="card border-success"><div class="card-body p-2 text-center"><div class="h4 mb-0">1</div><small class="text-muted">Open sales orders</small></div></div></div>
+    <div class="col-md-3 col-sm-6 mb-2"><div class="card border-success"><div class="card-body p-2 text-center"><div class="h4 mb-0">1</div><small class="text-muted">Active waves</small></div></div></div>
+    <div class="col-md-3 col-sm-6 mb-2"><div class="card border-success"><div class="card-body p-2 text-center"><div class="h4 mb-0">2</div><small class="text-muted">Open pick tasks</small></div></div></div>
+    <div class="col-md-3 col-sm-6 mb-2"><div class="card border-success"><div class="card-body p-2 text-center"><div class="h4 mb-0">1</div><small class="text-muted">Shipments planned/packed</small></div></div></div>
+</div>
+<div class="row mb-4">
+    <div class="col-md-3 col-sm-6 mb-2"><div class="card border-warning"><div class="card-body p-2 text-center"><div class="h4 mb-0">0</div><small class="text-muted">Open RMAs</small></div></div></div>
+    <div class="col-md-3 col-sm-6 mb-2"><div class="card border-warning"><div class="card-body p-2 text-center"><div class="h4 mb-0">0</div><small class="text-muted">Count sessions</small></div></div></div>
+    <div class="col-md-3 col-sm-6 mb-2"><div class="card border-warning"><div class="card-body p-2 text-center"><div class="h4 mb-0">0</div><small class="text-muted">Replen tasks</small></div></div></div>
+    <div class="col-md-3 col-sm-6 mb-2"><div class="card border-warning"><div class="card-body p-2 text-center"><div class="h4 mb-0">0</div><small class="text-muted">Inventory holds</small></div></div></div>
+</div>
+<div class="row mb-4">
+    <div class="col-md-3 col-sm-6 mb-2"><div class="card border-danger"><div class="card-body p-2 text-center"><div class="h4 mb-0">0</div><small class="text-muted">Open alerts</small></div></div></div>
+    <div class="col-md-3 col-sm-6 mb-2"><div class="card border-danger"><div class="card-body p-2 text-center"><div class="h4 mb-0">0</div><small class="text-muted">Running workflows</small></div></div></div>
+    <div class="col-md-3 col-sm-6 mb-2"><div class="card border-danger"><div class="card-body p-2 text-center"><div class="h4 mb-0">0</div><small class="text-muted">Open NCRs</small></div></div></div>
+    <div class="col-md-3 col-sm-6 mb-2"><div class="card border-danger"><div class="card-body p-2 text-center"><div class="h4 mb-0">0</div><small class="text-muted">Unbilled events</small></div></div></div>
+</div>
+
+
+<h3 class="mt-2 mb-3">Workflow centers</h3>
+<div class="row">
+    <div class="col-lg-4 col-md-6 mb-3">
+        <a href="wms/inbound" class="text-decoration-none text-dark">
+          <div class="card h-100 shadow-sm"><div class="card-body">
+            <h5 class="card-title text-primary">ð¦ Inbound</h5>
+            <p class="card-text text-muted small mb-1">Receive against ASN/PO, build LPNs, putaway. Drive goods from the dock to a storage bin.</p>
+            <p class="small mb-0">Open POs <b>1</b> &middot; ASNs pending <b>0</b> &middot; Receipts <b>0</b></p>
+          </div></div>
+        </a>
+    </div>
+    <div class="col-lg-4 col-md-6 mb-3">
+        <a href="wms/stock" class="text-decoration-none text-dark">
+          <div class="card h-100 shadow-sm"><div class="card-body">
+            <h5 class="card-title text-primary">ð Stock</h5>
+            <p class="card-text text-muted small mb-1">Find on-hand, drill into items / locations / lots / LPNs, move and adjust quantities.</p>
+            <p class="small mb-0">Inventory rows <b>15</b> &middot; Holds <b>0</b> &middot; LPNs <b>2</b></p>
+          </div></div>
+        </a>
+    </div>
+    <div class="col-lg-4 col-md-6 mb-3">
+        <a href="wms/outbound" class="text-decoration-none text-dark">
+          <div class="card h-100 shadow-sm"><div class="card-body">
+            <h5 class="card-title text-primary">ð Outbound</h5>
+            <p class="card-text text-muted small mb-1">Allocate orders, build waves, confirm picks, pack and ship. The whole DC-to-customer arc.</p>
+            <p class="small mb-0">Orders <b>1</b> &middot; Waves <b>1</b> &middot; Picks <b>2</b> &middot; Ship-ready <b>1</b></p>
+          </div></div>
+        </a>
+    </div>
+
+    <div class="col-lg-4 col-md-6 mb-3">
+        <a href="wms/reverse" class="text-decoration-none text-dark">
+          <div class="card h-100 shadow-sm"><div class="card-body">
+            <h5 class="card-title text-warning">â© Returns</h5>
+            <p class="card-text text-muted small mb-1">Process RMAs, inspect, decide disposition (restock / scrap / refurbish / RTV).</p>
+            <p class="small mb-0">Open RMAs <b>0</b></p>
+          </div></div>
+        </a>
+    </div>
+    <div class="col-lg-4 col-md-6 mb-3">
+        <a href="wms/counts" class="text-decoration-none text-dark">
+          <div class="card h-100 shadow-sm"><div class="card-body">
+            <h5 class="card-title text-warning">ð§® Cycle counts</h5>
+            <p class="card-text text-muted small mb-1">Run blind counts, reconcile variance, post adjustments.</p>
+            <p class="small mb-0">Active sessions <b>0</b></p>
+          </div></div>
+        </a>
+    </div>
+    <div class="col-lg-4 col-md-6 mb-3">
+        <a href="wms/replen" class="text-decoration-none text-dark">
+          <div class="card h-100 shadow-sm"><div class="card-body">
+            <h5 class="card-title text-warning">ð Replenishment</h5>
+            <p class="card-text text-muted small mb-1">Top-off pick faces from reserve. Min/max rules drive the queue.</p>
+            <p class="small mb-0">Open replen tasks <b>0</b></p>
+          </div></div>
+        </a>
+    </div>
+
+    <div class="col-lg-4 col-md-6 mb-3">
+        <a href="wms/quality" class="text-decoration-none text-dark">
+          <div class="card h-100 shadow-sm"><div class="card-body">
+            <h5 class="card-title text-danger">â Quality</h5>
+            <p class="card-text text-muted small mb-1">QC plans, inspections at receipt / return / production, NCR workflow.</p>
+            <p class="small mb-0">Open NCRs <b>0</b></p>
+          </div></div>
+        </a>
+    </div>
+    <div class="col-lg-4 col-md-6 mb-3">
+        <a href="wms/yard" class="text-decoration-none text-dark">
+          <div class="card h-100 shadow-sm"><div class="card-body">
+            <h5 class="card-title text-secondary">ð Yard &amp; Dock</h5>
+            <p class="card-text text-muted small mb-1">Appointments, gate moves, dock-door assignments, trailer dwell.</p>
+          </div></div>
+        </a>
+    </div>
+    <div class="col-lg-4 col-md-6 mb-3">
+        <a href="wms/billing" class="text-decoration-none text-dark">
+          <div class="card h-100 shadow-sm"><div class="card-body">
+            <h5 class="card-title text-success">ð° 3PL Billing</h5>
+            <p class="card-text text-muted small mb-1">Rate cards, billing events, monthly invoice runs per client.</p>
+            <p class="small mb-0">Unbilled events <b>0</b></p>
+          </div></div>
+        </a>
+    </div>
+
+    <div class="col-lg-4 col-md-6 mb-3">
+        <a href="wms/setup" class="text-decoration-none text-dark">
+          <div class="card h-100 shadow-sm"><div class="card-body">
+            <h5 class="card-title text-dark">â Setup</h5>
+            <p class="card-text text-muted small mb-1">Tenants, sites, warehouses, zones, users, roles, devices, alerts, workflows.</p>
+          </div></div>
+        </a>
+    </div>
+    <div class="col-lg-4 col-md-6 mb-3">
+        <a href="wms/db_admin" class="text-decoration-none text-dark">
+          <div class="card h-100 shadow-sm"><div class="card-body">
+            <h5 class="card-title text-dark">ð  DB admin</h5>
+            <p class="card-text text-muted small mb-1">Raw list view of all 164 WMS tables. Useful for debugging and ad-hoc data inspection.</p>
+          </div></div>
+        </a>
+    </div>
+</div>
+
+<div class="row mt-3">
+<div class="col-md-6 mb-3"><h5>Recent sales orders</h5>
+<table class='table table-sm table-striped table-bordered'>
+<thead class='bg-primary text-light'>
+<tr>
+<th scope='col'>
+<span>
+Tenant id</span>
+</th>
+<th scope='col'>
+<span>
+Warehouse id</span>
+</th>
+<th scope='col'>
+<span>
+Owner id</span>
+</th>
+<th scope='col'>
+<span>
+Order number</span>
+</th>
+<th scope='col'>
+<span>
+External order number</span>
+</th>
+<th scope='col'>
+<span>
+Channel</span>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td></td>
+<td>SO-2026-0001</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="col-md-6 mb-3"><h5>Recent receipts</h5>
+<table class='table table-sm table-striped table-bordered'>
+<thead class='bg-primary text-light'>
+<tr>
+<th scope='col'>
+<span>
+Tenant id</span>
+</th>
+<th scope='col'>
+<span>
+Warehouse id</span>
+</th>
+<th scope='col'>
+<span>
+Receipt number</span>
+</th>
+<th scope='col'>
+<span>
+Asn id</span>
+</th>
+<th scope='col'>
+<span>
+Purchase order id</span>
+</th>
+<th scope='col'>
+<span>
+Supplier id</span>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class='text-right'>1</td>
+<td>EHV-01</td>
+<td>RC-20260506235250-1</td>
+<td>ASN-2026-0001</td>
+<td></td>
+<td>SUP-ACME</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<script>document.addEventListener('keydown', function(event) {
+    if (event.ctrlKey && event.altKey && event.code === 'KeyV') {
+        const link = document.createElement('a');
+        link.href = 'vscode://file/C:\\casemaster-frontend-package\\Casemaster-WMS\\casemaster-runtime\\page\\wms.cms:8:1';
+        link.style.display = 'none';
+        link.target = '_self';
+
+        document.body.appendChild(link);
+        link.click();
+
+        document.body.removeChild(link);
+    }
+});</script>
+</main>
+<div id='cmModal' class='modal fade' data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden='true'>
+<div id='cmModalDialog' class='modal-dialog modal-lg' role="document">
+<div class='modal-content'>
+<div class='modal-header'>
+<div id='cmModalTitle' class='modal-title h5'>
+</div>
+<button id="cmModalClose" type="button" class="close" data-dismiss="modal"><i class='fas fa-times'></i></button>
+</div>
+<div id='cmModalBody' class='modal-body'>
+<div class='embed-responsive embed-responsive-16by9'>
+<iframe id='cmModalIFrame' class='embed-responsive-item'></iframe>
+</div>
+</div>
+</div>
+</div>
+</div>
+	<script src="http://localhost:5051/static/js/cm.js?v=1.0.0"></script>
+					<script src="http://localhost:5051/static/js/app.js?v=1.0.0"></script>
+</body>
+</html>
+

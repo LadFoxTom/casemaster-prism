@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Playground · casemaster-prism</title>
+<meta name="description" content="Compose prism class strings interactively and copy them to your clipboard.">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#2563eb">
+<meta property="og:title" content="casemaster-prism">
+<meta property="og:description" content="Drop-in design system for CaseMaster apps.">
+<meta property="og:image" content="../assets/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="../assets/og-card.png">
+<link rel="stylesheet" href="../assets/site.css">
+<style>
+  body { background: var(--bg); }
+
+  .pg-shell {
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    gap: 1.25rem;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 1.5rem;
+  }
+  @media (max-width: 980px) { .pg-shell { grid-template-columns: 1fr; } }
+
+  .pg-controls {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    box-shadow: var(--shadow);
+    align-self: start;
+    position: sticky;
+    top: 70px;
+    max-height: calc(100vh - 90px);
+    overflow-y: auto;
+  }
+  .pg-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+    margin: -1.25rem -1.25rem 1rem;
+    background: var(--surface-2);
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+  }
+  .pg-tabs button {
+    background: transparent;
+    border: none;
+    padding: 0.6rem 1rem;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--muted);
+    cursor: pointer;
+    border-right: 1px solid var(--border);
+  }
+  .pg-tabs button:last-child { border-right: 0; }
+  .pg-tabs button.is-active { color: var(--text); background: var(--surface); box-shadow: 0 -2px 0 0 var(--link) inset; }
+
+  .pg-group { display: none; }
+  .pg-group.is-active { display: block; }
+  .pg-group h4 {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    margin: 1rem 0 0.4rem;
+  }
+  .pg-group h4:first-child { margin-top: 0; }
+  .pg-toggles { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+  .pg-toggles button {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 6px;
+    padding: 0.3rem 0.7rem;
+    font-size: 0.78rem;
+    font-family: ui-monospace, Consolas, monospace;
+    cursor: pointer;
+  }
+  .pg-toggles button:hover { background: var(--surface); }
+  .pg-toggles button.is-active {
+    background: var(--link);
+    border-color: var(--link);
+    color: #fff;
+  }
+
+  .pg-radio { display: flex; gap: 0.3rem; }
+  .pg-radio button {
+    flex: 1;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 6px;
+    padding: 0.3rem 0.5rem;
+    font-size: 0.78rem;
+    font-family: ui-monospace, Consolas, monospace;
+    cursor: pointer;
+  }
+  .pg-radio button.is-active { background: var(--link); border-color: var(--link); color: #fff; }
+
+  .pg-tokens {
+    border-top: 1px solid var(--border);
+    padding-top: 1rem;
+    margin-top: 1rem;
+  }
+  .pg-tokens label { display: block; font-size: 0.78rem; color: var(--muted); margin-bottom: 0.25rem; font-weight: 500; }
+  .pg-tokens input[type=color] { width: 100%; }
+  .pg-tokens input[type=range] { width: 100%; }
+  .pg-tokens .row + .row { margin-top: 0.85rem; }
+
+  .pg-stage {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    min-width: 0;
+  }
+  .pg-classstring {
+    background: var(--code-bg);
+    color: var(--code-fg);
+    border-radius: 10px;
+    padding: 0.85rem 1rem;
+    position: relative;
+    font-family: ui-monospace, Consolas, monospace;
+    font-size: 0.85rem;
+  }
+  .pg-classstring code {
+    background: transparent !important;
+    padding: 0 !important;
+    color: var(--code-fg);
+    word-break: break-word;
+  }
+  .pg-classstring .pg-copy {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: rgb(255 255 255 / 0.06);
+    border: 1px solid rgb(255 255 255 / 0.15);
+    color: var(--code-fg);
+    font-family: inherit;
+    font-size: 0.7rem;
+    border-radius: 4px;
+    padding: 0.2rem 0.55rem;
+    cursor: pointer;
+  }
+  .pg-classstring .pg-copy.is-done { color: #4ade80; }
+  .pg-frame {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    flex: 1;
+    box-shadow: var(--shadow);
+    min-height: 480px;
+  }
+  [data-theme="dark"] .pg-frame { background: #0b1220; }
+  .pg-frame iframe { width: 100%; height: 100%; border: 0; min-height: 480px; }
+</style>
+</head>
+<body>
+<div id="gnav-host" data-root="../"></div>
+
+<div class="pg-shell">
+
+  <!-- Controls -->
+  <aside class="pg-controls">
+    <div class="pg-tabs" role="tablist">
+      <button data-tab="button" class="is-active">Button</button>
+      <button data-tab="table">Table</button>
+      <button data-tab="card">Card</button>
+      <button data-tab="alert">Alert</button>
+      <button data-tab="input">Input</button>
+    </div>
+
+    <!-- Button group -->
+    <div class="pg-group is-active" data-group="button">
+      <h4>Intent</h4>
+      <div class="pg-toggles" data-set="single" data-key="intent">
+        <button class="is-active" data-class="btn-primary">btn-primary</button>
+        <button data-class="btn-secondary">btn-secondary</button>
+        <button data-class="btn-success">btn-success</button>
+        <button data-class="btn-danger">btn-danger</button>
+        <button data-class="btn-warning">btn-warning</button>
+        <button data-class="btn-info">btn-info</button>
+        <button data-class="btn-link">btn-link</button>
+        <button data-class="btn-soft-primary">btn-soft-primary</button>
+        <button data-class="btn-soft-success">btn-soft-success</button>
+        <button data-class="btn-soft-danger">btn-soft-danger</button>
+        <button data-class="btn-ghost-primary">btn-ghost-primary</button>
+        <button data-class="btn-outline-primary">btn-outline-primary</button>
+      </div>
+
+      <h4>Size</h4>
+      <div class="pg-toggles" data-set="single" data-key="size">
+        <button data-class="btn-sm">btn-sm</button>
+        <button class="is-active" data-class="">default</button>
+        <button data-class="btn-lg">btn-lg</button>
+      </div>
+
+      <h4>Shape</h4>
+      <div class="pg-toggles" data-set="multi" data-key="shape">
+        <button data-class="btn-pill">btn-pill</button>
+        <button data-class="btn-square">btn-square</button>
+        <button data-class="btn-icon-only">btn-icon-only</button>
+      </div>
+    </div>
+
+    <!-- Table group -->
+    <div class="pg-group" data-group="table">
+      <h4>Density</h4>
+      <div class="pg-toggles" data-set="single" data-key="density">
+        <button data-class="cms-table-compact">compact</button>
+        <button class="is-active" data-class="">default</button>
+        <button data-class="cms-table-comfortable">comfortable</button>
+      </div>
+
+      <h4>Look</h4>
+      <div class="pg-toggles" data-set="single" data-key="look">
+        <button class="is-active" data-class="">default</button>
+        <button data-class="cms-table-elevated">elevated</button>
+        <button data-class="cms-table-flush">flush</button>
+        <button data-class="cms-table-hover-only">hover-only</button>
+      </div>
+    </div>
+
+    <!-- Card group -->
+    <div class="pg-group" data-group="card">
+      <h4>Surface</h4>
+      <div class="pg-toggles" data-set="single" data-key="surface">
+        <button class="is-active" data-class="">default</button>
+        <button data-class="cms-card-elevated">elevated</button>
+        <button data-class="cms-card-outlined">outlined</button>
+      </div>
+      <h4>Status strip</h4>
+      <div class="pg-toggles" data-set="single" data-key="status">
+        <button class="is-active" data-class="">none</button>
+        <button data-class="cms-card-status-primary">primary</button>
+        <button data-class="cms-card-status-success">success</button>
+        <button data-class="cms-card-status-warning">warning</button>
+        <button data-class="cms-card-status-danger">danger</button>
+        <button data-class="cms-card-status-info">info</button>
+      </div>
+      <h4>Behaviour</h4>
+      <div class="pg-toggles" data-set="multi" data-key="behaviour">
+        <button data-class="cms-card-interactive">cms-card-interactive</button>
+      </div>
+    </div>
+
+    <!-- Alert group -->
+    <div class="pg-group" data-group="alert">
+      <h4>Intent</h4>
+      <div class="pg-toggles" data-set="single" data-key="intent">
+        <button class="is-active" data-class="alert-primary">primary</button>
+        <button data-class="alert-success">success</button>
+        <button data-class="alert-warning">warning</button>
+        <button data-class="alert-danger">danger</button>
+        <button data-class="alert-info">info</button>
+      </div>
+      <h4>Style</h4>
+      <div class="pg-toggles" data-set="single" data-key="style">
+        <button class="is-active" data-class="">default</button>
+        <button data-class="cms-alert-subtle">subtle</button>
+        <button data-class="cms-alert-soft">soft</button>
+      </div>
+    </div>
+
+    <!-- Input group -->
+    <div class="pg-group" data-group="input">
+      <h4>Style</h4>
+      <div class="pg-toggles" data-set="single" data-key="style">
+        <button class="is-active" data-class="">default</button>
+        <button data-class="cms-input-filled">filled</button>
+        <button data-class="cms-input-underlined">underlined</button>
+      </div>
+    </div>
+
+    <!-- Token tweakers -->
+    <div class="pg-tokens">
+      <div class="row">
+        <label>--cms-primary</label>
+        <input type="color" id="tokAccent" value="#2563eb">
+      </div>
+      <div class="row">
+        <label>--cms-radius</label>
+        <input type="range" id="tokRadius" min="0" max="24" value="8">
+      </div>
+
+      <div class="row pg-radio" id="presetSwitch">
+        <button data-preset="" class="is-active">Default</button>
+        <button data-preset="linear">Linear</button>
+        <button data-preset="tabler">Tabler</button>
+        <button data-preset="material">Material</button>
+      </div>
+
+      <div class="row pg-radio" id="densitySwitch">
+        <button data-density="" class="is-active">Density</button>
+        <button data-density="compact">Compact</button>
+        <button data-density="comfortable">Comfy</button>
+      </div>
+
+      <div class="row pg-radio" id="modeSwitch">
+        <button data-mode="" class="is-active">Light</button>
+        <button data-mode="dark">Dark</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Stage -->
+  <div class="pg-stage">
+    <div class="pg-classstring">
+      <code id="pg-class"></code>
+      <button class="pg-copy" type="button" aria-label="Copy class string">Copy</button>
+    </div>
+
+    <div class="pg-frame">
+      <iframe id="pg-frame" src="../sandbox.html?demo=table&ui=1" title="prism playground"></iframe>
+    </div>
+  </div>
+</div>
+
+<script>
+  const state = {
+    activeTab: 'button',
+    sets: {
+      button:  { intent: ['btn-primary'], size: [''], shape: [] },
+      table:   { density: [''], look: [''] },
+      card:    { surface: [''], status: [''], behaviour: [] },
+      alert:   { intent: ['alert-primary'], style: [''] },
+      input:   { style: [''] },
+    },
+    accent: '#2563eb',
+    radius: 8,
+    preset: '',
+    density: '',
+    mode: '',
+  };
+
+  const TAB_TO_DEMO = {
+    button: 'variants-buttons',
+    table:  'toolbar-table',
+    card:   'variants-cards',
+    alert:  'variants-alerts',
+    input:  'variants-inputs',
+  };
+
+  function classStringFor(tab) {
+    const groups = state.sets[tab];
+    const parts = [];
+    if (tab === 'button') parts.push('btn');
+    if (tab === 'table')  parts.push('table table-sm table-striped table-bordered');
+    if (tab === 'card')   parts.push('card');
+    if (tab === 'alert')  parts.push('alert');
+    if (tab === 'input')  parts.push('form-control');
+    for (const k of Object.keys(groups)) parts.push(...groups[k].filter(Boolean));
+    return parts.join(' ').replace(/\s+/g, ' ').trim();
+  }
+
+  function refreshClassString() {
+    const text = classStringFor(state.activeTab);
+    document.getElementById('pg-class').textContent = text;
+  }
+
+  function refreshFrame() {
+    const u = new URL('../sandbox.html', location.href);
+    u.searchParams.set('demo', TAB_TO_DEMO[state.activeTab]);
+    u.searchParams.set('ui', '1');
+    if (state.preset)  u.searchParams.set('preset',  state.preset);
+    if (state.density) u.searchParams.set('density', state.density);
+    if (state.mode)    u.searchParams.set('theme',   state.mode);
+    if (state.accent && state.accent !== '#2563eb') u.searchParams.set('accent', state.accent);
+    if (state.radius && state.radius !== 8)         u.searchParams.set('radius', state.radius);
+    document.getElementById('pg-frame').src = u.toString();
+  }
+
+  // Tab switching
+  document.querySelectorAll('.pg-tabs button').forEach((b) => {
+    b.addEventListener('click', () => {
+      state.activeTab = b.dataset.tab;
+      document.querySelectorAll('.pg-tabs button').forEach((x) => x.classList.toggle('is-active', x === b));
+      document.querySelectorAll('.pg-group').forEach((g) => g.classList.toggle('is-active', g.dataset.group === state.activeTab));
+      refreshClassString();
+      refreshFrame();
+    });
+  });
+
+  // Class togglers
+  document.querySelectorAll('.pg-toggles').forEach((wrap) => {
+    const set = wrap.dataset.set;  // 'single' or 'multi'
+    const key = wrap.dataset.key;
+    const tab = wrap.closest('.pg-group').dataset.group;
+    wrap.querySelectorAll('button').forEach((b) => {
+      b.addEventListener('click', () => {
+        if (set === 'single') {
+          wrap.querySelectorAll('button').forEach((x) => x.classList.toggle('is-active', x === b));
+          state.sets[tab][key] = [b.dataset.class];
+        } else {
+          b.classList.toggle('is-active');
+          state.sets[tab][key] = [...wrap.querySelectorAll('button.is-active')].map((x) => x.dataset.class).filter(Boolean);
+        }
+        refreshClassString();
+      });
+    });
+  });
+
+  // Token tweakers
+  document.getElementById('tokAccent').addEventListener('input', (e) => { state.accent = e.target.value; refreshFrame(); });
+  document.getElementById('tokRadius').addEventListener('input', (e) => { state.radius = e.target.value; refreshFrame(); });
+
+  // Preset / density / mode switches
+  document.querySelectorAll('#presetSwitch button').forEach((b) => {
+    b.addEventListener('click', () => {
+      document.querySelectorAll('#presetSwitch button').forEach((x) => x.classList.toggle('is-active', x === b));
+      state.preset = b.dataset.preset;
+      refreshFrame();
+    });
+  });
+  document.querySelectorAll('#densitySwitch button').forEach((b) => {
+    b.addEventListener('click', () => {
+      document.querySelectorAll('#densitySwitch button').forEach((x) => x.classList.toggle('is-active', x === b));
+      state.density = b.dataset.density;
+      refreshFrame();
+    });
+  });
+  document.querySelectorAll('#modeSwitch button').forEach((b) => {
+    b.addEventListener('click', () => {
+      document.querySelectorAll('#modeSwitch button').forEach((x) => x.classList.toggle('is-active', x === b));
+      state.mode = b.dataset.mode;
+      refreshFrame();
+    });
+  });
+
+  // Copy button
+  document.querySelector('.pg-copy').addEventListener('click', async (e) => {
+    const code = document.getElementById('pg-class').textContent;
+    try {
+      await navigator.clipboard.writeText(code);
+      e.target.textContent = 'Copied';
+      e.target.classList.add('is-done');
+      setTimeout(() => { e.target.textContent = 'Copy'; e.target.classList.remove('is-done'); }, 1400);
+    } catch {
+      e.target.textContent = 'Manual';
+    }
+  });
+
+  refreshClassString();
+  refreshFrame();
+</script>
+
+<script src="../assets/site.js"></script>
+
+<script src="../assets/nav.js"></script>
+</body>
+</html>

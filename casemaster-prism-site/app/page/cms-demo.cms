@@ -1,0 +1,112 @@
+// Homepage of the casemaster-prism marketing site, served by cms-vercel.
+//
+// This page IS a CaseMaster .cms app — its purpose is to prove that
+// prism applies cleanly to real CaseMaster-rendered output. The runtime
+// emits standard Bootstrap 4 HTML; cms-vercel's `wrapInDefaultShell`
+// adds the prism CSS + JS via the `ui: 'pro'` option in api/index.ts.
+
+inherits 'base'
+
+function main()
+    page.render(page.get('./body'))
+end-function
+
+protected resource body
+    <@page/html
+        resolveTemplate(
+            `<div class="container py-4" style="max-width: 1080px">
+
+              <p class="text-muted small mb-2" style="text-transform:uppercase;letter-spacing:.06em;font-weight:600">
+                CaseMaster app · served by cms-vercel
+              </p>
+              <h1 class="display-5 mb-2" style="letter-spacing:-0.01em">casemaster-prism</h1>
+              <p class="lead text-muted">
+                You're looking at a real <code>.cms</code> page rendered by
+                cms-vercel and themed by <code>casemaster-prism</code>. Same
+                package you'd add to any CaseMaster app — applied here to
+                its own marketing site.
+              </p>
+
+              <div class="d-flex flex-wrap mt-3 mb-5" style="gap:.5rem">
+                <a class="btn btn-primary btn-pill" href="/">← Back to landing</a>
+                <a class="btn btn-soft-primary btn-pill" href="/docs/getting-started.html">Get started</a>
+                <a class="btn btn-ghost btn-pill" href="/playground/">Playground</a>
+              </div>
+
+              <div class="row mb-4">
+                <div class="col-md-3 col-sm-6 mb-3">
+                  <div class="card cms-stat-card cms-card-status-primary"><div class="card-body">
+                    <div class="cms-stat-label">Components</div>
+                    <div class="cms-stat-value">10</div>
+                    <div class="cms-stat-trend">themed</div>
+                  </div></div>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-3">
+                  <div class="card cms-stat-card cms-card-status-success"><div class="card-body">
+                    <div class="cms-stat-label">Preset themes</div>
+                    <div class="cms-stat-value">3</div>
+                    <div class="cms-stat-trend up">Linear · Tabler · Material</div>
+                  </div></div>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-3">
+                  <div class="card cms-stat-card cms-card-status-warning"><div class="card-body">
+                    <div class="cms-stat-label">Bundle size</div>
+                    <div class="cms-stat-value">~14<small class="text-muted"> KB gz</small></div>
+                    <div class="cms-stat-trend">CSS · JS lazy-loaded</div>
+                  </div></div>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-3">
+                  <div class="card cms-stat-card cms-card-status-info"><div class="card-body">
+                    <div class="cms-stat-label">Runtimes verified</div>
+                    <div class="cms-stat-value">2 / 2</div>
+                    <div class="cms-stat-trend up">CaseMaster.Web.exe · cms-vercel</div>
+                  </div></div>
+                </div>
+              </div>
+
+              <h3 class="mb-3">Sample inventory page</h3>
+              <p class="text-muted small mb-3">
+                Real <code>&lt;table class='table table-striped table-bordered'&gt;</code>
+                emitted by this <code>.cms</code> page. prism's enhancer
+                attaches the toolbar, sortable headers, and CSV export
+                automatically.
+              </p>
+
+              <table class='table table-sm table-striped table-bordered cms-table-elevated'>
+                <thead class='bg-primary text-light'>
+                  <tr><th>SKU</th><th>Name</th><th>Qty</th><th>Updated</th><th>Status</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>A-100</td><td>Widget</td><td class='text-right'>120</td><td>2026-05-04</td><td><span class="badge badge-success">In stock</span></td></tr>
+                  <tr><td>A-101</td><td>Gadget</td><td class='text-right'>40</td><td>2026-05-06</td><td><span class="badge badge-success">In stock</span></td></tr>
+                  <tr><td>B-220</td><td>Sprocket</td><td class='text-right'>1,400</td><td>2026-05-07</td><td><span class="badge badge-success">In stock</span></td></tr>
+                  <tr><td>B-221</td><td>Cog</td><td class='text-right'>3</td><td>2026-05-08</td><td><span class="badge badge-warning">Low</span></td></tr>
+                  <tr><td>C-330</td><td>Bracket</td><td class='text-right'>200</td><td>2026-04-30</td><td><span class="badge badge-success">In stock</span></td></tr>
+                  <tr><td>C-331</td><td>Bolt M8</td><td class='text-right'>0</td><td>2026-04-22</td><td><span class="badge badge-danger">Out</span></td></tr>
+                </tbody>
+              </table>
+
+              <h3 class="mt-5 mb-3">Where this comes from</h3>
+              <table class="table table-sm table-bordered">
+                <thead class="bg-primary text-light"><tr><th>Layer</th><th>What it does</th></tr></thead>
+                <tbody>
+                  <tr><td><code>app/page/cms-demo.cms</code></td><td>This file. Renders the page body via &lt;@page/html&gt;.</td></tr>
+                  <tr><td><code>api/index.ts</code></td><td>One line: <code>createHandler({ ui: 'pro' })</code>.</td></tr>
+                  <tr><td>cms-vercel runtime</td><td>Parses .cms, renders HTML, wraps it in a default shell that loads prism.</td></tr>
+                  <tr><td>casemaster-prism</td><td>Themes the BS4 markup; lazy-loads enhancer chunks.</td></tr>
+                </tbody>
+              </table>
+
+              <p class="mt-5 mb-2 text-muted small">View source on this page:</p>
+              <p class="text-muted small mb-5">
+                <code>/page/cms-demo</code> &nbsp;·&nbsp;
+                served by <code>casemaster-prism-site/</code> (a cms-vercel
+                application). The HTML you see is emitted by
+                <code>app/page/cms-demo.cms</code>; the polish you see is
+                <code>casemaster-prism</code> applied via one config option.
+              </p>
+
+            </div>`
+        )
+    >
+end-resource

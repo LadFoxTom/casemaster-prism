@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Getting started · casemaster-prism</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#2563eb">
+<meta property="og:title" content="casemaster-prism">
+<meta property="og:description" content="Drop-in design system for CaseMaster apps.">
+<meta property="og:image" content="../assets/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="../assets/og-card.png">
+<link rel="stylesheet" href="./assets/docs.css">
+</head>
+<body>
+<div id="gnav-host" data-root="../"></div>
+
+<main class="docs-content">
+    <p class="docs-breadcrumb"><a href="../">Home</a> &nbsp;/&nbsp; <a href="./index.html">Docs</a> &nbsp;/&nbsp; Getting started</p>
+
+    <h1>Getting started</h1>
+    <p class="docs-lead">
+      Pick your runtime. Paste two snippets. Hard-reload. You're done.
+    </p>
+
+    <div class="toc">
+      <div class="toc-label">On this page</div>
+      <ol>
+        <li><a href="#preflight">Pre-flight checklist</a></li>
+        <li><a href="#dotnet">.NET runtime — 30-second install</a></li>
+        <li><a href="#vercel">cms-vercel — 30-second install</a></li>
+        <li><a href="#verify">Verify it's working</a></li>
+        <li><a href="#tweak">Tweak the look</a></li>
+        <li><a href="#rollback">Roll back</a></li>
+      </ol>
+    </div>
+
+    <h2 id="preflight">Pre-flight checklist</h2>
+    <p>Five things to verify <em>before</em> you install:</p>
+    <ol>
+      <li><strong>Bootstrap 4 stack confirmed.</strong> prism is built
+        for the BS4 markup both runtimes emit. BS5 / BS3 apps aren't
+        supported yet.</li>
+      <li><strong>Your <code>app.css</code> / <code>app.js</code> are
+        clean append targets.</strong> No conflicting <code>@import</code>
+        URLs at the top.</li>
+      <li><strong>Note any in-app tables that already use a custom sort
+        library.</strong> Tag them <code>data-cms-no-enhance</code> or
+        prism's table enhancer will compete with them.</li>
+      <li><strong>Note any custom navbar branding image.</strong>
+        prism re-tones <code>bg-primary</code> through
+        <code>--cms-primary</code>. White-on-primary logos stay
+        visible; coloured logos may need a token override.</li>
+      <li><strong>(.NET only)</strong> Confirm you still want Select2 on
+        the selects the framework auto-wraps. prism's forms enhancer
+        skips them — Select2 wins on those.</li>
+    </ol>
+
+    <h2 id="dotnet">.NET runtime — 30-second install</h2>
+    <p>The runtime ships an HTML shell that always loads
+      <code>static/css/app.css</code> and <code>static/js/app.js</code>
+      at the bottom of every page. App authors hook in through those
+      two files. We never patch the framework itself.</p>
+
+    <h3 id="dotnet-vendor">1. Drop the bundle into <code>static/lib/prism/</code></h3>
+<pre><code># PowerShell — adjust the runtime root path for your install
+$src  = "$env:USERPROFILE\.prism-src\node_modules\casemaster-prism\dist"
+$dst  = "C:\Casemaster-WMS\runtime\static\lib\prism"
+Remove-Item $dst -Recurse -Force -ErrorAction SilentlyContinue
+New-Item   $dst -ItemType Directory | Out-Null
+Copy-Item  "$src\*" $dst -Recurse</code></pre>
+
+    <h3 id="dotnet-css">2. Append to <code>static/css/app.css</code></h3>
+<pre><code>/* App-wide overrides above; everything below is owned by prism. */
+@import url('/static/lib/prism/prism.min.css');
+
+/* Optional: per-app brand override */
+:root { --cms-primary: #0ea5e9; }</code></pre>
+
+    <h3 id="dotnet-js">3. Append to <code>static/js/app.js</code></h3>
+<pre><code>(function () {
+  // Optional config — disable any enhancer here:
+  // window.cmsUi = { shortcuts: false, inlineEdit: false };
+  window.cmsUi = window.cmsUi || {};
+
+  var s = document.createElement('script');
+  s.type = 'module';
+  s.src = '/static/lib/prism/prism.js';
+  document.body.appendChild(s);
+})();</code></pre>
+
+    <p>That's the full integration. Survives <code>git pull</code> of
+      the framework. See
+      <a href="./integration-dotnet.html">.NET integration</a> for the
+      CDN alternative.</p>
+
+    <h2 id="vercel">cms-vercel — 30-second install</h2>
+    <p>One option in <code>api/index.ts</code>:</p>
+<pre><code>import { createHandler } from 'cms-vercel';
+
+export default createHandler({
+  ui: 'pro', // theme + enhancers
+});</code></pre>
+    <p>The runtime injects the <code>&lt;link&gt;</code> /
+      <code>&lt;script&gt;</code> tags into the default HTML shell.
+      See <a href="./integration-vercel.html">cms-vercel integration</a>
+      for granular control and vendoring.</p>
+
+    <h2 id="verify">Verify it's working</h2>
+    <ol>
+      <li>Open a page that emits <code>&lt;table class='table table-striped …'&gt;</code>
+        with at least 2 rows.</li>
+      <li>Hover a column header → cursor becomes a pointer; ↕ icon visible.</li>
+      <li>Click a header → rows reorder; ▲ / ▼ shows the active sort.</li>
+      <li>Above the table you should see a toolbar with
+        <em>Filter rows…</em> input, <em>Columns</em> button, <em>CSV</em>
+        button, and an <em>"N rows"</em> counter.</li>
+      <li>Press <kbd>/</kbd> on the page → the filter input gains focus.</li>
+      <li>Press <kbd>Cmd</kbd>+<kbd>K</kbd> (or <kbd>Ctrl</kbd>+<kbd>K</kbd>)
+        → command palette opens.</li>
+      <li>DevTools console → no warnings about double-enhanced inputs.</li>
+    </ol>
+
+    <div class="docs-callout is-warning">
+      <strong>Browser cache</strong>
+      Both runtimes ship a hardcoded <code>?v=1.0.0</code> cache-buster
+      on <code>app.css</code> / <code>app.js</code>. Hard-reload
+      (<kbd>Ctrl</kbd>+<kbd>F5</kbd>) once after first install or your
+      browser will keep serving the old empty <code>app.css</code>.
+    </div>
+
+    <h2 id="tweak">Tweak the look</h2>
+
+    <h3 id="brand-colour">Brand colour</h3>
+<pre><code>:root {
+  --cms-primary: #7c3aed;   /* override anywhere in your CSS */
+  --cms-radius:  6px;
+}</code></pre>
+
+    <h3 id="preset-theme">Apply a preset theme</h3>
+<pre><code>&lt;html data-cms-theme="linear" data-cms-density="compact"&gt;</code></pre>
+    <p>See <a href="./themes.html">Preset themes</a> for the full list.</p>
+
+    <h3 id="dark-mode">Dark mode</h3>
+<pre><code>&lt;html data-theme="dark"&gt;</code></pre>
+
+    <h2 id="rollback">Roll back</h2>
+    <p>Comment two lines and the world is exactly as it was:</p>
+<pre><code>/* app.css */
+/* @import url('/static/lib/prism/prism.min.css'); */</code></pre>
+<pre><code>// app.js — comment the script.src injection
+// document.body.appendChild(s);</code></pre>
+    <p>No leftover state, no migrations to undo. Hard-reload and the
+      app reverts to bare Bootstrap 4.</p>
+
+    <div class="docs-footer-nav">
+      <a href="./index.html">
+        <small>← Previous</small>
+        Docs home
+      </a>
+      <a class="next" href="./themes.html">
+        <small>Next →</small>
+        Preset themes
+      </a>
+    </div>
+  </main>
+
+<script src="./assets/docs.js"></script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>

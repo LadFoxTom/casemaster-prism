@@ -1,0 +1,86 @@
+/* Tabler preset — opt in via <html data-cms-theme="tabler">.
+ *
+ * Tabler is an open-source Bootstrap-based admin kit. Its visual
+ * language: Microsoft-ish neutrals, defined elevation tiers, blue
+ * primary (#206bc4), 4 px corners, generous breathing room.
+ *
+ * Source palette:
+ *   bg          #f6f8fb
+ *   surface     #ffffff
+ *   border      #e6e7e9
+ *   text        #1d273b
+ *   muted       #67758d
+ *   accent      #206bc4
+ */
+
+[data-cms-theme="tabler"] {
+  --cms-primary:        #206bc4;
+  --cms-primary-hover:  #1a5aa6;
+  --cms-primary-active: #154d8c;
+  --cms-primary-fade:   rgb(32 107 196 / 0.10);
+
+  --cms-success:        #2fb344;
+  --cms-success-fade:   rgb(47 179 68 / 0.12);
+  --cms-warning:        #f76707;
+  --cms-warning-fade:   rgb(247 103 7 / 0.12);
+  --cms-danger:         #d63939;
+  --cms-danger-fade:    rgb(214 57 57 / 0.10);
+  --cms-info:           #4299e1;
+  --cms-info-fade:      rgb(66 153 225 / 0.10);
+
+  --cms-bg:             #f6f8fb;
+  --cms-surface:        #ffffff;
+  --cms-surface-2:      #f1f5f9;
+  --cms-surface-hover:  #f8fafc;
+  --cms-border:         #e6e7e9;
+  --cms-border-strong:  #cdd1d6;
+  --cms-text:           #1d273b;
+  --cms-text-muted:     #67758d;
+  --cms-text-faint:     #94a3b8;
+  --cms-link:           #206bc4;
+
+  --cms-radius:    4px;
+  --cms-radius-sm: 3px;
+  --cms-radius-lg: 6px;
+
+  --cms-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  /* Tabler defines clear elevation tiers */
+  --cms-shadow-xs: 0 1px 1px rgb(28 38 60 / 0.04);
+  --cms-shadow-sm: 0 1px 2px rgb(28 38 60 / 0.06);
+  --cms-shadow:    0 2px 6px rgb(28 38 60 / 0.08), 0 0 0 1px rgb(28 38 60 / 0.04);
+  --cms-shadow-lg: 0 6px 20px -6px rgb(28 38 60 / 0.18);
+  --cms-shadow-focus: 0 0 0 3px rgb(32 107 196 / 0.25);
+}
+
+/* Tabler dark mode */
+[data-cms-theme="tabler"][data-theme="dark"] {
+  color-scheme: dark;
+  --cms-bg:             #1a2234;
+  --cms-surface:        #232e44;
+  --cms-surface-2:      #2c3855;
+  --cms-surface-hover:  #34405e;
+  --cms-border:         #3b486b;
+  --cms-border-strong:  #51618a;
+  --cms-text:           #e6eaf2;
+  --cms-text-muted:     #9ba9c4;
+  --cms-text-faint:     #6f7d97;
+}
+
+/* Tabler-style strong header on tables — slightly tinted */
+[data-cms-theme="tabler"] .cms-table thead,
+[data-cms-theme="tabler"] table.table-striped thead {
+  background: var(--cms-surface-2) !important;
+}
+[data-cms-theme="tabler"] .cms-table thead th,
+[data-cms-theme="tabler"] table.table-striped thead th {
+  border-bottom: 2px solid var(--cms-border-strong) !important;
+  font-size: 0.74rem !important;
+}
+
+/* Tabler card with header background */
+[data-cms-theme="tabler"] .card-header {
+  background: var(--cms-surface);
+  border-bottom: 1px solid var(--cms-border);
+  font-size: var(--cms-text-sm);
+}

@@ -1,0 +1,114 @@
+/* Material preset — opt in via <html data-cms-theme="material">.
+ *
+ * Material You / Material 3 — Google's late-Material design language.
+ * Pronounced corner radii (12 px), tonal-purple primary (#6750a4),
+ * three elevation tiers, slightly larger touch targets, Roboto font.
+ *
+ * Source palette (Material 3 default tonal):
+ *   bg          #fffbfe
+ *   surface     #fffbfe
+ *   surface-2   #f6edff
+ *   border      #cac4d0
+ *   text        #1c1b1f
+ *   muted       #49454f
+ *   accent      #6750a4
+ */
+
+[data-cms-theme="material"] {
+  --cms-primary:        #6750a4;
+  --cms-primary-hover:  #563d97;
+  --cms-primary-active: #45307c;
+  --cms-primary-fade:   rgb(103 80 164 / 0.12);
+
+  --cms-success:        #1b873f;
+  --cms-success-fade:   rgb(27 135 63 / 0.12);
+  --cms-warning:        #ef6c00;
+  --cms-warning-fade:   rgb(239 108 0 / 0.12);
+  --cms-danger:         #b3261e;
+  --cms-danger-fade:    rgb(179 38 30 / 0.10);
+  --cms-info:           #0288d1;
+  --cms-info-fade:      rgb(2 136 209 / 0.12);
+
+  --cms-bg:             #fffbfe;
+  --cms-surface:        #ffffff;
+  --cms-surface-2:      #f6edff;
+  --cms-surface-hover:  #efe5fa;
+  --cms-border:         #e7e0ec;
+  --cms-border-strong:  #cac4d0;
+  --cms-text:           #1c1b1f;
+  --cms-text-muted:     #49454f;
+  --cms-text-faint:     #79747e;
+  --cms-link:           #6750a4;
+
+  /* Material You is rounder than classic Material */
+  --cms-radius:    12px;
+  --cms-radius-sm: 8px;
+  --cms-radius-lg: 20px;
+
+  --cms-font: "Roboto", "Roboto Flex", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  /* Material's three-tier elevation */
+  --cms-shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --cms-shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.08), 0 1px 2px 0 rgb(0 0 0 / 0.04);
+  --cms-shadow:    0 4px 8px -2px rgb(0 0 0 / 0.10), 0 2px 4px -1px rgb(0 0 0 / 0.06);
+  --cms-shadow-lg: 0 12px 24px -8px rgb(0 0 0 / 0.18), 0 6px 12px -6px rgb(0 0 0 / 0.10);
+  --cms-shadow-focus: 0 0 0 3px rgb(103 80 164 / 0.20);
+
+  /* Material's slightly larger touch targets */
+  --cms-control-h:    40px;
+  --cms-control-h-sm: 32px;
+  --cms-control-h-lg: 48px;
+}
+
+[data-cms-theme="material"][data-theme="dark"] {
+  color-scheme: dark;
+  --cms-bg:             #1c1b1f;
+  --cms-surface:        #2b2930;
+  --cms-surface-2:      #36343b;
+  --cms-surface-hover:  #44424a;
+  --cms-border:         #36343b;
+  --cms-border-strong:  #4a4750;
+  --cms-text:           #e6e1e5;
+  --cms-text-muted:     #cac4d0;
+  --cms-text-faint:     #938f99;
+  --cms-primary:        #d0bcff;
+  --cms-primary-hover:  #b69aff;
+  --cms-primary-active: #9a7ce8;
+  --cms-primary-fade:   rgb(208 188 255 / 0.16);
+}
+
+/* Material buttons get a contained-style ripple feel via box-shadow */
+[data-cms-theme="material"] .btn { font-weight: 500; letter-spacing: 0.01em; text-transform: none; }
+[data-cms-theme="material"] .btn-primary {
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.10), 0 1px 3px 1px rgb(103 80 164 / 0.15);
+}
+[data-cms-theme="material"] .btn-primary:hover:not(:disabled) {
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.15), 0 2px 6px 2px rgb(103 80 164 / 0.20);
+}
+
+/* Cards drop a soft Material elevation-1 shadow */
+[data-cms-theme="material"] .card {
+  border: 1px solid transparent;
+  box-shadow: var(--cms-shadow-sm);
+}
+[data-cms-theme="material"] .card:hover { box-shadow: var(--cms-shadow); }
+
+/* Material-style filled inputs */
+[data-cms-theme="material"] .form-control,
+[data-cms-theme="material"] .custom-select {
+  background: var(--cms-surface-2);
+  border-color: transparent;
+}
+[data-cms-theme="material"] .form-control:focus,
+[data-cms-theme="material"] .custom-select:focus {
+  background: var(--cms-surface);
+  border-color: var(--cms-primary) !important;
+}
+
+/* Larger sortable headers */
+[data-cms-theme="material"] .cms-table thead th,
+[data-cms-theme="material"] table.table-striped thead th {
+  font-size: 0.78rem !important;
+  letter-spacing: 0.05em;
+  padding: 0.85rem 1rem !important;
+}

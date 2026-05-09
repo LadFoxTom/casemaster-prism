@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Keyboard shortcuts · casemaster-prism docs</title>
+<meta name="description" content="Keyboard shortcuts — casemaster-prism docs">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#2563eb">
+<meta property="og:title" content="casemaster-prism">
+<meta property="og:description" content="Drop-in design system for CaseMaster apps.">
+<meta property="og:image" content="../../assets/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="../../assets/og-card.png">
+<link rel="stylesheet" href="../assets/docs.css">
+</head>
+<body>
+<div id="gnav-host" data-root="../../"></div>
+
+<main class="docs-content">
+    <p class="docs-breadcrumb"><a href="../../">Home</a> &nbsp;/&nbsp; <a href="../index.html">Docs</a> &nbsp;/&nbsp; Enhancers &nbsp;/&nbsp; Keyboard shortcuts</p>
+
+    <h1>Keyboard shortcuts</h1>
+    <p class="docs-lead">Linear-style shortcuts: <kbd>/</kbd>, <kbd>?</kbd>, <kbd>Cmd</kbd>+<kbd>K</kbd>, <kbd>g</kbd> chords.</p>
+
+    <h2 id='defaults'>Default shortcuts</h2>
+    <table>
+      <thead><tr><th>Chord</th><th>Action</th></tr></thead>
+      <tbody>
+        <tr><td><kbd>/</kbd></td><td>Focus the page's first search input.</td></tr>
+        <tr><td><kbd>?</kbd></td><td>Toggle the shortcut help overlay.</td></tr>
+        <tr><td><kbd>Cmd</kbd>+<kbd>K</kbd> / <kbd>Ctrl</kbd>+<kbd>K</kbd></td><td>Open command palette.</td></tr>
+        <tr><td><kbd>Esc</kbd></td><td>Close active overlay (palette / help).</td></tr>
+        <tr><td><kbd>g</kbd> <kbd>d</kbd></td><td>Goto dashboard (configurable).</td></tr>
+        <tr><td><kbd>g</kbd> <kbd>i</kbd></td><td>Goto inventory.</td></tr>
+        <tr><td><kbd>g</kbd> <kbd>s</kbd></td><td>Goto settings.</td></tr>
+      </tbody>
+    </table>
+    <p>Shortcuts are suppressed while the user is typing in a form field.</p>
+
+    <h2 id='custom'>Override</h2>
+<pre><code>window.cmsUi = {
+  shortcuts: {
+    focusSearch:  '/',
+    openCommand:  'mod+k',
+    toggleHelp:   '?',
+    closeOverlay: 'Escape',
+    goto: {
+      'd': '/page/wms',
+      'i': '/page/wms/item',
+      's': '/page/settings',
+    },
+  },
+};</code></pre>
+
+    <div class="docs-footer-nav"><a href="./toasts.html"><small>← Previous</small>Toasts</a><a class="next" href="./modal-links.html"><small>Next →</small>Modal-link drawer</a></div>
+  </main>
+
+<script>
+  // Inject the sidebar HTML manually (relative path differs per depth)
+  (function () {
+    fetch('../_sidebar.html').then((r) => r.text()).then((h) => {
+      const host = document.getElementById('docs-sidebar-host');
+      if (!host) return;
+      host.innerHTML = h;
+      const here = location.pathname.split('/').pop();
+      host.querySelectorAll('a[href]').forEach((a) => {
+        const t = a.getAttribute('href').split('/').pop();
+        if (t === here) a.classList.add('is-current');
+      });
+      const search = host.querySelector('.docs-search');
+      if (search) search.addEventListener('input', () => {
+        const q = search.value.trim().toLowerCase();
+        host.querySelectorAll('.docs-nav a').forEach((a) => {
+          a.classList.toggle('is-hidden', !!q && !a.textContent.toLowerCase().includes(q));
+        });
+      });
+    });
+  })();
+</script>
+<script src="../assets/docs.js"></script>
+<script src="../../assets/nav.js"></script>
+</body>
+</html>

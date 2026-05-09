@@ -1,0 +1,181 @@
+/* Forms — both runtimes use BS4 .form-control / .form-group / .custom-select */
+
+.form-control,
+.custom-select {
+  border: 1px solid var(--cms-border-strong);
+  border-radius: var(--cms-radius);
+  padding: 0.45rem 0.75rem;
+  font-size: var(--cms-text-sm);
+  height: var(--cms-control-h);
+  color: var(--cms-text);
+  background: var(--cms-surface);
+  transition:
+    border-color var(--cms-dur) var(--cms-ease),
+    box-shadow var(--cms-dur) var(--cms-ease);
+}
+
+.form-control:hover,
+.custom-select:hover {
+  border-color: var(--cms-text-faint);
+}
+
+.form-control:focus,
+.custom-select:focus {
+  border-color: var(--cms-primary) !important;
+  box-shadow: var(--cms-shadow-focus) !important;
+  outline: none;
+}
+
+.form-control:disabled,
+.form-control[readonly] {
+  background: var(--cms-surface-2);
+  color: var(--cms-text-muted);
+  cursor: not-allowed;
+}
+
+.form-control.is-invalid,
+.was-validated .form-control:invalid {
+  border-color: var(--cms-danger) !important;
+}
+.form-control.is-invalid:focus {
+  box-shadow: 0 0 0 3px var(--cms-danger-fade) !important;
+}
+
+.form-control.is-valid {
+  border-color: var(--cms-success) !important;
+}
+
+textarea.form-control {
+  height: auto;
+  min-height: 80px;
+  resize: vertical;
+}
+
+select.form-control {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%2364748b' d='M4 6l4 4 4-4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.65rem center;
+  background-size: 16px;
+  padding-right: 2.25rem;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+/* Labels */
+label,
+.col-form-label,
+.form-group label {
+  font-weight: 500;
+  font-size: var(--cms-text-sm);
+  color: var(--cms-text);
+  margin-bottom: 0.35rem;
+}
+
+/* Help text */
+.form-text,
+small.form-text {
+  font-size: var(--cms-text-xs);
+  color: var(--cms-text-muted);
+  margin-top: 0.25rem;
+}
+
+/* Validation feedback */
+.invalid-feedback {
+  font-size: var(--cms-text-xs);
+  color: var(--cms-danger);
+  margin-top: 0.25rem;
+}
+.valid-feedback {
+  font-size: var(--cms-text-xs);
+  color: var(--cms-success);
+  margin-top: 0.25rem;
+}
+
+/* Form group spacing */
+.form-group {
+  margin-bottom: var(--cms-space-4);
+}
+
+/* Input groups — BS4 .input-group-text */
+.input-group-text {
+  background: var(--cms-surface-2);
+  border: 1px solid var(--cms-border-strong);
+  color: var(--cms-text-muted);
+  font-size: var(--cms-text-sm);
+  border-radius: var(--cms-radius);
+}
+
+.input-group > .form-control:not(:last-child),
+.input-group > .custom-select:not(:last-child) {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.input-group > .form-control:not(:first-child),
+.input-group > .custom-select:not(:first-child) {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+/* Custom checkbox / radio polish (light touch on BS4) */
+.custom-control-input:focus ~ .custom-control-label::before {
+  box-shadow: var(--cms-shadow-focus) !important;
+}
+.custom-control-input:checked ~ .custom-control-label::before {
+  background: var(--cms-primary) !important;
+  border-color: var(--cms-primary) !important;
+}
+
+/* Tom Select coexistence — match height + radius */
+.ts-wrapper.form-control,
+.ts-wrapper .ts-control {
+  border-radius: var(--cms-radius);
+  border-color: var(--cms-border-strong);
+  background: var(--cms-surface);
+  min-height: var(--cms-control-h);
+  padding: 0.25rem 0.6rem;
+  box-shadow: none;
+  font-size: var(--cms-text-sm);
+}
+.ts-wrapper.focus .ts-control {
+  border-color: var(--cms-primary);
+  box-shadow: var(--cms-shadow-focus);
+}
+.ts-dropdown {
+  border: 1px solid var(--cms-border);
+  border-radius: var(--cms-radius);
+  box-shadow: var(--cms-shadow-lg);
+  margin-top: 4px;
+  font-size: var(--cms-text-sm);
+}
+.ts-dropdown .active {
+  background: var(--cms-primary-fade) !important;
+  color: var(--cms-text) !important;
+}
+
+/* Flatpickr coexistence — replace its default chrome */
+.flatpickr-calendar {
+  border-radius: var(--cms-radius) !important;
+  box-shadow: var(--cms-shadow-lg) !important;
+  border: 1px solid var(--cms-border) !important;
+  font-size: var(--cms-text-sm);
+}
+.flatpickr-day.selected,
+.flatpickr-day.selected:hover {
+  background: var(--cms-primary) !important;
+  border-color: var(--cms-primary) !important;
+}
+.flatpickr-day.today {
+  border-color: var(--cms-primary) !important;
+}
+
+/* Select2 coexistence (.NET runtime) — only minimal alignment */
+.select2-container--default .select2-selection--single,
+.select2-container--default .select2-selection--multiple {
+  border: 1px solid var(--cms-border-strong) !important;
+  border-radius: var(--cms-radius) !important;
+  min-height: var(--cms-control-h);
+}
+.select2-container--default.select2-container--focus .select2-selection {
+  border-color: var(--cms-primary) !important;
+  box-shadow: var(--cms-shadow-focus) !important;
+}

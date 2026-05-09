@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>cms-vercel integration · casemaster-prism docs</title>
+<meta name="description" content="cms-vercel integration — casemaster-prism docs">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#2563eb">
+<meta property="og:title" content="casemaster-prism">
+<meta property="og:description" content="Drop-in design system for CaseMaster apps.">
+<meta property="og:image" content="../assets/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="../assets/og-card.png">
+<link rel="stylesheet" href="assets/docs.css">
+</head>
+<body>
+<div id="gnav-host" data-root="../"></div>
+
+<main class="docs-content">
+    <p class="docs-breadcrumb"><a href="../">Home</a> &nbsp;/&nbsp; <a href="index.html">Docs</a> &nbsp;/&nbsp; cms-vercel integration</p>
+
+    <h1>cms-vercel integration</h1>
+    <p class="docs-lead">One option in <code>api/index.ts</code>. Granular flags. Vendoring. Custom shells.</p>
+
+    <h2 id='basic'>Basic setup</h2>
+<pre><code>// api/index.ts
+import { createHandler } from 'cms-vercel';
+
+export default createHandler({
+  ui: 'pro', // theme + enhancers
+});</code></pre>
+    <p>The runtime injects the <code>&lt;link&gt;</code> / <code>&lt;script&gt;</code> tags into the default HTML shell.</p>
+
+    <h2 id='shorthands'>Shorthand values</h2>
+    <table>
+      <thead><tr><th>Value</th><th>Effect</th></tr></thead>
+      <tbody>
+        <tr><td><code>'pro'</code></td><td>Theme + enhancers (recommended).</td></tr>
+        <tr><td><code>'theme-only'</code></td><td>CSS only.</td></tr>
+        <tr><td><code>'enhancers-only'</code></td><td>JS only.</td></tr>
+        <tr><td><code>false</code></td><td>Off (default).</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id='granular'>Granular options</h2>
+<pre><code>createHandler({
+  ui: {
+    theme:       true,
+    themeAccent: '#7c3aed',
+    themeMode:   'auto',                    // 'auto' | 'light' | 'dark'
+    enhancers:   { tables: true, shortcuts: false },
+    version:     '1',                       // pin a CDN version
+    scriptUrl:   '/static/lib/prism/prism.js', // override JS bundle URL
+  },
+});</code></pre>
+
+    <h2 id='vendor'>Vendoring</h2>
+    <p>If you can't reach jsDelivr from production, vendor the files into your <code>public/</code> directory and pass the URLs explicitly:</p>
+<pre><code>createHandler({
+  ui: {
+    theme:     '/static/lib/prism/prism.min.css',
+    scriptUrl: '/static/lib/prism/prism.js',
+    enhancers: true,
+  },
+});</code></pre>
+    <p>Drop <code>dist/prism.min.css</code>, <code>dist/prism.js</code>, and the <code>dist/chunks/</code> folder into your repo's <code>public/lib/prism/</code>. The <code>/static/:path*</code> rewrite in <code>vercel.json</code> maps it to the right URL.</p>
+
+    <h2 id='custom-shell'>Custom shells</h2>
+    <p>If your app uses <code>inherits 'base'</code> with a custom HTML shell that bypasses <code>wrapInDefaultShell</code>, add the tags manually in your base template:</p>
+<pre><code>&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/casemaster-prism@1/dist/prism.min.css"&gt;
+&lt;script type="module" src="https://cdn.jsdelivr.net/npm/casemaster-prism@1/dist/prism.js"&gt;&lt;/script&gt;</code></pre>
+    <p>Per-feature config still works via <code>&lt;script&gt;window.cmsUi = {…}&lt;/script&gt;</code> above the prism script tag.</p>
+
+    <div class="docs-footer-nav"><a href="./integration-dotnet.html"><small>← Previous</small>.NET integration</a><a class="next" href="./migration.html"><small>Next →</small>Migration guide</a></div>
+  </main>
+
+<script>
+  // Inject the sidebar HTML manually (relative path differs per depth)
+  (function () {
+    fetch('_sidebar.html').then((r) => r.text()).then((h) => {
+      const host = document.getElementById('docs-sidebar-host');
+      if (!host) return;
+      host.innerHTML = h;
+      const here = location.pathname.split('/').pop();
+      host.querySelectorAll('a[href]').forEach((a) => {
+        const t = a.getAttribute('href').split('/').pop();
+        if (t === here) a.classList.add('is-current');
+      });
+      const search = host.querySelector('.docs-search');
+      if (search) search.addEventListener('input', () => {
+        const q = search.value.trim().toLowerCase();
+        host.querySelectorAll('.docs-nav a').forEach((a) => {
+          a.classList.toggle('is-hidden', !!q && !a.textContent.toLowerCase().includes(q));
+        });
+      });
+    });
+  })();
+</script>
+<script src="assets/docs.js"></script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>

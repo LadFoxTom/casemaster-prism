@@ -1,0 +1,45 @@
+/* @casemaster/ui — entry stylesheet.
+ * Bundles tokens, reset, every component, extras, and the dark-mode override.
+ * Built into dist/ui.css (and dist/ui.min.css) by PostCSS.
+ *
+ * Order matters:
+ *   tokens   — variables before any rule that uses them
+ *   reset    — base typography / layout
+ *   components — one file per Bootstrap-emitted component
+ *   extras   — augmentations (skeletons, command palette, toasts...)
+ *   dark     — opt-in [data-theme="dark"] overrides last
+ */
+
+@import "./tokens.css";
+@import "./reset.css";
+
+@import "./components/buttons.css";
+@import "./components/forms.css";
+@import "./components/tables.css";
+@import "./components/cards.css";
+@import "./components/navbar.css";
+@import "./components/sidebar.css";
+@import "./components/modals.css";
+@import "./components/badges.css";
+@import "./components/alerts.css";
+@import "./components/pagination.css";
+
+@import "./extras.css";
+@import "./variants.css";
+
+/* Vendor stylesheets — required for Tom Select dropdowns and Flatpickr
+ * calendars to position / paint correctly. We use Tom Select's BS4 build
+ * so it inherits Bootstrap classes consistent with the runtime markup.
+ * postcss-import inlines these at build time. */
+@import "../../node_modules/tom-select/dist/css/tom-select.bootstrap4.min.css";
+@import "../../node_modules/flatpickr/dist/flatpickr.min.css";
+
+/* Our own overrides go last so they win over the vendor defaults. */
+@import "./rtl.css";
+@import "./dark.css";
+
+/* Brand-preset themes — opt-in via data-cms-theme="X". They cascade after
+ * dark.css so a preset can adjust the dark palette explicitly. */
+@import "./themes/linear.css";
+@import "./themes/tabler.css";
+@import "./themes/material.css";

@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Migration guide · casemaster-prism docs</title>
+<meta name="description" content="Migration guide — casemaster-prism docs">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#2563eb">
+<meta property="og:title" content="casemaster-prism">
+<meta property="og:description" content="Drop-in design system for CaseMaster apps.">
+<meta property="og:image" content="../assets/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="../assets/og-card.png">
+<link rel="stylesheet" href="assets/docs.css">
+</head>
+<body>
+<div id="gnav-host" data-root="../"></div>
+
+<main class="docs-content">
+    <p class="docs-breadcrumb"><a href="../">Home</a> &nbsp;/&nbsp; <a href="index.html">Docs</a> &nbsp;/&nbsp; Migration guide</p>
+
+    <h1>Migration guide</h1>
+    <p class="docs-lead">Adopt prism on an existing CaseMaster app without breaking layouts. What changes, what to watch for, how to roll back.</p>
+
+    <h2 id='preflight'>Pre-flight checklist</h2>
+    <ol>
+      <li><strong>Confirm Bootstrap 4.</strong> prism is built for the BS4 markup the runtimes emit. BS5/BS3 not supported yet.</li>
+      <li><strong>Inventory custom CSS.</strong> Anything that uses <code>!important</code> on a Bootstrap class will beat prism's tokens. List those overrides; you'll likely keep them.</li>
+      <li><strong>Inventory custom JS.</strong> Look for jQuery DataTables, custom datepickers, custom row-click handlers. Tag those targets <code>data-cms-no-enhance</code> before installing.</li>
+      <li><strong>Branding image.</strong> If the navbar uses a coloured logo (not white-on-primary), test against <code>--cms-primary</code>. Override the token if needed.</li>
+      <li><strong>Pick a theme baseline.</strong> Default keeps the BS4 feel; Tabler is closest to typical admin UX; Material is the biggest visual departure.</li>
+    </ol>
+
+    <h2 id='what-changes'>What changes after install</h2>
+    <table>
+      <thead><tr><th>Surface</th><th>Before</th><th>After prism</th></tr></thead>
+      <tbody>
+        <tr><td>Tables</td><td>Sharp, harsh stripes, blue header.</td><td>Soft surface, muted-grey uppercase header, hover tint, sortable.</td></tr>
+        <tr><td>Buttons</td><td>BS4 default radii (4 px) and saturated colours.</td><td>8 px radii, slightly muted hover, focus rings.</td></tr>
+        <tr><td>Inputs</td><td>BS4 default 4 px radius, blue focus ring.</td><td>8 px radius, primary-coloured focus ring tied to <code>--cms-primary</code>.</td></tr>
+        <tr><td>Cards</td><td>Plain white panel with hairline border.</td><td>Same panel + soft shadow, rounded corners.</td></tr>
+        <tr><td>Navbar</td><td><code>bg-primary</code> = BS4 blue.</td><td><code>bg-primary</code> = your <code>--cms-primary</code>.</td></tr>
+        <tr><td>Modals</td><td>Sharp 4 px corners.</td><td>14 px corners, larger drop shadow, blurred backdrop.</td></tr>
+        <tr><td>Pagination</td><td>BS4 attached buttons.</td><td>Detached buttons with subtle borders.</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id='gotchas'>Common gotchas</h2>
+    <table>
+      <thead><tr><th>Risk</th><th>Mitigation</th></tr></thead>
+      <tbody>
+        <tr><td>App ships its own conflicting CSS with <code>!important</code>.</td><td>We use <code>!important</code> only where Bootstrap forces it. App's <code>!important</code> on a class beats ours on a token. Audit yours, leave them in place.</td></tr>
+        <tr><td>App already wired jQuery DataTables.</td><td>Add <code>data-cms-no-enhance</code> on the table or its <code>.dataTables_wrapper</code>.</td></tr>
+        <tr><td>App uses the runtime's global <code>#cmModal</code>.</td><td>Modal-link enhancer is opt-in via <code>data-cms-modal-link</code>. We never touch <code>#cmModal</code>.</td></tr>
+        <tr><td>Print stylesheet looks weird.</td><td><code>@media print</code> overrides ship in extras.css. Audit yours after install.</td></tr>
+        <tr><td>Hard-coded <code>&lt;select&gt;</code> widths break with Tom Select.</td><td>Set <code>selectThreshold: 99</code> globally, or tag specific selects <code>data-cms-no-enhance</code>.</td></tr>
+        <tr><td>Custom sidebar that uses <code>.wms-sidebar</code> with different layout.</td><td><code>data-cms-no-enhance</code> on the wrapper disables our sidebar rules.</td></tr>
+        <tr><td>Right-to-left languages.</td><td>RTL stylesheet ships; verify against a Hebrew/Arabic test page.</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id='gradual'>Gradual adoption</h2>
+    <p>You don't have to switch all-or-nothing. Two strategies:</p>
+    <h3 id='theme-only'>Theme only first</h3>
+    <p>Skip the JS bundle:</p>
+<pre><code>/* app.css */
+@import url('/static/lib/prism/prism.min.css');
+/* don't include the script tag in app.js yet */</code></pre>
+    <p>You get the visual lift without any behavioural changes. Roll out the JS bundle in a second pass.</p>
+
+    <h3 id='per-page'>Per-page opt-out</h3>
+    <p>Disable prism on a single page that's particularly fragile:</p>
+<pre><code>&lt;body data-cms-no-enhance&gt;</code></pre>
+    <p>The whole page renders bare BS4 even though prism is installed globally.</p>
+
+    <h2 id='rollback'>Roll back</h2>
+    <p>Comment two lines:</p>
+<pre><code>/* app.css */
+/* @import url('/static/lib/prism/prism.min.css'); */</code></pre>
+<pre><code>// app.js
+// document.body.appendChild(s);  // (was the prism injection)</code></pre>
+    <p>Hard-reload. The app reverts to bare Bootstrap 4. No leftover state, no migrations to undo.</p>
+
+    <div class="docs-footer-nav"><a href="./integration-vercel.html"><small>← Previous</small>cms-vercel integration</a><a class="next" href="./troubleshooting.html"><small>Next →</small>Troubleshooting</a></div>
+  </main>
+
+<script>
+  // Inject the sidebar HTML manually (relative path differs per depth)
+  (function () {
+    fetch('_sidebar.html').then((r) => r.text()).then((h) => {
+      const host = document.getElementById('docs-sidebar-host');
+      if (!host) return;
+      host.innerHTML = h;
+      const here = location.pathname.split('/').pop();
+      host.querySelectorAll('a[href]').forEach((a) => {
+        const t = a.getAttribute('href').split('/').pop();
+        if (t === here) a.classList.add('is-current');
+      });
+      const search = host.querySelector('.docs-search');
+      if (search) search.addEventListener('input', () => {
+        const q = search.value.trim().toLowerCase();
+        host.querySelectorAll('.docs-nav a').forEach((a) => {
+          a.classList.toggle('is-hidden', !!q && !a.textContent.toLowerCase().includes(q));
+        });
+      });
+    });
+  })();
+</script>
+<script src="assets/docs.js"></script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>

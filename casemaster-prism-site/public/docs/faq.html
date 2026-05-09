@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>FAQ · casemaster-prism docs</title>
+<meta name="description" content="FAQ — casemaster-prism docs">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#2563eb">
+<meta property="og:title" content="casemaster-prism">
+<meta property="og:description" content="Drop-in design system for CaseMaster apps.">
+<meta property="og:image" content="../assets/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="../assets/og-card.png">
+<link rel="stylesheet" href="assets/docs.css">
+</head>
+<body>
+<div id="gnav-host" data-root="../"></div>
+
+<main class="docs-content">
+    <p class="docs-breadcrumb"><a href="../">Home</a> &nbsp;/&nbsp; <a href="index.html">Docs</a> &nbsp;/&nbsp; FAQ</p>
+
+    <h1>FAQ</h1>
+    
+
+    <h2 id='bs5'>Does prism support Bootstrap 5?</h2>
+    <p>Not yet. Both CaseMaster runtimes still ship BS4 markup. If/when one upgrades to BS5, we'll ship a parallel <code>casemaster-prism-bs5</code> track.</p>
+
+    <h2 id='spa'>Can I use prism in a React/Vue SPA?</h2>
+    <p>The CSS works anywhere — apply the classes the same way the BS4 markup does. The JS enhancers expect server-rendered DOM and a MutationObserver to catch dynamic inserts. They'll mostly work in an SPA too, but components that mount/unmount frequently may need explicit re-init.</p>
+
+    <h2 id='size'>What's the bundle cost?</h2>
+    <p>~14&nbsp;KB gz CSS (vendor CSS for Tom Select / Flatpickr included), ~10&nbsp;KB gz core JS. Tom Select (~30&nbsp;KB gz) and Flatpickr (~20&nbsp;KB gz) are lazy-loaded only when the first matching element is found.</p>
+
+    <h2 id='backend'>Does prism need a specific backend?</h2>
+    <p>No. It only touches the rendered HTML. Both CaseMaster runtimes are supported, and the package works on any other BS4-emitting backend with manual <code>&lt;link&gt;</code> + <code>&lt;script&gt;</code> tags.</p>
+
+    <h2 id='cms-source'>Do I need to change my <code>.cms</code> source?</h2>
+    <p>No. Variant classes are passed through existing qualifier props (<code>tableClass</code>, <code>class</code>). The default look applies automatically to the runtime-emitted markup.</p>
+
+    <h2 id='custom-themes'>Can I ship a custom theme?</h2>
+    <p>Yes. Override <code>--cms-*</code> tokens under <code>:root[data-cms-theme="yours"]</code> in your app's CSS. See <a href='./themes.html#custom'>Building a custom preset</a>.</p>
+
+    <div class="docs-footer-nav"><a href="./troubleshooting.html"><small>← Previous</small>Troubleshooting</a><span></span></div>
+  </main>
+
+<script>
+  // Inject the sidebar HTML manually (relative path differs per depth)
+  (function () {
+    fetch('_sidebar.html').then((r) => r.text()).then((h) => {
+      const host = document.getElementById('docs-sidebar-host');
+      if (!host) return;
+      host.innerHTML = h;
+      const here = location.pathname.split('/').pop();
+      host.querySelectorAll('a[href]').forEach((a) => {
+        const t = a.getAttribute('href').split('/').pop();
+        if (t === here) a.classList.add('is-current');
+      });
+      const search = host.querySelector('.docs-search');
+      if (search) search.addEventListener('input', () => {
+        const q = search.value.trim().toLowerCase();
+        host.querySelectorAll('.docs-nav a').forEach((a) => {
+          a.classList.toggle('is-hidden', !!q && !a.textContent.toLowerCase().includes(q));
+        });
+      });
+    });
+  })();
+</script>
+<script src="assets/docs.js"></script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>

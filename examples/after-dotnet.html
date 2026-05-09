@@ -1,0 +1,81 @@
+<!doctype html>
+<!--
+  This file mimics the .NET runtime (CaseMaster.Web.exe) shell.
+  Real apps include this stack from runtime/page/base.cms; we replicate
+  it here to prove that cms-ui works against the same markup.
+
+  Notice:
+   - Same body markup as examples/after-vercel.html.
+   - jQuery + Select2 are present (they live alongside cms-ui without conflict).
+   - cms-ui is loaded last, so by the time it scans, Select2 has already
+     wrapped its targets.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>WMS — Inventory (.NET runtime, with cms-ui)</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+
+<!-- App's own static/css/app.css would import cms-ui. We inline the @import effect: -->
+<link rel="stylesheet" href="../dist/ui.min.css">
+</head>
+<body>
+<nav class="navbar navbar-light bg-primary text-light">
+  <a class="navbar-brand text-light" href="/">WMS</a>
+</nav>
+
+<div class="d-flex">
+  <aside class="wms-sidebar p-3">
+    <div class="sidebar-header">Operations</div>
+    <ul class="nav flex-column">
+      <li class="nav-item"><a class="nav-link active" href="/"><i class="fa fa-home"></i> Dashboard</a></li>
+      <li class="nav-item"><a class="nav-link" href="/inventory"><i class="fa fa-boxes"></i> Inventory</a></li>
+      <li class="nav-item"><a class="nav-link" href="/inbound"><i class="fa fa-arrow-down"></i> Inbound</a></li>
+      <li class="nav-item"><a class="nav-link" href="/outbound"><i class="fa fa-arrow-up"></i> Outbound</a></li>
+    </ul>
+  </aside>
+
+  <main class="flex-grow-1 p-3">
+    <div class="form-group" style="max-width:320px">
+      <label>Warehouse</label>
+      <!-- Marked with .select2-style class so jQuery wraps it; cms-ui will leave it alone. -->
+      <select class="form-control select2-style">
+        <option>Main</option><option>North</option><option>South</option><option>East</option>
+        <option>West</option><option>Hub</option><option>Annex 1</option><option>Annex 2</option>
+        <option>Annex 3</option><option>Reserve</option>
+      </select>
+    </div>
+
+    <h2>Inventory</h2>
+    <table class="cms-table table table-sm table-striped table-bordered">
+      <thead class="bg-primary text-light">
+        <tr>
+          <th>SKU</th><th>Name</th><th>Qty</th><th>Updated</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>A-100</td><td>Widget</td><td>120</td><td>2026-05-04</td></tr>
+        <tr><td>A-101</td><td>Gadget</td><td>40</td><td>2026-05-06</td></tr>
+        <tr><td>B-220</td><td>Sprocket</td><td>1,400</td><td>2026-05-07</td></tr>
+        <tr><td>B-221</td><td>Cog</td><td>3</td><td>2026-05-08</td></tr>
+        <tr><td>C-330</td><td>Bracket</td><td>200</td><td>2026-04-30</td></tr>
+      </tbody>
+    </table>
+  </main>
+</div>
+
+<!-- .NET stack: jQuery, Select2, Bootstrap.bundle, cm.js, app.js (our hook) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // The .NET runtime's cm.js wires Select2 onto certain inputs. We mimic that:
+  $(function () { $('.select2-style').select2(); });
+</script>
+<!-- App's own static/js/app.js would inject this; we inline it: -->
+<script>window.cmsUi = { shortcuts: true, command: true };</script>
+<script type="module" src="../dist/ui.js"></script>
+</body>
+</html>

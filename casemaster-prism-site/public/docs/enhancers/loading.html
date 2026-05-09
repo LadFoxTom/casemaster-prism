@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Loading bar · casemaster-prism docs</title>
+<meta name="description" content="Loading bar — casemaster-prism docs">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#2563eb">
+<meta property="og:title" content="casemaster-prism">
+<meta property="og:description" content="Drop-in design system for CaseMaster apps.">
+<meta property="og:image" content="../../assets/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="../../assets/og-card.png">
+<link rel="stylesheet" href="../assets/docs.css">
+</head>
+<body>
+<div id="gnav-host" data-root="../../"></div>
+
+<main class="docs-content">
+    <p class="docs-breadcrumb"><a href="../../">Home</a> &nbsp;/&nbsp; <a href="../index.html">Docs</a> &nbsp;/&nbsp; Enhancers &nbsp;/&nbsp; Loading bar</p>
+
+    <h1>Loading bar</h1>
+    <p class="docs-lead">Top-bar progress on link clicks and form submits. Plus busy-button state.</p>
+
+    <h2 id='triggers'>Triggers</h2>
+    <ul>
+      <li>Click on a same-origin <code>&lt;a&gt;</code> with no <code>target="_blank"</code>.</li>
+      <li>Submit on any <code>&lt;form&gt;</code> not tagged <code>data-cms-no-progress</code>.</li>
+      <li>Manual: <code>window.dispatchEvent(new CustomEvent('cms-progress-start'))</code> / <code>'cms-progress-end'</code>.</li>
+    </ul>
+
+    <h2 id='busy'>Busy buttons</h2>
+    <p>On form submit, the first non-disabled <code>&lt;button type="submit"&gt;</code> gets <code>aria-busy="true"</code>. The CSS replaces the button text with a spinner.</p>
+
+    <h2 id='manual-api'>Manual API</h2>
+<pre><code>import { startLoading, endLoading } from 'casemaster-prism';
+
+startLoading();
+await fetch('/api/heavy');
+endLoading();</code></pre>
+
+    <div class="docs-footer-nav"><a href="./confirm.html"><small>← Previous</small>Confirm dialog</a><a class="next" href="./toasts.html"><small>Next →</small>Toasts</a></div>
+  </main>
+
+<script>
+  // Inject the sidebar HTML manually (relative path differs per depth)
+  (function () {
+    fetch('../_sidebar.html').then((r) => r.text()).then((h) => {
+      const host = document.getElementById('docs-sidebar-host');
+      if (!host) return;
+      host.innerHTML = h;
+      const here = location.pathname.split('/').pop();
+      host.querySelectorAll('a[href]').forEach((a) => {
+        const t = a.getAttribute('href').split('/').pop();
+        if (t === here) a.classList.add('is-current');
+      });
+      const search = host.querySelector('.docs-search');
+      if (search) search.addEventListener('input', () => {
+        const q = search.value.trim().toLowerCase();
+        host.querySelectorAll('.docs-nav a').forEach((a) => {
+          a.classList.toggle('is-hidden', !!q && !a.textContent.toLowerCase().includes(q));
+        });
+      });
+    });
+  })();
+</script>
+<script src="../assets/docs.js"></script>
+<script src="../../assets/nav.js"></script>
+</body>
+</html>

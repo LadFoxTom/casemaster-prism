@@ -1,0 +1,1006 @@
+/* Landing-page chrome.
+ *
+ * Independent of cms-ui; this stylesheet defines only the marketing
+ * page surface so the iframe demos remain a faithful "before vs after"
+ * comparison untouched by site styling.
+ */
+
+:root {
+  --bg:        #f8fafc;
+  --surface:   #ffffff;
+  --surface-2: #f1f5f9;
+  --border:    #e2e8f0;
+  --text:      #0f172a;
+  --muted:     #64748b;
+  --link:      #2563eb;
+  --code-bg:   #0f172a;
+  --code-fg:   #e2e8f0;
+  --shadow:    0 4px 12px -2px rgb(15 23 42 / 0.08);
+}
+
+[data-theme="dark"] {
+  --bg:        #0b1220;
+  --surface:   #111827;
+  --surface-2: #1e293b;
+  --border:    #1f2937;
+  --text:      #f1f5f9;
+  --muted:     #94a3b8;
+  --link:      #60a5fa;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  font-size: 15px;
+}
+
+/* ─────────────────────── Global left navigation ───────────────────
+ * Loaded into #gnav-host on every page. The body becomes a CSS grid
+ * with the nav on the left and content on the right. Mobile collapses
+ * the nav into a slide-in panel triggered by the hamburger.
+ */
+
+body:has(#gnav-host) {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: 100vh;
+}
+@media (max-width: 980px) {
+  body:has(#gnav-host) { display: block; }
+}
+
+#gnav-host {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  height: 100vh;
+  overflow-y: auto;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 0.75rem 0.75rem;
+  font-size: 0.85rem;
+  z-index: 50;
+}
+
+.gnav-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.4rem 0.6rem 0.85rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 0.5rem;
+}
+.gnav-brand:hover { text-decoration: none; color: var(--text); }
+.gnav-mark {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px -3px rgb(37 99 235 / 0.55);
+}
+.gnav-brand-name { flex: 1; }
+.gnav-version {
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 0.65rem;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.gnav-nav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  overflow-y: auto;
+}
+.gnav-section {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--muted);
+  padding: 0.85rem 0.6rem 0.35rem;
+}
+.gnav-section:first-child { padding-top: 0; }
+.gnav-nav a {
+  display: block;
+  padding: 0.32rem 0.6rem;
+  border-radius: 6px;
+  color: var(--muted);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.85rem;
+}
+.gnav-nav a:hover {
+  background: var(--surface-2);
+  color: var(--text);
+  text-decoration: none;
+}
+.gnav-nav a.is-active {
+  background: var(--surface-2);
+  color: var(--link);
+  font-weight: 600;
+  position: relative;
+}
+.gnav-nav a.is-active::before {
+  content: "";
+  position: absolute;
+  left: -0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 60%;
+  background: var(--link);
+  border-radius: 2px;
+}
+
+.gnav-footer {
+  border-top: 1px solid var(--border);
+  padding-top: 0.6rem;
+  margin-top: 0.6rem;
+  display: flex;
+  gap: 0.4rem;
+}
+.gnav-icon-btn {
+  flex: 1;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  text-decoration: none;
+  font-family: inherit;
+}
+.gnav-icon-btn:hover { background: var(--surface); text-decoration: none; color: var(--text); }
+
+.gnav-mobile-toggle {
+  display: none;
+  position: fixed;
+  top: 0.85rem;
+  right: 1rem;
+  z-index: 60;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.5rem 0.6rem;
+  cursor: pointer;
+  flex-direction: column;
+  gap: 4px;
+}
+.gnav-mobile-toggle span {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: var(--text);
+  border-radius: 1px;
+}
+
+@media (max-width: 980px) {
+  #gnav-host {
+    position: fixed;
+    top: 0; left: 0;
+    width: 280px;
+    height: 100vh;
+    transform: translateX(-100%);
+    transition: transform 200ms ease;
+    box-shadow: 0 0 40px -8px rgb(0 0 0 / 0.25);
+  }
+  #gnav-host.is-open { transform: translateX(0); }
+  .gnav-mobile-toggle { display: flex; }
+}
+
+/* When a page uses the global nav, drop the legacy sticky top header. */
+body:has(#gnav-host) > .site-header { display: none; }
+
+a { color: var(--link); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+code {
+  font-family: ui-monospace, "JetBrains Mono", Consolas, monospace;
+  font-size: 0.85em;
+  background: var(--surface-2);
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+}
+
+/* Inside dark <pre> blocks, the nested <code> should be transparent. */
+pre code {
+  background: transparent !important;
+  padding: 0 !important;
+  color: inherit;
+  font-size: inherit;
+  border-radius: 0;
+}
+
+pre {
+  background: var(--code-bg);
+  color: var(--code-fg);
+  padding: 1rem 1.25rem;
+  border-radius: 10px;
+  overflow-x: auto;
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  margin: 0.75rem 0 1.5rem;
+  position: relative;
+}
+
+pre .copy {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: rgb(255 255 255 / 0.05);
+  border: 1px solid rgb(255 255 255 / 0.15);
+  color: var(--code-fg);
+  font-family: inherit;
+  font-size: 0.7rem;
+  border-radius: 4px;
+  padding: 0.2rem 0.5rem;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 160ms;
+}
+pre:hover .copy { opacity: 1; }
+pre .copy.is-done { color: #4ade80; }
+
+/* Header */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgb(248 250 252 / 0.85);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: saturate(180%) blur(10px);
+  -webkit-backdrop-filter: saturate(180%) blur(10px);
+}
+[data-theme="dark"] .site-header { background: rgb(15 23 42 / 0.85); }
+
+.site-header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0.7rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 980px) {
+  .site-header-inner { gap: 0.5rem; }
+  .site-nav a { display: none; }
+  .site-nav button { display: inline-flex; }
+  .global-picker { display: none !important; }
+}
+.site-brand {
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.site-brand-mark {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  display: inline-block;
+  box-shadow: 0 4px 14px -4px rgb(37 99 235 / 0.6);
+}
+.site-tag {
+  color: var(--muted);
+  font-size: 0.75rem;
+  margin-left: 0.5rem;
+}
+.site-nav {
+  margin-left: auto;
+  display: inline-flex;
+  gap: 0.4rem;
+}
+.site-nav a {
+  font-size: 0.85rem;
+  color: var(--muted);
+  padding: 0.35rem 0.7rem;
+  border-radius: 6px;
+}
+.site-nav a:hover { color: var(--text); background: var(--surface-2); text-decoration: none; }
+.site-nav button {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 6px;
+  font-size: 0.85rem;
+  padding: 0.35rem 0.65rem;
+  cursor: pointer;
+}
+.site-nav button:hover { background: var(--surface); }
+
+/* Global theme + density picker (sticky header) */
+.global-picker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  margin-left: auto;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.2rem 0.4rem;
+  font-size: 0.78rem;
+}
+.global-picker-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  padding: 0 0.35rem;
+}
+.global-picker-sep {
+  width: 1px;
+  height: 18px;
+  background: var(--border);
+  margin: 0 0.2rem;
+}
+.global-picker button {
+  background: transparent;
+  border: none;
+  color: var(--text);
+  font-size: 0.78rem;
+  font-weight: 500;
+  padding: 0.25rem 0.55rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.global-picker button:hover { background: var(--surface); }
+.global-picker button.is-active {
+  background: var(--link);
+  color: #fff;
+}
+
+/* Hero — updated chrome */
+.hero-eyebrow {
+  font-size: 0.78rem;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  margin-bottom: 0.85rem;
+}
+.hero-eyebrow strong { color: var(--link); font-weight: 600; }
+
+.install-tabs {
+  margin: 1.75rem 0 0;
+  max-width: 580px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  text-align: left;
+  overflow: hidden;
+}
+.install-tabs-row {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-2);
+}
+.install-tabs-row button {
+  background: transparent;
+  border: none;
+  padding: 0.6rem 1rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--muted);
+  cursor: pointer;
+  border-right: 1px solid var(--border);
+}
+.install-tabs-row button:last-of-type { border-right: 0; }
+.install-tabs-row button:hover { background: var(--surface); color: var(--text); }
+.install-tabs-row button.is-active {
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 0 -2px 0 0 var(--link) inset;
+}
+.install-tabs-cmd {
+  position: relative;
+  padding: 0.85rem 1rem;
+  font-family: ui-monospace, "JetBrains Mono", Consolas, monospace;
+  font-size: 0.85rem;
+  background: var(--code-bg);
+  color: var(--code-fg);
+}
+.install-tabs-cmd code {
+  display: block;
+  background: transparent !important;
+  padding: 0 !important;
+  white-space: pre-wrap;
+  font-size: 0.85rem;
+  color: var(--code-fg);
+}
+.install-tabs-cmd code[hidden] { display: none; }
+.install-tabs-cmd .install-copy {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: rgb(255 255 255 / 0.06);
+  border: 1px solid rgb(255 255 255 / 0.15);
+  color: var(--code-fg);
+  font-family: inherit;
+  font-size: 0.7rem;
+  border-radius: 4px;
+  padding: 0.2rem 0.55rem;
+  cursor: pointer;
+  opacity: 0.8;
+}
+.install-tabs-cmd .install-copy.is-done { color: #4ade80; }
+
+.trust-row {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 1.5rem 0 0.5rem;
+}
+.trust-badge {
+  display: inline-flex;
+  align-items: center;
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 0.72rem;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  text-decoration: none;
+  color: var(--text);
+}
+.trust-badge:hover { text-decoration: none; }
+.trust-label {
+  background: #475569;
+  color: #fff;
+  padding: 0.2rem 0.5rem;
+  text-transform: lowercase;
+}
+[data-theme="dark"] .trust-label { background: #334155; }
+.trust-value {
+  padding: 0.2rem 0.5rem;
+  background: var(--surface);
+  color: var(--text);
+}
+.trust-value.ok { background: #22c55e; color: #fff; }
+
+.hero-meta {
+  margin-top: 1.5rem;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.85rem 1.5rem;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+.hero-meta code { font-size: 0.85em; }
+.ok-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #16a34a;
+  margin-right: 0.35rem;
+  vertical-align: 1px;
+}
+
+/* Layout — content fills the right grid column with a comfortable
+ * but not excessive gutter. No centring band. */
+main { max-width: 1280px; margin: 0; padding: 0 2.25rem 4rem; }
+@media (max-width: 980px) { main { padding: 4rem 1.25rem 3rem; } }
+
+.hero {
+  padding: 3.5rem 0 3rem;
+  text-align: left;
+}
+.hero h1 {
+  font-size: clamp(2rem, 4vw, 2.85rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.85rem;
+}
+.hero .lead {
+  font-size: 1.05rem;
+  color: var(--muted);
+  max-width: 640px;
+  margin: 0 0 1.5rem;
+}
+.hero-actions {
+  display: inline-flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.btn-cta {
+  background: var(--link);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.55rem 1.2rem;
+  font-weight: 500;
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  box-shadow: 0 1px 2px rgb(15 23 42 / 0.08);
+}
+.btn-cta:hover { background: #1d4ed8; color: #fff; text-decoration: none; }
+.btn-ghost {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.5rem 1.1rem;
+  font-weight: 500;
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-decoration: none;
+}
+.btn-ghost:hover { background: var(--surface-2); text-decoration: none; }
+
+.badges {
+  display: flex;
+  justify-content: center;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+}
+.badge-pill {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.2rem 0.7rem;
+  font-size: 0.72rem;
+  color: var(--muted);
+  font-weight: 500;
+}
+.badge-pill .ok { color: #16a34a; font-weight: 700; }
+
+/* Section */
+.section {
+  margin: 4rem 0;
+  /* The site header is sticky at top; offset anchor scroll so the
+   * heading isn't hidden behind it when users click a nav link. */
+  scroll-margin-top: 80px;
+}
+.section > h2 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.4rem;
+  scroll-margin-top: 80px;
+}
+.section > p.lead-2 {
+  color: var(--muted);
+  margin: 0 0 1.75rem;
+  max-width: 760px;
+}
+
+/* Component block — tabs (Preview / Code / Before) + single content pane.
+ * Replaces the older .compare dual-iframe pattern for the Components section.
+ * Each block can be deep-linked via id="components/tables", etc. */
+.comp-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  scroll-margin-top: 80px;
+}
+.comp-tabs {
+  display: flex;
+  align-items: center;
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--border);
+}
+.comp-tabs button {
+  background: transparent;
+  border: none;
+  border-right: 1px solid var(--border);
+  padding: 0.55rem 1rem;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--muted);
+  cursor: pointer;
+}
+.comp-tabs button:hover { background: var(--surface); color: var(--text); }
+.comp-tabs button.is-active {
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 0 -2px 0 0 var(--link) inset;
+}
+.comp-tabs .comp-anchor {
+  margin-left: auto;
+  padding: 0 0.85rem;
+  color: var(--muted);
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+.comp-tabs .comp-anchor:hover { color: var(--link); text-decoration: none; }
+.comp-tabs .comp-copy {
+  border-left: 1px solid var(--border);
+  border-right: 0 !important;
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.comp-tabs .comp-copy.is-done { color: #16a34a; }
+
+.comp-pane {
+  display: none;
+  height: var(--frame-h, 380px);
+  background: #fff;
+}
+.comp-pane.is-active { display: block; }
+.comp-pane iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+[data-theme="dark"] .comp-pane { background: #0b1220; }
+
+.comp-pane-code {
+  height: var(--frame-h, 380px);
+  background: var(--code-bg);
+  overflow: auto;
+  padding: 0;
+  margin: 0;
+}
+.comp-pane-code pre {
+  margin: 0;
+  border-radius: 0;
+  height: 100%;
+  background: transparent;
+  padding: 1rem 1.25rem;
+}
+.comp-pane-code .copy { display: none; } /* superseded by .comp-copy */
+
+.comp-section-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 2rem 0 0.5rem;
+}
+.comp-section-title .comp-anchor-h {
+  margin-left: 0.4rem;
+  color: var(--muted);
+  font-weight: 400;
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 0.85em;
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity 160ms;
+}
+.comp-section-title:hover .comp-anchor-h,
+.comp-section-title:focus-within .comp-anchor-h { opacity: 1; }
+
+/* Comparison block */
+.compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+@media (max-width: 720px) {
+  .compare { grid-template-columns: 1fr; }
+}
+
+.compare-pane {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.compare-label {
+  padding: 0.55rem 0.85rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--muted);
+}
+.compare-pane.before .compare-label { color: #94a3b8; }
+.compare-pane.after  .compare-label { color: var(--link); }
+.compare-label .dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: currentColor; opacity: 0.7;
+}
+
+.compare-frame-host {
+  position: relative;
+  background: #fff;
+  height: var(--frame-h, 480px);
+}
+.compare-frame-host iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+[data-theme="dark"] .compare-pane { background: var(--surface); }
+[data-theme="dark"] .compare-frame-host { background: #0b1220; }
+
+/* Code list */
+.snippet-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+@media (max-width: 720px) { .snippet-grid { grid-template-columns: 1fr; } }
+.snippet-grid h3 { margin: 0 0 0.4rem; font-size: 1rem; font-weight: 600; }
+.snippet-grid p  { color: var(--muted); margin: 0 0 0.75rem; font-size: 0.9rem; }
+
+/* Feature grid for the configuration / overview tiles */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+.feature-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.1rem 1.2rem;
+  box-shadow: var(--shadow);
+}
+.feature-card h4 {
+  margin: 0 0 0.4rem;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+.feature-card h4 .icon {
+  display: inline-block;
+  width: 22px; height: 22px;
+  background: var(--surface-2);
+  border-radius: 6px;
+  text-align: center;
+  line-height: 22px;
+  font-size: 0.75rem;
+}
+.feature-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.55;
+}
+
+/* Config table */
+.config-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  font-size: 0.88rem;
+}
+.config-table th {
+  text-align: left;
+  padding: 0.65rem 0.9rem;
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--border);
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.config-table td {
+  padding: 0.65rem 0.9rem;
+  border-top: 1px solid var(--border);
+  vertical-align: top;
+}
+
+/* Theme picker */
+.theme-picker {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 1.25rem;
+  box-shadow: var(--shadow);
+}
+.theme-picker-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  font-weight: 600;
+  margin-right: 0.25rem;
+}
+.theme-picker button {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text);
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 0.3rem 0.7rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.theme-picker button:hover { background: var(--surface-2); }
+.theme-picker button.is-active {
+  background: var(--link);
+  color: #fff;
+}
+
+.theme-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+@media (max-width: 720px) { .theme-grid { grid-template-columns: 1fr; } }
+
+.theme-frame {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.theme-frame-label {
+  padding: 0.5rem 0.85rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-2);
+}
+.theme-frame iframe {
+  width: 100%;
+  height: 320px;
+  border: 0;
+  display: block;
+  background: #fff;
+}
+
+/* Templates grid */
+.templates-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+.template-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  transition: transform 200ms, box-shadow 200ms;
+}
+.template-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px -8px rgb(15 23 42 / 0.15);
+  text-decoration: none;
+  color: inherit;
+}
+.template-thumb {
+  height: 140px;
+  background: var(--surface-2);
+  background-size: cover;
+  background-position: center top;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+.template-thumb::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 60%, rgb(255 255 255 / 0.5));
+}
+[data-theme="dark"] .template-thumb::after {
+  background: linear-gradient(180deg, transparent 60%, rgb(15 23 42 / 0.5));
+}
+
+/* Stylised iso thumbs (no real screenshots needed) */
+.template-thumb-dashboard {
+  background-image:
+    linear-gradient(135deg, rgb(37 99 235 / 0.2), transparent 60%),
+    linear-gradient(0deg, rgb(255 255 255 / 0.5), transparent),
+    repeating-linear-gradient(0deg, var(--surface-2), var(--surface-2) 10px, var(--border) 10px, var(--border) 11px);
+}
+.template-thumb-settings {
+  background:
+    linear-gradient(135deg, rgb(124 58 237 / 0.2), transparent 60%),
+    linear-gradient(180deg, var(--surface), var(--surface-2));
+  border-bottom: 1px solid var(--border);
+}
+.template-thumb-listdetail {
+  background:
+    linear-gradient(180deg, rgb(22 163 74 / 0.10), transparent),
+    repeating-linear-gradient(180deg, var(--surface), var(--surface) 28px, var(--surface-2) 28px, var(--surface-2) 30px);
+}
+.template-meta { padding: 1rem 1.1rem 1.1rem; }
+.template-meta h3 { margin: 0 0 0.3rem; font-size: 1rem; font-weight: 600; }
+.template-meta p { margin: 0 0 0.85rem; color: var(--muted); font-size: 0.85rem; line-height: 1.45; }
+.template-cta { color: var(--link); font-size: 0.82rem; font-weight: 500; }
+
+/* Token tester */
+.token-tester {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 1rem;
+  box-shadow: var(--shadow);
+}
+@media (max-width: 720px) { .token-tester { grid-template-columns: 1fr; } }
+.token-tester label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--muted);
+  margin-bottom: 0.25rem;
+}
+.token-tester input[type=color],
+.token-tester input[type=range] {
+  width: 100%;
+}
+.token-tester .token-value {
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 0.78rem;
+  color: var(--text);
+}
+.token-tester .token-frame-host {
+  height: 380px;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.token-tester .token-frame-host iframe { width: 100%; height: 100%; border: 0; }
+
+/* Footer */
+footer {
+  margin-top: 5rem;
+  padding: 2rem 1.5rem;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.8rem;
+  text-align: center;
+}

@@ -1,0 +1,57 @@
+/* Pagination — BS4 .pagination */
+
+.pagination {
+  gap: 0.25rem;
+  margin: var(--cms-space-3) 0;
+}
+
+.page-item .page-link,
+.page-link {
+  border: 1px solid var(--cms-border);
+  background: var(--cms-surface);
+  color: var(--cms-text);
+  border-radius: var(--cms-radius-sm) !important;
+  margin: 0;
+  padding: 0.35rem 0.7rem;
+  font-size: var(--cms-text-sm);
+  font-weight: 500;
+  min-width: 32px;
+  text-align: center;
+  transition:
+    background var(--cms-dur) var(--cms-ease),
+    color var(--cms-dur) var(--cms-ease),
+    border-color var(--cms-dur) var(--cms-ease);
+}
+
+.page-link:hover {
+  background: var(--cms-surface-hover);
+  border-color: var(--cms-border-strong);
+  color: var(--cms-text);
+  z-index: 0;
+  text-decoration: none;
+}
+
+.page-item.active .page-link {
+  background: var(--cms-primary);
+  border-color: var(--cms-primary);
+  color: #fff;
+}
+
+.page-item.disabled .page-link {
+  color: var(--cms-text-faint);
+  background: var(--cms-surface-2);
+  border-color: var(--cms-border);
+  cursor: not-allowed;
+}
+
+.page-item:not(:first-child):not(:last-child) .page-link {
+  /* Override BS4 collapsed-border behaviour */
+  border-radius: var(--cms-radius-sm);
+}
+
+/* Pagination meta line — used alongside the table toolbar */
+.cms-pagination-meta {
+  font-size: var(--cms-text-xs);
+  color: var(--cms-text-muted);
+  font-variant-numeric: tabular-nums;
+}

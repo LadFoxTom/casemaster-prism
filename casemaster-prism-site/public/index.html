@@ -1,0 +1,658 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>casemaster-prism</title>
+<meta name="description" content="casemaster-prism: drop-in design system, variant catalogue, preset themes (Linear / Tabler / Material), and progressive-enhancement JS for CaseMaster apps. Both runtimes, no .cms source changes.">
+
+<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="./favicon.svg">
+<link rel="manifest" href="./manifest.webmanifest">
+<meta name="theme-color" content="#2563eb">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="casemaster-prism">
+<meta property="og:description" content="Drop-in design system + progressive-enhancement JS for CaseMaster apps. Three preset themes, variant catalogue, both runtimes.">
+<meta property="og:image" content="./assets/og-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="casemaster-prism">
+<meta name="twitter:description" content="Drop-in design system for CaseMaster apps. Verified on both runtimes.">
+<meta name="twitter:image" content="./assets/og-card.png">
+
+<link rel="stylesheet" href="./assets/site.css">
+</head>
+<body>
+<div id="gnav-host" data-root="./"></div>
+
+<main id="top">
+
+  <!-- ─── HERO ─────────────────────────────────────────────────────── -->
+  <section class="hero">
+    <h1>casemaster-prism</h1>
+    <p class="lead">
+      Theme, variant catalogue, three preset themes (Linear, Tabler,
+      Material) and progressive-enhancement JS — verified live on
+      both <code>CaseMaster.Web.exe</code> and <code>cms-vercel</code>.
+      This site itself ships as a CaseMaster <code>.cms</code> app —
+      <a href="/page/cms-demo" target="_blank" rel="noopener">see the dog-food demo →</a>
+    </p>
+
+    <div class="hero-actions">
+      <a class="btn-cta" href="#install">Get started →</a>
+      <a class="btn-ghost" href="#components">See components</a>
+      <a class="btn-ghost" href="/page/cms-demo" target="_blank" rel="noopener">.cms demo</a>
+      <a class="btn-ghost" href="https://github.com/casemaster-prism" target="_blank" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="vertical-align:-3px;margin-right:.3rem"><path d="M12 .5a12 12 0 0 0-3.79 23.4c.6.11.82-.26.82-.58v-2c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.21.09 1.84 1.24 1.84 1.24 1.07 1.84 2.81 1.31 3.5 1 .1-.78.42-1.32.76-1.62-2.66-.3-5.47-1.34-5.47-5.95 0-1.31.47-2.39 1.24-3.23-.13-.3-.54-1.52.11-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.29-1.55 3.3-1.23 3.3-1.23.65 1.66.24 2.88.12 3.18.77.84 1.23 1.92 1.23 3.23 0 4.62-2.81 5.65-5.49 5.95.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58A12 12 0 0 0 12 .5z"/></svg>
+        GitHub
+      </a>
+    </div>
+
+    <div class="install-tabs" role="tablist" aria-label="Install command">
+      <div class="install-tabs-row">
+        <button role="tab" data-pkg="npm"  aria-selected="true"  class="is-active">npm</button>
+        <button role="tab" data-pkg="pnpm" aria-selected="false">pnpm</button>
+        <button role="tab" data-pkg="yarn" aria-selected="false">yarn</button>
+        <button role="tab" data-pkg="bun"  aria-selected="false">bun</button>
+        <button role="tab" data-pkg="cdn"  aria-selected="false">CDN</button>
+      </div>
+      <div class="install-tabs-cmd" role="tabpanel">
+        <code data-pkg-cmd="npm">npm install casemaster-prism</code>
+        <code data-pkg-cmd="pnpm" hidden>pnpm add casemaster-prism</code>
+        <code data-pkg-cmd="yarn" hidden>yarn add casemaster-prism</code>
+        <code data-pkg-cmd="bun"  hidden>bun add casemaster-prism</code>
+        <code data-pkg-cmd="cdn"  hidden>&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/casemaster-prism@1/dist/prism.min.css"&gt;
+&lt;script type="module" src="https://cdn.jsdelivr.net/npm/casemaster-prism@1/dist/prism.js"&gt;&lt;/script&gt;</code>
+        <button class="install-copy" type="button" aria-label="Copy install command">Copy</button>
+      </div>
+    </div>
+
+    <div class="trust-row">
+      <a href="#" class="trust-badge">
+        <span class="trust-label">npm</span>
+        <span class="trust-value">v0.3.0</span>
+      </a>
+      <a href="#" class="trust-badge">
+        <span class="trust-label">bundle</span>
+        <span class="trust-value">~14 KB gz</span>
+      </a>
+      <a href="#" class="trust-badge">
+        <span class="trust-label">tests</span>
+        <span class="trust-value ok">22 passing</span>
+      </a>
+      <a href="#" class="trust-badge">
+        <span class="trust-label">a11y</span>
+        <span class="trust-value ok">axe clean</span>
+      </a>
+      <a href="#" class="trust-badge">
+        <span class="trust-label">license</span>
+        <span class="trust-value">MIT</span>
+      </a>
+    </div>
+
+    <p class="hero-meta">
+      <span><span class="ok-dot"></span> Bootstrap 4 markup unchanged</span>
+      <span><span class="ok-dot"></span> No <code>.cms</code> source changes</span>
+      <span><span class="ok-dot"></span> Coexists with Select2 / FullCalendar / Flatpickr</span>
+      <span><span class="ok-dot"></span> Works in dark mode &amp; RTL</span>
+    </p>
+  </section>
+
+  <!-- ─── INSTALL ─────────────────────────────────────────────────── -->
+  <section class="section" id="install">
+    <h2>Install</h2>
+    <p class="lead-2">Two runtimes, two recipes. Both leave the <code>.cms</code> source alone.</p>
+
+    <div class="snippet-grid">
+      <div>
+        <h3>cms-vercel</h3>
+        <p>One option in <code>api/index.ts</code>:</p>
+<pre><code>import { createHandler } from 'cms-vercel';
+
+export default createHandler({
+  ui: 'pro',  // theme + enhancers
+});
+</code></pre>
+        <p>The runtime injects the link / script tags into the default shell.</p>
+      </div>
+
+      <div>
+        <h3>.NET runtime (CaseMaster.Web.exe)</h3>
+        <p>Append two snippets to your app's <code>static/css/app.css</code> and <code>static/js/app.js</code>:</p>
+<pre><code>/* app.css */
+@import url('/static/lib/prism/prism.min.css');
+</code></pre>
+<pre><code>// app.js
+const s = document.createElement('script');
+s.type = 'module';
+s.src  = '/static/lib/prism/prism.js';
+document.body.appendChild(s);
+</code></pre>
+        <p>Survives <code>git pull</code> of the framework. Vendored or CDN, your call.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── COMPONENTS ──────────────────────────────────────────────── -->
+  <section class="section" id="components">
+    <h2>Components</h2>
+    <p class="lead-2">
+      Each component renders in an isolated iframe. <strong>Preview</strong>
+      shows the styled output, <strong>Code</strong> reveals the exact
+      HTML being rendered (one-click copy), <strong>Before</strong>
+      shows the same markup against bare Bootstrap 4 for comparison.
+      Combine with the theme picker in the header to re-skin every
+      component live.
+    </p>
+
+    <h3 class="comp-section-title" id="components/table">Tables <a class="comp-anchor-h" href="#components/table">#</a></h3>
+    <div class="comp-block" data-demo="table" style="--frame-h: 380px">
+      <div class="comp-tabs" role="tablist">
+        <button role="tab" data-pane="preview">Preview</button>
+        <button role="tab" data-pane="code">Code</button>
+        <button role="tab" data-pane="before">Before</button>
+        <button class="comp-copy" type="button" aria-label="Copy code">Copy</button>
+      </div>
+      <div class="comp-pane comp-pane-preview" data-pane="preview">
+        <iframe class="theme-aware" data-base="./sandbox.html?demo=table&amp;ui=1" loading="lazy" title="prism table"></iframe>
+      </div>
+      <div class="comp-pane comp-pane-code" data-pane="code"><pre><code></code></pre></div>
+      <div class="comp-pane comp-pane-before" data-pane="before">
+        <iframe class="theme-aware" data-base="./sandbox.html?demo=table" loading="lazy" title="bare table"></iframe>
+      </div>
+    </div>
+    <h3 class="comp-section-title" id="components/form">Forms <a class="comp-anchor-h" href="#components/form">#</a></h3>
+    <div class="comp-block" data-demo="form" style="--frame-h: 540px">
+      <div class="comp-tabs" role="tablist">
+        <button role="tab" data-pane="preview">Preview</button>
+        <button role="tab" data-pane="code">Code</button>
+        <button role="tab" data-pane="before">Before</button>
+        <button class="comp-copy" type="button" aria-label="Copy code">Copy</button>
+      </div>
+      <div class="comp-pane comp-pane-preview" data-pane="preview">
+        <iframe class="theme-aware" data-base="./sandbox.html?demo=form&amp;ui=1" loading="lazy" title="prism form"></iframe>
+      </div>
+      <div class="comp-pane comp-pane-code" data-pane="code"><pre><code></code></pre></div>
+      <div class="comp-pane comp-pane-before" data-pane="before">
+        <iframe class="theme-aware" data-base="./sandbox.html?demo=form" loading="lazy" title="bare form"></iframe>
+      </div>
+    </div>
+    <h3 class="comp-section-title" id="components/buttons">Buttons <a class="comp-anchor-h" href="#components/buttons">#</a></h3>
+    <div class="comp-block" data-demo="buttons" style="--frame-h: 200px">
+      <div class="comp-tabs" role="tablist">
+        <button role="tab" data-pane="preview">Preview</button>
+        <button role="tab" data-pane="code">Code</button>
+        <button role="tab" data-pane="before">Before</button>
+        <button class="comp-copy" type="button" aria-label="Copy code">Copy</button>
+      </div>
+      <div class="comp-pane comp-pane-preview" data-pane="preview">
+        <iframe class="theme-aware" data-base="./sandbox.html?demo=buttons&amp;ui=1" loading="lazy" title="prism buttons"></iframe>
+      </div>
+      <div class="comp-pane comp-pane-code" data-pane="code"><pre><code></code></pre></div>
+      <div class="comp-pane comp-pane-before" data-pane="before">
+        <iframe class="theme-aware" data-base="./sandbox.html?demo=buttons" loading="lazy" title="bare buttons"></iframe>
+      </div>
+    </div>
+    <h3 class="comp-section-title" id="components/cards">Cards <a class="comp-anchor-h" href="#components/cards">#</a></h3>
+    <div class="comp-block" data-demo="cards" style="--frame-h: 280px">
+      <div class="comp-tabs" role="tablist">
+        <button role="tab" data-pane="preview">Preview</button>
+        <button role="tab" data-pane="code">Code</button>
+        <button role="tab" data-pane="before">Before</button>
+        <button class="comp-copy" type="button" aria-label="Copy code">Copy</button>
+      </div>
+      <div class="comp-pane comp-pane-preview" data-pane="preview">
+        <iframe class="theme-aware" data-base="./sandbox.html?demo=cards&amp;ui=1" loading="lazy" title="prism cards"></iframe>
+      </div>
+      <div class="comp-pane comp-pane-code" data-pane="code"><pre><code></code></pre></div>
+      <div class="comp-pane comp-pane-before" data-pane="before">
+        <iframe class="theme-aware" data-base="./sandbox.html?demo=cards" loading="lazy" title="bare cards"></iframe>
+      </div>
+    </div>
+    <h3 class="comp-section-title" id="components/alerts">Alerts <a class="comp-anchor-h" href="#components/alerts">#</a></h3>
+    <div class="comp-block" data-demo="alerts" style="--frame-h: 280px">
+      <div class="comp-tabs" role="tablist">
+        <button role="tab" data-pane="preview">Preview</button>
+        <button role="tab" data-pane="code">Code</button>
+        <button role="tab" data-pane="before">Before</button>
+        <button class="comp-copy" type="button" aria-label="Copy code">Copy</button>
+      </div>
+      <div class="comp-pane comp-pane-preview" data-pane="preview">
+        <iframe class="theme-aware" data-base="./sandbox.html?demo=alerts&amp;ui=1" loading="lazy" title="prism alerts"></iframe>
+      </div>
+      <div class="comp-pane comp-pane-code" data-pane="code"><pre><code></code></pre></div>
+      <div class="comp-pane comp-pane-before" data-pane="before">
+        <iframe class="theme-aware" data-base="./sandbox.html?demo=alerts" loading="lazy" title="bare alerts"></iframe>
+      </div>
+    </div>
+    <h3 class="comp-section-title" id="components/badges">Badges &amp; status dots <a class="comp-anchor-h" href="#components/badges">#</a></h3>
+    <div class="comp-block" data-demo="badges" style="--frame-h: 180px">
+      <div class="comp-tabs" role="tablist">
+        <button role="tab" data-pane="preview">Preview</button>
+        <button role="tab" data-pane="code">Code</button>
+        <button role="tab" data-pane="before">Before</button>
+        <button class="comp-copy" type="button" aria-label="Copy code">Copy</button>
+      </div>
+      <div class="comp-pane comp-pane-preview" data-pane="preview">
+        <iframe class="theme-aware" data-base="./sandbox.html?demo=badges&amp;ui=1" loading="lazy" title="prism badges"></iframe>
+      </div>
+      <div class="comp-pane comp-pane-code" data-pane="code"><pre><code></code></pre></div>
+      <div class="comp-pane comp-pane-before" data-pane="before">
+        <iframe class="theme-aware" data-base="./sandbox.html?demo=badges" loading="lazy" title="bare badges"></iframe>
+      </div>
+    </div>
+    <h3 class="comp-section-title" id="components/pagination">Pagination <a class="comp-anchor-h" href="#components/pagination">#</a></h3>
+    <div class="comp-block" data-demo="pagination" style="--frame-h: 110px">
+      <div class="comp-tabs" role="tablist">
+        <button role="tab" data-pane="preview">Preview</button>
+        <button role="tab" data-pane="code">Code</button>
+        <button role="tab" data-pane="before">Before</button>
+        <button class="comp-copy" type="button" aria-label="Copy code">Copy</button>
+      </div>
+      <div class="comp-pane comp-pane-preview" data-pane="preview">
+        <iframe class="theme-aware" data-base="./sandbox.html?demo=pagination&amp;ui=1" loading="lazy" title="prism pagination"></iframe>
+      </div>
+      <div class="comp-pane comp-pane-code" data-pane="code"><pre><code></code></pre></div>
+      <div class="comp-pane comp-pane-before" data-pane="before">
+        <iframe class="theme-aware" data-base="./sandbox.html?demo=pagination" loading="lazy" title="bare pagination"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── PRESET THEMES ──────────────────────────────────────────── -->
+  <section class="section" id="themes">
+    <h2>Preset themes</h2>
+    <p class="lead-2">
+      Three named brand presets — pick one with a single attribute
+      change. Each one swaps the entire token set: palette, typography,
+      radius, shadows, control sizes. Use the picker below to preview
+      them across all four panes simultaneously, or set
+      <code>data-cms-theme</code> on your <code>&lt;html&gt;</code> tag
+      for a permanent switch.
+    </p>
+
+    <div id="themePicker" class="theme-picker" aria-label="Theme + density picker">
+      <span class="theme-picker-label">Preset</span>
+      <button data-preset="" class="is-active">Default</button>
+      <button data-preset="linear">Linear</button>
+      <button data-preset="tabler">Tabler</button>
+      <button data-preset="material">Material</button>
+      <span class="theme-picker-label" style="margin-left:1rem">Density</span>
+      <button data-density="" class="is-active">Default</button>
+      <button data-density="compact">Compact</button>
+      <button data-density="comfortable">Comfortable</button>
+    </div>
+
+<pre><code>&lt;html data-cms-theme="linear" data-cms-density="compact"&gt;
+&lt;html data-cms-theme="tabler"&gt;
+&lt;html data-cms-theme="material" data-theme="dark"&gt;
+</code></pre>
+
+    <div class="theme-grid" data-theme-frames>
+      <div class="theme-frame">
+        <div class="theme-frame-label">Tables</div>
+        <iframe data-base="./sandbox.html?demo=toolbar-table&amp;ui=1" loading="lazy" title="theme tables"></iframe>
+      </div>
+      <div class="theme-frame">
+        <div class="theme-frame-label">Forms</div>
+        <iframe data-base="./sandbox.html?demo=form&amp;ui=1" loading="lazy" title="theme forms"></iframe>
+      </div>
+      <div class="theme-frame">
+        <div class="theme-frame-label">Buttons</div>
+        <iframe data-base="./sandbox.html?demo=variants-buttons&amp;ui=1" loading="lazy" title="theme buttons"></iframe>
+      </div>
+      <div class="theme-frame">
+        <div class="theme-frame-label">Cards</div>
+        <iframe data-base="./sandbox.html?demo=variants-cards&amp;ui=1" loading="lazy" title="theme cards"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── TEMPLATES ──────────────────────────────────────────────── -->
+  <section class="section" id="templates">
+    <h2>Templates</h2>
+    <p class="lead-2">
+      Three full-page demos showing what a CaseMaster app looks like
+      end-to-end with prism applied. Each template has its own theme +
+      density picker so you can preview Linear / Tabler / Material on
+      a real product surface.
+    </p>
+
+    <div class="templates-grid">
+      <a class="template-card" href="./templates/dashboard.html">
+        <div class="template-thumb template-thumb-dashboard"></div>
+        <div class="template-meta">
+          <h3>Dashboard</h3>
+          <p>KPI cards, recent-orders table, activity feed, sidebar.</p>
+          <span class="template-cta">Open template →</span>
+        </div>
+      </a>
+
+      <a class="template-card" href="./templates/settings.html">
+        <div class="template-thumb template-thumb-settings"></div>
+        <div class="template-meta">
+          <h3>Settings</h3>
+          <p>Multi-section form with selects, switches, integrations panel, danger zone.</p>
+          <span class="template-cta">Open template →</span>
+        </div>
+      </a>
+
+      <a class="template-card" href="./templates/list-detail.html">
+        <div class="template-thumb template-thumb-listdetail"></div>
+        <div class="template-meta">
+          <h3>List + detail</h3>
+          <p>Inventory list with row-click detail panel and inline-edit cells.</p>
+          <span class="template-cta">Open template →</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ─── VARIANTS catalogue ─────────────────────────────────────── -->
+  <section class="section" id="variants">
+    <h2>Variants — call them from <code>.cms</code></h2>
+    <p class="lead-2">
+      Modifier classes designed to be passed through existing CaseMaster
+      qualifiers — no new qualifier system required. Drop the class
+      string into <code>tableClass</code>, <code>class</code>, or any
+      other class-accepting property the runtime exposes.
+    </p>
+
+<pre><code>&lt;@page/data/table iterator: [items], group: 'list',
+                  tableClass: 'cms-table-elevated cms-table-compact'&gt;
+
+&lt;@page/button class: 'btn btn-soft-primary btn-pill', label: 'Approve'&gt;
+
+&lt;@page/alert  class: 'alert alert-warning cms-alert-subtle',
+              text:  'Two items below safety stock.'&gt;
+</code></pre>
+
+    <h3 class="comp-section-title" id="variants/buttons">Buttons</h3>
+    <div class="comp-block" data-demo="variants-buttons" style="--frame-h: 320px">
+      <div class="comp-tabs" role="tablist">
+        <button role="tab" data-pane="preview">Preview</button>
+        <button role="tab" data-pane="code">Code</button>
+        <button class="comp-copy" type="button" aria-label="Copy code">Copy</button>
+      </div>
+      <div class="comp-pane comp-pane-preview" data-pane="preview">
+        <iframe class="theme-aware" data-base="./sandbox.html?demo=variants-buttons&amp;ui=1" loading="lazy" title="button variants"></iframe>
+      </div>
+      <div class="comp-pane comp-pane-code" data-pane="code"><pre><code></code></pre></div>
+    </div>
+
+    <h3 class="comp-section-title" id="variants/tables">Tables</h3>
+    <div class="comp-block" data-demo="variants-tables" style="--frame-h: 540px">
+      <div class="comp-tabs" role="tablist">
+        <button role="tab" data-pane="preview">Preview</button>
+        <button role="tab" data-pane="code">Code</button>
+        <button class="comp-copy" type="button" aria-label="Copy code">Copy</button>
+      </div>
+      <div class="comp-pane comp-pane-preview" data-pane="preview">
+        <iframe class="theme-aware" data-base="./sandbox.html?demo=variants-tables&amp;ui=1" loading="lazy" title="table variants"></iframe>
+      </div>
+      <div class="comp-pane comp-pane-code" data-pane="code"><pre><code></code></pre></div>
+    </div>
+
+    <h3 class="comp-section-title" id="variants/cards">Cards</h3>
+    <div class="comp-block" data-demo="variants-cards" style="--frame-h: 220px">
+      <div class="comp-tabs" role="tablist">
+        <button role="tab" data-pane="preview">Preview</button>
+        <button role="tab" data-pane="code">Code</button>
+        <button class="comp-copy" type="button" aria-label="Copy code">Copy</button>
+      </div>
+      <div class="comp-pane comp-pane-preview" data-pane="preview">
+        <iframe class="theme-aware" data-base="./sandbox.html?demo=variants-cards&amp;ui=1" loading="lazy" title="card variants"></iframe>
+      </div>
+      <div class="comp-pane comp-pane-code" data-pane="code"><pre><code></code></pre></div>
+    </div>
+
+    <h3 class="comp-section-title" id="variants/alerts">Alerts</h3>
+    <div class="comp-block" data-demo="variants-alerts" style="--frame-h: 240px">
+      <div class="comp-tabs" role="tablist">
+        <button role="tab" data-pane="preview">Preview</button>
+        <button role="tab" data-pane="code">Code</button>
+        <button class="comp-copy" type="button" aria-label="Copy code">Copy</button>
+      </div>
+      <div class="comp-pane comp-pane-preview" data-pane="preview">
+        <iframe class="theme-aware" data-base="./sandbox.html?demo=variants-alerts&amp;ui=1" loading="lazy" title="alert variants"></iframe>
+      </div>
+      <div class="comp-pane comp-pane-code" data-pane="code"><pre><code></code></pre></div>
+    </div>
+
+    <h3 class="comp-section-title" id="variants/inputs">Inputs</h3>
+    <div class="comp-block" data-demo="variants-inputs" style="--frame-h: 320px">
+      <div class="comp-tabs" role="tablist">
+        <button role="tab" data-pane="preview">Preview</button>
+        <button role="tab" data-pane="code">Code</button>
+        <button class="comp-copy" type="button" aria-label="Copy code">Copy</button>
+      </div>
+      <div class="comp-pane comp-pane-preview" data-pane="preview">
+        <iframe class="theme-aware" data-base="./sandbox.html?demo=variants-inputs&amp;ui=1" loading="lazy" title="input variants"></iframe>
+      </div>
+      <div class="comp-pane comp-pane-code" data-pane="code"><pre><code></code></pre></div>
+    </div>
+  </section>
+
+  <!-- ─── ENHANCERS — interactive ──────────────────────────────────── -->
+  <section class="section" id="enhancers">
+    <h2>Enhancers — try them live</h2>
+    <p class="lead-2">
+      The right-hand frame loads the JS bundle. Click headers to sort,
+      type in the filter to narrow rows, hit the <code>CSV</code> button
+      to download. Same markup is dead-static on the left.
+    </p>
+
+    <h3 style="margin: 1.5rem 0 0.5rem; font-size: 1.05rem; font-weight:600">Sortable + filterable table</h3>
+    <div class="compare" style="--frame-h: 540px">
+      <div class="compare-pane before">
+        <div class="compare-label"><span class="dot"></span>Before</div>
+        <div class="compare-frame-host"><iframe class="theme-aware" src="./sandbox.html?demo=toolbar-table" loading="lazy" title="bare table"></iframe></div>
+      </div>
+      <div class="compare-pane after">
+        <div class="compare-label"><span class="dot"></span>After — interactive</div>
+        <div class="compare-frame-host"><iframe class="theme-aware" src="./sandbox.html?demo=toolbar-table&amp;ui=1" loading="lazy" title="cms-ui table"></iframe></div>
+      </div>
+    </div>
+
+    <h3 style="margin: 2rem 0 0.5rem; font-size: 1.05rem; font-weight:600">Toast notifications</h3>
+    <div class="compare" style="--frame-h: 200px">
+      <div class="compare-pane before">
+        <div class="compare-label"><span class="dot"></span>Before</div>
+        <div class="compare-frame-host"><iframe class="theme-aware" src="./sandbox.html?demo=toasts" loading="lazy" title="bare toasts"></iframe></div>
+      </div>
+      <div class="compare-pane after">
+        <div class="compare-label"><span class="dot"></span>After — click any button</div>
+        <div class="compare-frame-host"><iframe class="theme-aware" src="./sandbox.html?demo=toasts&amp;ui=1" loading="lazy" title="cms-ui toasts"></iframe></div>
+      </div>
+    </div>
+
+    <h3 style="margin: 2rem 0 0.5rem; font-size: 1.05rem; font-weight:600">Confirm dialog (<code>data-cms-confirm</code>)</h3>
+    <div class="compare" style="--frame-h: 220px">
+      <div class="compare-pane before">
+        <div class="compare-label"><span class="dot"></span>Before</div>
+        <div class="compare-frame-host"><iframe class="theme-aware" src="./sandbox.html?demo=confirm" loading="lazy" title="bare confirm"></iframe></div>
+      </div>
+      <div class="compare-pane after">
+        <div class="compare-label"><span class="dot"></span>After — click "Delete"</div>
+        <div class="compare-frame-host"><iframe class="theme-aware" src="./sandbox.html?demo=confirm&amp;ui=1" loading="lazy" title="cms-ui confirm"></iframe></div>
+      </div>
+    </div>
+
+    <h3 style="margin: 2rem 0 0.5rem; font-size: 1.05rem; font-weight:600">Command palette (<kbd>Cmd</kbd>+<kbd>K</kbd>)</h3>
+    <div class="compare" style="--frame-h: 320px">
+      <div class="compare-pane before">
+        <div class="compare-label"><span class="dot"></span>Before</div>
+        <div class="compare-frame-host"><iframe class="theme-aware" src="./sandbox.html?demo=cmdk" loading="lazy" title="bare cmdk"></iframe></div>
+      </div>
+      <div class="compare-pane after">
+        <div class="compare-label"><span class="dot"></span>After — focus, then <kbd>Cmd</kbd>+<kbd>K</kbd></div>
+        <div class="compare-frame-host"><iframe class="theme-aware" src="./sandbox.html?demo=cmdk&amp;ui=1" loading="lazy" title="cms-ui cmdk"></iframe></div>
+      </div>
+    </div>
+
+    <h3 style="margin: 2rem 0 0.5rem; font-size: 1.05rem; font-weight:600">Inline-edit cells</h3>
+    <div class="compare" style="--frame-h: 280px">
+      <div class="compare-pane before">
+        <div class="compare-label"><span class="dot"></span>Before</div>
+        <div class="compare-frame-host"><iframe class="theme-aware" src="./sandbox.html?demo=inline-edit" loading="lazy" title="bare inline-edit"></iframe></div>
+      </div>
+      <div class="compare-pane after">
+        <div class="compare-label"><span class="dot"></span>After — click a cell</div>
+        <div class="compare-frame-host"><iframe class="theme-aware" src="./sandbox.html?demo=inline-edit&amp;ui=1" loading="lazy" title="cms-ui inline-edit"></iframe></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── TOKENS — interactive theming ────────────────────────────── -->
+  <section class="section" id="tokens">
+    <h2>Theme it in seconds</h2>
+    <p class="lead-2">
+      Every visual decision in the package is a CSS variable. Override
+      one in your app's CSS and every component picks it up — no
+      recompile, no fork.
+    </p>
+    <div id="tokenTester" class="token-tester">
+      <div>
+        <label>--cms-primary</label>
+        <input type="color" name="accent" value="#2563eb">
+        <div class="token-value" data-token="accent">#2563eb</div>
+
+        <label style="margin-top:1rem">--cms-radius</label>
+        <input type="range" name="radius" min="0" max="20" value="8">
+        <div class="token-value" data-token="radius">8px</div>
+
+        <p style="font-size:0.78rem;color:var(--muted);margin-top:1rem;line-height:1.5">
+          The full token set lives in <code>src/theme/tokens.css</code> —
+          spacing, shadows, type, dark-mode overrides.
+        </p>
+      </div>
+      <div class="token-frame-host">
+        <iframe data-base="./sandbox.html?demo=table" title="token preview"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CONFIG ──────────────────────────────────────────────────── -->
+  <section class="section" id="config">
+    <h2>Configure</h2>
+    <p class="lead-2">
+      Disable any enhancer at runtime via <code>window.cmsUi</code>.
+      Disable a single element with <code>data-cms-no-enhance</code>.
+    </p>
+
+<pre><code>&lt;!-- Configure before the bundle loads --&gt;
+&lt;script&gt;
+  window.cmsUi = {
+    tables:     { search: true, sort: true, csvExport: false },
+    forms:      { tomSelect: true, flatpickr: true, selectThreshold: 8 },
+    shortcuts:  true,
+    command:    true,
+    inlineEdit: false,
+    confirm:    true,
+  };
+&lt;/script&gt;
+&lt;script type="module" src="/static/lib/prism/prism.js"&gt;&lt;/script&gt;
+</code></pre>
+
+    <table class="config-table">
+      <thead>
+        <tr><th>Key</th><th>Default</th><th>Effect when off</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>tables</code></td><td>on</td><td>No sortable headers, no toolbar.</td></tr>
+        <tr><td><code>forms</code></td><td>on</td><td>Bare <code>&lt;select&gt;</code> / <code>&lt;input type=date&gt;</code>.</td></tr>
+        <tr><td><code>confirm</code></td><td>on</td><td><code>data-cms-confirm</code> ignored.</td></tr>
+        <tr><td><code>loading</code></td><td>on</td><td>No top progress bar.</td></tr>
+        <tr><td><code>toasts</code></td><td>on</td><td><code>cms-toast</code> events ignored.</td></tr>
+        <tr><td><code>shortcuts</code></td><td>on</td><td><code>/</code>, <code>?</code>, <code>g X</code> chords inert.</td></tr>
+        <tr><td><code>command</code></td><td>on</td><td><kbd>Cmd</kbd>+<kbd>K</kbd> palette disabled.</td></tr>
+        <tr><td><code>modalLinks</code></td><td>on</td><td><code>data-cms-modal-link</code> falls back to navigation.</td></tr>
+        <tr><td><code>inlineEdit</code></td><td>on</td><td><code>data-cms-inline-edit</code> cells become static.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ─── FEATURES grid ──────────────────────────────────────────── -->
+  <section class="section">
+    <h2>What's in the box</h2>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <h4><span class="icon">🎨</span>10+ themed components</h4>
+        <p>Tables, forms, buttons, cards, navbar, sidebar, modals, badges, alerts, pagination — all driven by a single token set.</p>
+      </div>
+      <div class="feature-card">
+        <h4><span class="icon">⌨</span>Keyboard shortcuts</h4>
+        <p><kbd>/</kbd> focuses search. <kbd>?</kbd> shows the help overlay. <kbd>Cmd</kbd>+<kbd>K</kbd> opens the command palette. <kbd>g</kbd> chords for navigation.</p>
+      </div>
+      <div class="feature-card">
+        <h4><span class="icon">🔍</span>Sortable, filterable tables</h4>
+        <p>Auto-detected on every BS4 striped table. CSV export, column toggle, numeric-column alignment for free.</p>
+      </div>
+      <div class="feature-card">
+        <h4><span class="icon">ðŸ“…</span>Better selects &amp; datepickers</h4>
+        <p>Tom Select replaces big <code>&lt;select&gt;</code>s; Flatpickr replaces <code>&lt;input type="date"&gt;</code>. Both lazy-loaded.</p>
+      </div>
+      <div class="feature-card">
+        <h4><span class="icon">🌗</span>Dark mode</h4>
+        <p>Add <code>data-theme="dark"</code> on <code>&lt;html&gt;</code>. Every token has a dark-mode counterpart.</p>
+      </div>
+      <div class="feature-card">
+        <h4><span class="icon">↔</span>RTL support</h4>
+        <p>Add <code>dir="rtl"</code> on <code>&lt;html&gt;</code>. Toolbar, sidebar, dropdown, and toast directions flip.</p>
+      </div>
+      <div class="feature-card">
+        <h4><span class="icon">♿</span>Accessibility-first</h4>
+        <p>Focus rings preserved. <code>aria-sort</code> set on sorted headers. <code>prefers-reduced-motion</code> honoured. axe-core clean.</p>
+      </div>
+      <div class="feature-card">
+        <h4><span class="icon">🔌</span>Coexistence</h4>
+        <p>Doesn't double-wrap Select2 (.NET runtime), Flatpickr, jQuery UI, or anything tagged <code>data-cms-no-enhance</code>.</p>
+      </div>
+      <div class="feature-card">
+        <h4><span class="icon">⚡</span>Tiny &amp; lazy</h4>
+        <p>~10 KB gz core JS, ~7 KB gz CSS. Tom Select / Flatpickr only loaded on the first matching element.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── VERIFY ──────────────────────────────────────────────────── -->
+  <section class="section">
+    <h2>Verified on both runtimes</h2>
+    <p class="lead-2">
+      The package ships with a Playwright suite that runs the same tests
+      against both runtimes — <code>CaseMaster.Web.exe</code> on
+      <code>:5051</code> and <code>cms-vercel</code> on
+      <code>:5052</code> — to prove the dual-runtime claim.
+    </p>
+<pre><code># Boot both runtimes in two terminals, then:
+$ npx playwright test
+”¦
+24 passed (27.0s)
+
+# Visual baselines, axe-core, sortable headers, filter, /, Cmd+K,
+# zero console / page errors — verified on both targets.
+</code></pre>
+  </section>
+
+</main>
+
+<footer>
+  <p>
+    casemaster-prism · v0.3.0 · MIT.
+    <br>
+    Source: <a href="../">repository root</a> ·
+    Spec: <a href="../AB-ui-package.md">AB-ui-package.md</a> ·
+    .NET integration recipe: <a href="../integrations/dotnet/README.md">dotnet/README.md</a> ·
+    cms-vercel: <a href="../integrations/vercel/README.md">vercel/README.md</a>
+  </p>
+</footer>
+
+<script src="./assets/site.js"></script>
+<script src="./assets/nav.js"></script>
+</body>
+</html>
