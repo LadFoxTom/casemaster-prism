@@ -172,6 +172,6 @@ server.listen(PORT, () => {
   console.log(`  /                  → public/index.html (static landing)`);
   console.log(`  /docs/, /playground/, /migrate/, /sandbox.html, /404.html`);
   console.log(`                     → public/* (static)`);
-  console.log(`  /page/cms-demo     → app/page/cms-demo.cms (.cms dog-food demo)`);
+  console.log(`  /                  → app/page/index.cms (and every other page lives under app/page/)`);
   console.log(`  /static/lib/prism/* → public/lib/prism/* (CaseMaster URL convention)`);
 });

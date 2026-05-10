@@ -4,10 +4,10 @@ The full `casemaster-prism` marketing + docs site, packaged as a
 **cms-vercel** application. Deploys directly to Vercel with one
 command.
 
-The homepage is a static landing page. One route (`/page/cms-demo`)
-is a real CaseMaster `.cms` page rendered through the cms-vercel
-runtime and themed by `casemaster-prism` — the package eats its own
-dog food.
+**Every URL is a real CaseMaster `.cms` page.** There are no static
+HTML pages on the site — every public route under `app/page/` is
+parsed by the cms-vercel runtime and rendered into the response, then
+themed by `casemaster-prism`. The package eats its own dog food.
 
 ## Run locally
 
@@ -17,70 +17,97 @@ node dev-server.mjs
 # → http://localhost:4000
 ```
 
-The dev-server reuses the cms-vercel runtime that's already compiled
-under `casemaster-vercel-wms-test1/my-cms-app/packages/runtime/dist/`.
+The dev-server uses the cms-vercel runtime vendored under
+`api/_runtime/` so the site is self-contained — no external workspace,
+no build step.
 
-## Routing (mirrors what Vercel does in production)
+## Routing
 
-| Path                              | Resolves to                         |
-|----------------------------------|-------------------------------------|
-| `/`                              | `public/index.html` (landing)       |
-| `/sandbox.html`                  | `public/sandbox.html` (iframe demo) |
-| `/docs/*`                        | `public/docs/*`                     |
-| `/playground/`                   | `public/playground/index.html`      |
-| `/migrate/`                      | `public/migrate/index.html`         |
-| `/templates/*.html`              | `public/templates/*.html`           |
-| `/page/cms-demo`                 | `app/page/cms-demo.cms` via runtime |
-| `/static/lib/prism/*`            | `public/lib/prism/*`                |
-| `/404.html`, `/favicon.svg`, etc.| `public/*`                          |
+`vercel.json` mirrors the local `dev-server.mjs` routes.
+
+| Public URL                      | Served by                                  |
+|--------------------------------|--------------------------------------------|
+| `/`                            | `app/page/index.cms`                       |
+| `/docs`                        | `app/page/docs.cms`                        |
+| `/docs/<page>`                 | `app/page/docs/<page>.cms`                 |
+| `/docs/enhancers/<page>`       | `app/page/docs/enhancers/<page>.cms`       |
+| `/playground`                  | `app/page/playground.cms`                  |
+| `/migrate`                     | `app/page/migrate.cms`                     |
+| `/sandbox.html`                | `public/sandbox.html` (iframe fixture)     |
+| `/templates/<x>.html`          | `public/templates/<x>.html` (product previews) |
+| `/_nav.html`, `/404.html`, `/favicon.svg`, `/manifest.webmanifest` | `public/*` |
+| `/assets/*`, `/lib/prism/*`    | `public/*`                                 |
+| `/static/lib/prism/*`          | `public/lib/prism/*` (CaseMaster URL convention) |
+
+Both `/docs/themes` and `/docs/themes.html` resolve to the same
+`.cms` page (`.html` is stripped at the rewrite layer).
 
 ## Layout
 
 ```
 casemaster-prism-site/
 ├── api/
-│   └── index.ts                 createHandler({ ui: 'pro' })
+│   ├── index.ts                 createHandler({ ui: 'pro' })
+│   └── _runtime/                vendored cms-vercel runtime (pre-compiled)
 ├── app/
-│   └── page/
-│       └── cms-demo.cms         dog-food .cms page
+│   └── page/                    24 .cms files — every user-facing route
+│       ├── index.cms
+│       ├── docs.cms
+│       ├── docs/
+│       │   ├── getting-started.cms
+│       │   ├── themes.cms · tokens.cms · variants.cms · …
+│       │   └── enhancers/
+│       │       ├── tables.cms · forms.cms · confirm.cms · …
+│       ├── playground.cms
+│       └── migrate.cms
 ├── public/
-│   ├── index.html               static landing (homepage)
-│   ├── sandbox.html             iframe fixture for component demos
-│   ├── _nav.html                global left-nav fragment
-│   ├── 404.html
-│   ├── favicon.svg
-│   ├── manifest.webmanifest
+│   ├── sandbox.html             iframe fixture (loaded by docs/landing demos)
+│   ├── _nav.html                global left-nav fragment (fetched by nav.js)
+│   ├── 404.html                 Vercel auto-404 page
+│   ├── favicon.svg, manifest.webmanifest
 │   ├── assets/                  site.css, site.js, nav.js, og-card.png
-│   ├── lib/
-│   │   └── prism/               vendored prism dist
-│   ├── docs/                    static docs subsite (19 pages)
-│   ├── playground/              class-builder playground
-│   ├── migrate/                 migration guide
+│   ├── lib/prism/               vendored prism dist (CSS + JS + lazy chunks)
 │   └── templates/               full-page product previews
+│       ├── dashboard.html · settings.html · list-detail.html
 ├── dev-server.mjs               local Node http wrapper
 ├── package.json
 ├── vercel.json
 └── README.md
 ```
 
+## Refresh + edit cycle
+
+To edit page content:
+
+1. Edit `app/page/<path>.cms` directly.
+2. Or edit the original HTML somewhere (e.g. a snapshot), then re-run
+   the converter:
+   ```sh
+   node ../test/smoke/convert-html-to-cms.mjs
+   ```
+   The script regenerates each `.cms` from the corresponding HTML
+   source. (Currently the source-of-truth IS the `.cms` file — the
+   converter was used once during initial conversion.)
+
+To refresh the prism dist:
+
+```powershell
+$src = 'C:\casemaster-frontend-package\dist'
+$dst = 'C:\casemaster-frontend-package\casemaster-prism-site\public\lib\prism'
+Copy-Item (Join-Path $src 'prism.min.css')  $dst -Force
+Copy-Item (Join-Path $src 'prism.js')       $dst -Force
+Copy-Item (Join-Path $src 'prism.js.map')   $dst -Force
+Copy-Item (Join-Path $src 'chunks\*')       (Join-Path $dst 'chunks') -Recurse -Force
+```
+
 ## Deploy to Vercel
-
-Two options.
-
-### A. Vercel CLI
 
 ```sh
 cd casemaster-prism-site
-npm install -g vercel       # one-time
-vercel link                 # connect to a Vercel project
+npm install -g vercel        # one-time
+vercel link                  # connect to a Vercel project
 vercel deploy --prod
 ```
-
-### B. Git-based deploy
-
-Push this directory (or its parent monorepo) to GitHub / GitLab /
-Bitbucket. Import the project into Vercel; it picks up `vercel.json`
-automatically.
 
 #### Vercel project settings
 
@@ -93,37 +120,18 @@ automatically.
 | Install command     | `npm install`                               |
 | Node.js version     | 20.x                                        |
 
-The `vercel.json` rewrites handle the rest:
+The `vercel.json` rewrites + `framework: null` + `buildCommand: ""`
+combine to give Vercel exactly the right instructions: install,
+trace `api/index.ts` imports, deploy `public/` as static, route
+URLs through the rewrites.
 
-- `/page/:path*` → the `.cms` runtime
-- `/static/:path*` → public/ (legacy CaseMaster URL convention)
+## Proof
 
-The cms-vercel runtime needs to be available at deploy time — it's
-referenced via `import { createHandler } from 'cms-vercel'` in
-`api/index.ts`. For production deploys, install it as an npm
-dependency. For this monorepo, the dev-server reaches into the
-sibling `casemaster-vercel-wms-test1` workspace; before deploying
-standalone, copy `packages/runtime/` into this directory or publish
-`cms-vercel` to npm and add it to `package.json`.
+1. Open `/docs/themes` in the browser.
+2. View Source.
+3. The HTML is emitted by `app/page/docs/themes.cms` via the
+   cms-vercel runtime in `api/_runtime/`. The polish is
+   `casemaster-prism` applied via one config option in `api/index.ts`.
 
-## Refresh the prism dist
-
-Whenever the prism package gets a new build, refresh the vendored copy:
-
-```powershell
-$src = 'C:\casemaster-frontend-package\dist'
-$dst = 'C:\casemaster-frontend-package\casemaster-prism-site\public\lib\prism'
-Copy-Item (Join-Path $src 'prism.min.css')  $dst -Force
-Copy-Item (Join-Path $src 'prism.js')       $dst -Force
-Copy-Item (Join-Path $src 'prism.js.map')   $dst -Force
-Copy-Item (Join-Path $src 'chunks\*')       (Join-Path $dst 'chunks') -Recurse -Force
-```
-
-## What's the proof?
-
-1. Open `/` — the static landing.
-2. Open `/page/cms-demo`. View Source. The HTML is emitted by
-   `app/page/cms-demo.cms` through the cms-vercel runtime, then themed
-   by `casemaster-prism` (added via the `ui` option in `api/index.ts`).
-3. Same package the docs are recommending — applied here to prove the
-   integration recipe in production.
+Same proof works for any URL on the site: edit the corresponding
+`.cms` file, push, the page updates.
