@@ -1,28 +1,7 @@
-// Landing-page UX glue — copy buttons, dark toggle, token tester.
+// Landing-page UX glue — copy buttons, install tabs, theme picker, etc.
+// Dark-mode toggle lives in nav.js (single source of truth).
 
 (function () {
-  // --- Persist + apply dark mode -----------------------------------
-  const THEME_KEY = 'cms-ui-landing-theme';
-  function setTheme(t) {
-    document.documentElement.setAttribute('data-theme', t);
-    try { localStorage.setItem(THEME_KEY, t); } catch {}
-    document.querySelectorAll('iframe.theme-aware').forEach((f) => {
-      const u = new URL(f.src, location.href);
-      if (t === 'dark') u.searchParams.set('theme', 'dark');
-      else u.searchParams.delete('theme');
-      f.src = u.toString();
-    });
-  }
-  const stored = (() => { try { return localStorage.getItem(THEME_KEY); } catch { return null; } })();
-  if (stored === 'dark') setTheme('dark');
-
-  document.addEventListener('click', (ev) => {
-    const t = ev.target.closest('[data-theme-toggle]');
-    if (!t) return;
-    const cur = document.documentElement.getAttribute('data-theme');
-    setTheme(cur === 'dark' ? 'light' : 'dark');
-  });
-
   // --- Copy buttons on every <pre> ---------------------------------
   document.querySelectorAll('pre').forEach((pre) => {
     if (pre.querySelector('.copy')) return;

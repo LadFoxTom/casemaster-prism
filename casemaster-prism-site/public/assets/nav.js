@@ -1,25 +1,35 @@
-// Global nav loader. Drop this into any page that has a #gnav-host
-// element; it fetches /_nav.html, rewrites relative paths for the
-// page's depth, highlights the active link, and wires the mobile
-// hamburger.
+// Global nav loader. Drop into any page that has a #gnav-host element.
+// Fetches /_nav.html (cached in sessionStorage), rewrites relative paths
+// for the page's depth, highlights the active link, persists scroll
+// position across navigations, and wires the mobile hamburger.
 
 (async function () {
   const host = document.getElementById('gnav-host');
   if (!host) return;
 
-  // Compute the depth of the current page from the site root.
-  // Site root is the directory containing _nav.html. We expose it as a
-  // data attribute on #gnav-host (defaults to the current dir).
   const rootRel = host.dataset.root ?? './';
-  const navUrl = new URL(rootRel + '_nav.html', location.href).toString();
+  const navUrl  = new URL(rootRel + '_nav.html', location.href).toString();
+  const CACHE_KEY  = 'prism-nav-html-v3';
+  const SCROLL_KEY = 'prism-nav-scroll';
 
   let html = '';
   try {
-    const res = await fetch(navUrl);
-    html = await res.text();
-  } catch (e) {
-    console.warn('[gnav] could not load _nav.html', e);
-    return;
+    const cached = sessionStorage.getItem(CACHE_KEY);
+    if (cached) {
+      html = cached;
+    } else {
+      const res = await fetch(navUrl);
+      html = await res.text();
+      sessionStorage.setItem(CACHE_KEY, html);
+    }
+  } catch {
+    try {
+      const res = await fetch(navUrl);
+      html = await res.text();
+    } catch (e) {
+      console.warn('[gnav] failed to load _nav.html', e);
+      return;
+    }
   }
 
   host.innerHTML = html;
@@ -27,24 +37,79 @@
   // Rewrite every data-href to be relative to this page.
   host.querySelectorAll('[data-href]').forEach((a) => {
     const original = a.getAttribute('data-href');
-    // Strip leading "./"
     let target = original.replace(/^\.\//, '');
-    // Use rootRel as the prefix so a page at /docs/x.html with rootRel="../"
-    // gets "../target".
-    const finalUrl = rootRel + target;
-    a.setAttribute('href', finalUrl);
+    a.setAttribute('href', rootRel + target);
     a.removeAttribute('data-href');
   });
 
-  // Highlight the active link.
-  // We compare against location.pathname relative to rootRel root.
-  const here = computeRelativePath(rootRel);
+  // Active-link highlighting. Compare each entry's data-match regex
+  // against a normalised current path.
+  // location.pathname examples: "/", "/docs/", "/docs/index.html",
+  // "/playground/", "/page/cms-demo".
+  // Normalise: strip leading slash, trailing slash, "index.html" so
+  // /docs/ and /docs/index.html both become "docs".
+  let here = location.pathname.replace(/^\//, '').replace(/\/$/, '');
+  if (here.endsWith('/index.html')) here = here.slice(0, -'/index.html'.length);
+  if (here === 'index.html') here = '';
+
+  let bestMatch = null;
+  let bestMatchLen = -1;
   host.querySelectorAll('a[data-match]').forEach((a) => {
     try {
       const re = new RegExp(a.dataset.match);
-      if (re.test(here)) a.classList.add('is-active');
+      if (re.test(here)) {
+        // Prefer the most specific match (longest pattern).
+        const len = a.dataset.match.length;
+        if (len > bestMatchLen) { bestMatch = a; bestMatchLen = len; }
+      }
     } catch {}
     a.removeAttribute('data-match');
+  });
+  if (bestMatch) bestMatch.classList.add('is-active');
+
+  // Same-path links shouldn't trigger a full reload. Useful for
+  // "Overview" when already on the homepage — clicking it should just
+  // scroll to top, not navigate (which causes a flash).
+  host.querySelectorAll('a[href]').forEach((a) => {
+    a.addEventListener('click', (ev) => {
+      const href = a.getAttribute('href');
+      if (!href || href.startsWith('http') || href.startsWith('//')) return;
+      const target = new URL(href, location.href);
+      const targetPath = target.pathname.replace(/\/$/, '') || '/';
+      const herePath   = location.pathname.replace(/\/$/, '') || '/';
+      if (targetPath === herePath && !target.hash) {
+        ev.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+      }
+      // Persist nav scroll before navigation.
+      try { sessionStorage.setItem(SCROLL_KEY, String(host.scrollTop)); } catch {}
+    });
+  });
+
+  // Restore nav scroll if the user navigated from another page.
+  try {
+    const saved = sessionStorage.getItem(SCROLL_KEY);
+    if (saved) {
+      host.scrollTop = parseInt(saved, 10) || 0;
+    } else if (bestMatch) {
+      // First visit on this page — make sure the active link is
+      // visible by scrolling it into view (without animating).
+      const r = bestMatch.getBoundingClientRect();
+      const hr = host.getBoundingClientRect();
+      if (r.top < hr.top || r.bottom > hr.bottom) {
+        bestMatch.scrollIntoView({ block: 'center' });
+      }
+    }
+  } catch {}
+
+  // Persist scroll on every scroll (debounced).
+  let saveTimer;
+  host.addEventListener('scroll', () => {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => {
+      try { sessionStorage.setItem(SCROLL_KEY, String(host.scrollTop)); } catch {}
+    }, 80);
   });
 
   // Mobile hamburger
@@ -54,16 +119,17 @@
       const open = host.classList.toggle('is-open');
       hamburger.setAttribute('aria-expanded', String(open));
     });
-    // Close when a link is clicked (mobile UX)
     host.querySelectorAll('a').forEach((a) => {
       a.addEventListener('click', () => host.classList.remove('is-open'));
     });
   }
 
-  // Dark toggle inside the nav (replaces the per-page one)
-  const THEME_KEY = 'cms-ui-landing-theme';
-  function setTheme(t) {
-    document.documentElement.setAttribute('data-theme', t);
+  // Dark toggle — single source of truth (site.js's duplicate handler
+  // was removed to stop the cancel-each-other-out bug).
+  const THEME_KEY = 'prism-theme';
+  function applyTheme(t) {
+    if (t === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+    else              document.documentElement.removeAttribute('data-theme');
     try { localStorage.setItem(THEME_KEY, t); } catch {}
     document.querySelectorAll('iframe.theme-aware, iframe[data-base]').forEach((f) => {
       const baseSrc = f.dataset.base ?? f.src;
@@ -71,25 +137,24 @@
       try {
         const u = new URL(baseSrc, location.href);
         if (t === 'dark') u.searchParams.set('theme', 'dark');
-        else u.searchParams.delete('theme');
+        else              u.searchParams.delete('theme');
         f.src = u.toString();
       } catch {}
     });
+    const btn = host.querySelector('[data-theme-toggle] .gnav-icon-label');
+    if (btn) btn.textContent = t === 'dark' ? 'Light' : 'Dark';
   }
-  const stored = (() => { try { return localStorage.getItem(THEME_KEY); } catch { return null; } })();
-  if (stored === 'dark') setTheme('dark');
+  try {
+    const stored = localStorage.getItem(THEME_KEY);
+    if (stored === 'dark') applyTheme('dark');
+    else if (stored === 'light') applyTheme('light');
+  } catch {}
+
   host.addEventListener('click', (ev) => {
     const t = ev.target.closest('[data-theme-toggle]');
     if (!t) return;
-    const cur = document.documentElement.getAttribute('data-theme');
-    setTheme(cur === 'dark' ? 'light' : 'dark');
+    ev.preventDefault();
+    const cur = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+    applyTheme(cur === 'dark' ? 'light' : 'dark');
   });
 })();
-
-function computeRelativePath(rootRel) {
-  // location.pathname is e.g. "/docs/themes.html" when served by http-server.
-  // rootRel is "../" for a page at depth 1.
-  const path = location.pathname.replace(/^\//, ''); // strip leading slash
-  // Some servers emit "/docs/" without index — handle empty-segment
-  return path === '' ? '' : path.replace(/\/$/, '/'); // keep trailing slash if any
-}

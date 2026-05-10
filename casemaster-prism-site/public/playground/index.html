@@ -18,13 +18,12 @@
 
   .pg-shell {
     display: grid;
-    grid-template-columns: 360px 1fr;
+    grid-template-columns: 280px minmax(0, 1fr);
     gap: 1.25rem;
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 1.5rem;
+    margin: 0;
+    padding: 1.25rem 1.75rem 3rem;
   }
-  @media (max-width: 980px) { .pg-shell { grid-template-columns: 1fr; } }
+  @media (max-width: 980px) { .pg-shell { grid-template-columns: 1fr; padding: 4rem 1.25rem 3rem; } }
 
   .pg-controls {
     background: var(--surface);
