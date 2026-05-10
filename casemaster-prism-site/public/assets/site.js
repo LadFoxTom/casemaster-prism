@@ -39,8 +39,10 @@
   });
 
   // --- Component blocks (Preview / Code / Before tabs) -------------
-  // Fetch sandbox.html once, parse out every <template id="demo-X">,
-  // and project the template's HTML into each comp-block's code pane.
+  // Fetch sandbox.html once, parse out every <template id="demo-X">
+  // (rendered HTML) and <template id="cms-X"> (.cms source). The Code
+  // pane shows .cms by default with a sub-toggle to view the rendered
+  // HTML — that's what CaseMaster developers want to see first.
   let sandboxTemplates = null;
   async function getSandboxTemplates() {
     if (sandboxTemplates) return sandboxTemplates;
@@ -49,18 +51,26 @@
       const text = await res.text();
       const doc = new DOMParser().parseFromString(text, 'text/html');
       const map = {};
+      const stripIndent = (raw) => {
+        const lines = raw.trim().split('\n');
+        const indent = (lines[1] ?? '').match(/^\s*/)?.[0]?.length ?? 0;
+        return lines.map((l) => l.startsWith(' '.repeat(indent)) ? l.slice(indent) : l).join('\n');
+      };
       doc.querySelectorAll('template[id^="demo-"]').forEach((t) => {
         const id = t.id.replace(/^demo-/, '');
-        // .innerHTML on a template gives back what was inside (already
-        // escaped). Pretty-print with leading indent stripped.
-        const raw = t.innerHTML.trim();
-        const lines = raw.split('\n');
-        // Drop the first line's whitespace-only leading indent from all
-        // subsequent lines so the snippet doesn't render with a 6-space
-        // gutter.
-        const indent = (lines[1] ?? '').match(/^\s*/)?.[0]?.length ?? 0;
-        const cleaned = lines.map((l) => l.startsWith(' '.repeat(indent)) ? l.slice(indent) : l).join('\n');
-        map[id] = cleaned;
+        map[id] = map[id] || {};
+        map[id].html = stripIndent(t.innerHTML);
+      });
+      doc.querySelectorAll('template[id^="cms-"]').forEach((t) => {
+        const id = t.id.replace(/^cms-/, '');
+        map[id] = map[id] || {};
+        // The browser parses <template> into an inert .content
+        // DocumentFragment. .textContent on the element itself returns
+        // empty — we have to read .content.textContent. That gives us
+        // the DECODED text (so `&lt;` becomes `<`), which is exactly
+        // the .cms source as it would be written on disk.
+        const text = t.content?.textContent ?? t.textContent ?? '';
+        map[id].cms = stripIndent(text);
       });
       sandboxTemplates = map;
     } catch (e) {
@@ -100,16 +110,45 @@
       b.addEventListener('click', () => activate(b.dataset.pane));
     });
 
-    // Auto-fill code pane from the matching sandbox template.
-    const codePane = block.querySelector('.comp-pane-code pre code');
+    // Auto-fill the Code pane. Show .cms source by default; offer a
+    // sub-toggle to view the rendered HTML output.
+    const codePane = block.querySelector('.comp-pane-code');
     if (codePane) {
       const demo = block.dataset.demo;
-      const tpl = await getSandboxTemplates();
-      if (demo && tpl[demo]) {
-        codePane.textContent = tpl[demo];
-      } else {
-        codePane.textContent = '<!-- no demo template found for "' + demo + '" -->';
+      const tpl = (await getSandboxTemplates())[demo] ?? {};
+      const cmsSrc  = tpl.cms;
+      const htmlSrc = tpl.html;
+
+      // Build the inner DOM
+      const codeEl = codePane.querySelector('pre code');
+      const headerEl = document.createElement('div');
+      headerEl.className = 'comp-code-toggle';
+      let mode = cmsSrc ? 'cms' : 'html';
+      const setMode = (m) => {
+        mode = m;
+        headerEl.querySelectorAll('button').forEach((b) => b.classList.toggle('is-active', b.dataset.mode === m));
+        if (codeEl) codeEl.textContent = m === 'cms' ? (cmsSrc ?? '') : (htmlSrc ?? '');
+      };
+      const cmsBtn  = document.createElement('button');
+      cmsBtn.type = 'button'; cmsBtn.dataset.mode = 'cms';
+      cmsBtn.textContent = '.cms source';
+      cmsBtn.addEventListener('click', () => setMode('cms'));
+      const htmlBtn = document.createElement('button');
+      htmlBtn.type = 'button'; htmlBtn.dataset.mode = 'html';
+      htmlBtn.textContent = 'HTML output';
+      htmlBtn.addEventListener('click', () => setMode('html'));
+
+      if (cmsSrc)  headerEl.appendChild(cmsBtn);
+      if (htmlSrc) headerEl.appendChild(htmlBtn);
+      // Caption to hint why we show .cms primarily
+      if (cmsSrc && htmlSrc) {
+        const note = document.createElement('span');
+        note.className = 'comp-code-note';
+        note.textContent = '.cms is what you write — HTML is what the runtime emits.';
+        headerEl.appendChild(note);
       }
+      codePane.insertBefore(headerEl, codePane.firstChild);
+      setMode(mode);
     }
 
     // Copy button on the tab bar

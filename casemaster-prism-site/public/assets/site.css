@@ -683,18 +683,55 @@ main { max-width: 1280px; margin: 0; padding: 0 2.25rem 4rem; }
 .comp-pane-code {
   height: var(--frame-h, 380px);
   background: var(--code-bg);
-  overflow: auto;
+  overflow: hidden;
   padding: 0;
   margin: 0;
+  display: flex;
+  flex-direction: column;
 }
 .comp-pane-code pre {
   margin: 0;
   border-radius: 0;
-  height: 100%;
+  flex: 1 1 auto;
+  overflow: auto;
   background: transparent;
   padding: 1rem 1.25rem;
 }
 .comp-pane-code .copy { display: none; } /* superseded by .comp-copy */
+
+/* Sub-toggle inside the Code pane: switch between .cms source and
+ * rendered HTML output. JS injects this dynamically. */
+.comp-code-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.4rem 0.5rem;
+  background: rgb(255 255 255 / 0.04);
+  border-bottom: 1px solid rgb(255 255 255 / 0.08);
+  flex-shrink: 0;
+}
+.comp-code-toggle button {
+  background: transparent;
+  border: 1px solid rgb(255 255 255 / 0.12);
+  color: var(--code-fg);
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 0.7rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.comp-code-toggle button:hover { background: rgb(255 255 255 / 0.06); }
+.comp-code-toggle button.is-active {
+  background: rgb(96 165 250 / 0.18);
+  border-color: rgb(96 165 250 / 0.35);
+  color: #e2e8f0;
+}
+.comp-code-note {
+  margin-left: auto;
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 0.65rem;
+  color: rgb(255 255 255 / 0.5);
+}
 
 .comp-section-title {
   font-size: 1.05rem;

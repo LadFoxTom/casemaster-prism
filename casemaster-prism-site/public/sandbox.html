@@ -411,6 +411,305 @@
   </div>
 </template>
 
+<!-- ─────────── .cms SOURCE TEMPLATES ───────────────
+     One per demo. Shown in the ".cms" tab on the landing's
+     comp-blocks. The <template> body is plain text (escaped HTML
+     entities for &lt; / &gt;) so it renders verbatim as code. -->
+
+<template id="cms-table" data-language="cms">// CaseMaster .cms — emits the BS4 table that prism themes.
+inherits 'base'
+
+function main()
+    set('items',
+        iterator.ofEntity(
+            entities: &lt; &lt;@iterator/entity name: 'i', entity: 'wms/inventory', orderBy: '-id'&gt; &gt;,
+            rows: 50
+        )
+    )
+    page.render(
+        &lt;@page/data/table iterator: [items], group: 'list'&gt;
+    )
+end-function</template>
+
+<template id="cms-form" data-language="cms">// CaseMaster .cms — declarative form. Fields auto-bind to the
+// business object's attribute metadata; runtime emits BS4 markup.
+inherits 'base'
+
+function main()
+    page.render(
+        &lt;@page/data/form
+            entity: 'wms/inventory',
+            fields: &lt;
+                &lt;@page/data/form/field name: 'sku',            label: 'SKU'&gt;,
+                &lt;@page/data/form/field name: 'warehouse',      type: 'select',   source: &lt;@iterator/entity entity: 'wms/warehouse'&gt;&gt;,
+                &lt;@page/data/form/field name: 'available_from', type: 'date'&gt;,
+                &lt;@page/data/form/field name: 'notes',          type: 'textarea'&gt;
+            &gt;,
+            actions: &lt;
+                &lt;@page/button class: 'btn btn-primary',   label: 'Save changes'&gt;,
+                &lt;@page/button class: 'btn btn-secondary', label: 'Cancel'&gt;
+            &gt;
+        &gt;
+    )
+end-function</template>
+
+<template id="cms-buttons" data-language="cms">// CaseMaster .cms — button intents + sizes. The class string is
+// passed verbatim to the rendered HTML, so prism's variant classes
+// (btn-soft-*, btn-pill, btn-icon-only) work out of the box.
+&lt;@page/button class: 'btn btn-primary',         label: 'Primary'&gt;
+&lt;@page/button class: 'btn btn-secondary',       label: 'Secondary'&gt;
+&lt;@page/button class: 'btn btn-success',         label: 'Success'&gt;
+&lt;@page/button class: 'btn btn-warning',         label: 'Warning'&gt;
+&lt;@page/button class: 'btn btn-danger',          label: 'Danger'&gt;
+&lt;@page/button class: 'btn btn-link',            label: 'Link'&gt;
+
+// Sizes
+&lt;@page/button class: 'btn btn-primary btn-sm',  label: 'Small'&gt;
+&lt;@page/button class: 'btn btn-primary',         label: 'Default'&gt;
+&lt;@page/button class: 'btn btn-primary btn-lg',  label: 'Large'&gt;
+
+// Disabled
+&lt;@page/button class: 'btn btn-primary',         label: 'Disabled', disabled: true()&gt;</template>
+
+<template id="cms-cards" data-language="cms">// CaseMaster .cms — cards are typically built with raw HTML in
+// .cms source via &lt;@page/html&gt;, since there's no &lt;@page/card&gt;
+// qualifier. The runtime passes through to BS4 .card markup, and
+// prism's cms-stat-card / cms-card-* variants work via the class
+// string.
+&lt;@page/html resolveTemplate(
+    `&lt;div class="row"&gt;
+       &lt;div class="col-md-4 mb-3"&gt;
+         &lt;div class="card cms-stat-card"&gt;
+           &lt;div class="card-body"&gt;
+             &lt;div class="cms-stat-label"&gt;Open POs&lt;/div&gt;
+             &lt;div class="cms-stat-value"&gt;{{[cnt_po_open]}}&lt;/div&gt;
+             &lt;div class="cms-stat-trend up"&gt;↑ 12 % week-on-week&lt;/div&gt;
+           &lt;/div&gt;
+         &lt;/div&gt;
+       &lt;/div&gt;
+       &lt;!-- … more cards … --&gt;
+     &lt;/div&gt;`
+)&gt;</template>
+
+<template id="cms-alerts" data-language="cms">// CaseMaster .cms — alerts. The runtime emits BS4 .alert markup;
+// prism's cms-alert-subtle / cms-alert-soft variants opt into
+// quieter styling.
+&lt;@page/alert class: 'alert alert-primary',
+             text:  'A new replenishment wave is being planned.'&gt;
+
+&lt;@page/alert class: 'alert alert-success',
+             text:  'Inventory adjustment posted with reference ADJ-2026-0419.'&gt;
+
+&lt;@page/alert class: 'alert alert-warning',
+             text:  'Two items are below safety stock.'&gt;
+
+&lt;@page/alert class: 'alert alert-danger',
+             text:  'Picker connection lost — retrying in 30 s.'&gt;</template>
+
+<template id="cms-badges" data-language="cms">// CaseMaster .cms — badges are plain HTML in .cms via &lt;@page/html&gt;.
+// Prism styles the BS4 .badge classes; status dots use the
+// cms-status-dot helper.
+&lt;@page/html
+    `&lt;span class="badge badge-primary"&gt;Primary&lt;/span&gt;
+     &lt;span class="badge badge-success"&gt;Success&lt;/span&gt;
+     &lt;span class="badge badge-warning"&gt;Warning&lt;/span&gt;
+     &lt;span class="badge badge-danger"&gt;Danger&lt;/span&gt;
+     &lt;span class="badge badge-info"&gt;Info&lt;/span&gt;
+
+     &lt;p class="mt-3 d-flex align-items-center" style="gap:.6rem"&gt;
+       &lt;span&gt;&lt;span class="cms-status-dot is-online"&gt;&lt;/span&gt; Online — 47&lt;/span&gt;
+       &lt;span&gt;&lt;span class="cms-status-dot is-warning"&gt;&lt;/span&gt; Throttled — 3&lt;/span&gt;
+       &lt;span&gt;&lt;span class="cms-status-dot is-offline"&gt;&lt;/span&gt; Offline — 1&lt;/span&gt;
+     &lt;/p&gt;`
+&gt;</template>
+
+<template id="cms-pagination" data-language="cms">// CaseMaster .cms — pagination is typically auto-generated by
+// &lt;@page/data/table&gt; based on the iterator's total + the `pagingMode`
+// option. To render manually:
+&lt;@page/html
+    `&lt;nav&gt;
+       &lt;ul class="pagination"&gt;
+         &lt;li class="page-item disabled"&gt;&lt;a class="page-link" href="#"&gt;«&lt;/a&gt;&lt;/li&gt;
+         &lt;li class="page-item"&gt;&lt;a class="page-link" href="?page=1"&gt;1&lt;/a&gt;&lt;/li&gt;
+         &lt;li class="page-item active"&gt;&lt;a class="page-link" href="?page=2"&gt;2&lt;/a&gt;&lt;/li&gt;
+         &lt;li class="page-item"&gt;&lt;a class="page-link" href="?page=3"&gt;3&lt;/a&gt;&lt;/li&gt;
+         &lt;li class="page-item"&gt;&lt;a class="page-link" href="?page=3"&gt;»&lt;/a&gt;&lt;/li&gt;
+       &lt;/ul&gt;
+     &lt;/nav&gt;`
+&gt;
+
+// Or with a table iterator:
+&lt;@page/data/table
+    iterator:   [items],
+    group:      'list',
+    pagingMode: pagingMode.Pages,
+    pageSize:   20
+&gt;</template>
+
+<template id="cms-toolbar-table" data-language="cms">// CaseMaster .cms — same as a normal table. The toolbar (filter,
+// columns, CSV) is added by prism's enhancer at runtime, NOT by the
+// CaseMaster runtime. Just render any &lt;@page/data/table&gt; with at
+// least 2 rows and prism enhances it automatically.
+inherits 'base'
+
+function main()
+    set('orders',
+        iterator.ofEntity(
+            entities: &lt; &lt;@iterator/entity name: 'so', entity: 'wms/sales_order', orderBy: '-id'&gt; &gt;,
+            rows: 50
+        )
+    )
+    page.render(
+        &lt;@page/data/table iterator: [orders], group: 'list'&gt;
+    )
+end-function</template>
+
+<template id="cms-toasts" data-language="cms">// CaseMaster .cms — toasts are surfaced from the SERVER via response
+// headers, then rendered by prism's enhancer on the client.
+function save()
+    bo.save([item])
+    response.setHeader('X-Cms-Toast', '{"kind":"success","title":"Saved","message":"Inventory updated."}')
+    response.redirect('./list')
+end-function
+
+// On the receiving page, no .cms code is needed — prism reads the
+// header, shows a toast. From client-side JS:
+//
+//   import { showToast } from 'casemaster-prism';
+//   showToast({ kind: 'warning', message: 'Low stock!' });</template>
+
+<template id="cms-confirm" data-language="cms">// CaseMaster .cms — confirm dialog via the data-cms-confirm attribute.
+// prism intercepts the click and shows a styled modal before the
+// link/form submission proceeds.
+&lt;@page/button
+    class:    'btn btn-danger btn-sm',
+    label:    'Delete A-100',
+    href:     './delete/A-100',
+    dataAttr: &lt;
+        &lt;key: 'cms-confirm', value: 'Delete inventory record A-100? This cannot be undone.'&gt;
+    &gt;
+&gt;</template>
+
+<template id="cms-cmdk" data-language="cms">// CaseMaster .cms — command palette items are harvested from the
+// app's sidebar at render time. The sidebar itself is a normal
+// CaseMaster sidebar &lt;@page/sidebar&gt;:
+&lt;@page/sidebar
+    items: &lt;
+        &lt;@page/sidebar/item href: '/page/wms',          label: 'Dashboard', icon: 'fa-home',   active: true()&gt;,
+        &lt;@page/sidebar/item href: '/page/wms/inventory', label: 'Inventory', icon: 'fa-boxes'&gt;,
+        &lt;@page/sidebar/item href: '/page/wms/inbound',   label: 'Inbound',   icon: 'fa-arrow-down'&gt;,
+        &lt;@page/sidebar/item href: '/page/wms/outbound',  label: 'Outbound',  icon: 'fa-arrow-up'&gt;
+    &gt;
+&gt;
+
+// Press Cmd+K (or Ctrl+K) on any page — prism's command palette
+// reads .wms-sidebar / .cms-sidebar and surfaces the items as a
+// fuzzy quick-switcher. No .cms wiring needed.</template>
+
+<template id="cms-inline-edit" data-language="cms">// CaseMaster .cms — opt-in via dataAttr on a table cell.
+// Prism's inline-edit enhancer wires the click → input → PATCH cycle.
+&lt;@page/data/table
+    iterator: [items],
+    group:    'list',
+    cells: &lt;
+        &lt;@page/data/table/cell field: 'sku'&gt;,
+        &lt;@page/data/table/cell field: 'name', editable: true(),
+            dataAttr: &lt;
+                &lt;key: 'cms-inline-edit'&gt;,
+                &lt;key: 'cms-edit-field', value: 'name'&gt;,
+                &lt;key: 'cms-edit-url',   value: '/api/inventory/{sku}'&gt;
+            &gt;
+        &gt;,
+        &lt;@page/data/table/cell field: 'qty', editable: true(),
+            dataAttr: &lt;
+                &lt;key: 'cms-inline-edit'&gt;,
+                &lt;key: 'cms-edit-field', value: 'qty'&gt;,
+                &lt;key: 'cms-edit-type',  value: 'number'&gt;,
+                &lt;key: 'cms-edit-url',   value: '/api/inventory/{sku}'&gt;
+            &gt;
+        &gt;
+    &gt;
+&gt;</template>
+
+<template id="cms-variants-buttons" data-language="cms">// CaseMaster .cms — pass any combination of prism variant classes
+// through the existing class property of &lt;@page/button&gt;.
+&lt;@page/button class: 'btn btn-primary',          label: 'Primary'&gt;
+&lt;@page/button class: 'btn btn-soft-primary',     label: 'Soft primary'&gt;
+&lt;@page/button class: 'btn btn-soft-success',     label: 'Soft success'&gt;
+&lt;@page/button class: 'btn btn-soft-danger',      label: 'Soft danger'&gt;
+&lt;@page/button class: 'btn btn-ghost-primary',    label: 'Ghost primary'&gt;
+&lt;@page/button class: 'btn btn-outline-primary',  label: 'Outline primary'&gt;
+
+// Shape modifiers
+&lt;@page/button class: 'btn btn-primary btn-pill',     label: 'Pill'&gt;
+&lt;@page/button class: 'btn btn-primary btn-square',   label: 'Square'&gt;
+&lt;@page/button class: 'btn btn-primary btn-icon-only', icon: 'fa-search', label: 'Search'&gt;</template>
+
+<template id="cms-variants-tables" data-language="cms">// CaseMaster .cms — pass prism table variants via tableClass.
+&lt;@page/data/table
+    iterator:   [items],
+    group:      'list',
+    tableClass: 'cms-table-compact'
+&gt;
+
+&lt;@page/data/table
+    iterator:   [items],
+    group:      'list',
+    tableClass: 'cms-table-comfortable'
+&gt;
+
+&lt;@page/data/table
+    iterator:   [items],
+    group:      'list',
+    tableClass: 'cms-table-elevated'
+&gt;
+
+// Combine with density preset on the &lt;html&gt; element for app-wide
+// effect:
+//   &lt;html data-cms-density="compact"&gt;</template>
+
+<template id="cms-variants-cards" data-language="cms">// CaseMaster .cms — cards are typically raw HTML in CaseMaster too.
+// Pass prism's variant classes alongside the BS4 .card class.
+&lt;@page/html resolveTemplate(
+    `&lt;div class="card cms-card-elevated"&gt;
+       &lt;div class="card-body"&gt;
+         &lt;div class="card-title"&gt;Settlement run&lt;/div&gt;
+         &lt;p class="text-muted"&gt;Posts {{count}} events to ledger.&lt;/p&gt;
+       &lt;/div&gt;
+     &lt;/div&gt;
+
+     &lt;div class="card cms-card-status-warning"&gt;
+       &lt;div class="card-body"&gt;
+         &lt;div class="card-title"&gt;Backorder spike&lt;/div&gt;
+         &lt;p class="text-muted"&gt;Watch list: {{watch_count}} items.&lt;/p&gt;
+       &lt;/div&gt;
+     &lt;/div&gt;`
+)&gt;</template>
+
+<template id="cms-variants-alerts" data-language="cms">// CaseMaster .cms — pass prism's cms-alert-subtle / cms-alert-soft
+// alongside the BS4 .alert intent class.
+&lt;@page/alert class: 'alert alert-success cms-alert-subtle',
+             text:  'Inventory adjustment posted with reference ADJ-2026-0419.'&gt;
+
+&lt;@page/alert class: 'alert alert-warning cms-alert-subtle',
+             text:  'Two items below safety stock.'&gt;
+
+&lt;@page/alert class: 'alert alert-danger cms-alert-soft',
+             text:  'Picker connection lost — retrying.'&gt;</template>
+
+<template id="cms-variants-inputs" data-language="cms">// CaseMaster .cms — pass cms-input-filled / cms-input-underlined
+// alongside the BS4 .form-control class on a form field.
+&lt;@page/data/form
+    entity: 'wms/inventory',
+    fields: &lt;
+        &lt;@page/data/form/field name: 'sku',  label: 'Default'&gt;,
+        &lt;@page/data/form/field name: 'name', label: 'Filled',
+            class: 'form-control cms-input-filled'&gt;,
+        &lt;@page/data/form/field name: 'qty',  label: 'Underlined',
+            class: 'form-control cms-input-underlined'&gt;
+    &gt;
+&gt;</template>
+
 <!-- ─────────────────────── BOOT ─────────────────────────── -->
 <script>
   (function () {
