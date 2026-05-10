@@ -15,7 +15,7 @@
  */
 
 // @ts-ignore — vendored runtime ships JS only, no .d.ts at this path
-import { createHandler } from '../packages/runtime/dist/index.js';
+import { createHandler } from './_runtime/index.js';
 
 let inner: ((req: any, res: any) => Promise<void>) | null = null;
 let initError: unknown = null;

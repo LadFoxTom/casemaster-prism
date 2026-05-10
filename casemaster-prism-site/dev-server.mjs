@@ -25,10 +25,10 @@ process.env.CMS_APP_DIR ??= resolve(__dirname, 'app');
 const PORT   = Number(process.env.PORT ?? 4000);
 const PUBLIC = resolve(__dirname, 'public');
 
-// Use the vendored cms-vercel runtime under packages/runtime/. The
-// runtime is shipped pre-compiled (dist/) so this site is self-
-// contained — no build step, no external workspace.
-const RUNTIME_DIST = resolve(__dirname, 'packages', 'runtime', 'dist', 'index.js');
+// Use the vendored cms-vercel runtime under api/_runtime/. The
+// runtime is shipped pre-compiled (JS) and lives next to the api
+// function so Vercel auto-bundles it together with api/index.ts.
+const RUNTIME_DIST = resolve(__dirname, 'api', '_runtime', 'index.js');
 
 const runtimeMod = await import(pathToFileURL(RUNTIME_DIST).href);
 const handler = runtimeMod.createHandler({

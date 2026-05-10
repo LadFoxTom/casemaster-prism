@@ -1,0 +1,12 @@
+/**
+ * Public exports for the `cms-vercel` package.
+ * Most consumers only need `createHandler`. The rest is for advanced
+ * integration (custom interpreters, programmatic loading, plugins).
+ */
+export { createHandler } from './handler.js';
+export { loadApp } from './loader.js';
+export { callFunction, evalExpr, compileWhere } from './eval.js';
+export { lex } from './lex.js';
+export { parse, parseExpression } from './parse.js';
+export { renderValue, resolveTemplate } from './render.js';
+export { tryExtractBo } from './bo.js';
