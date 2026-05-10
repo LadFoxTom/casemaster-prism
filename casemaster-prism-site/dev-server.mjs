@@ -59,19 +59,51 @@ function serveStatic(req, res, fileAbsPath) {
 }
 
 // Routing precedence (mirrors what Vercel does in production):
-//  1. /static/<path>  → public/<path>           (legacy CaseMaster URL convention)
-//  2. /page/<path>    → cms-vercel handler      (.cms-rendered pages)
-//  3. /api*           → cms-vercel handler
-//  4. /<path>         → public/<path>           (static files)
-//  5. /<dir>/         → public/<dir>/index.html (directory index)
-//  6. /               → public/index.html       (homepage = static landing)
+//  1. /static/<path>            → public/<path>      (legacy CaseMaster URL convention)
+//  2. /assets, /lib, /favicon, /manifest, /sandbox.html, /_nav.html,
+//     /templates/, /404.html    → public/* (real static assets)
+//  3. /api*                     → cms-vercel handler
+//  4. /page/<path>              → cms-vercel handler (e.g. /page/cms-demo)
+//  5. /                         → /page/index/f/main
+//  6. /docs, /docs/<x>          → /page/docs/(x)/f/main
+//  7. /playground, /migrate     → /page/playground/f/main, /page/migrate/f/main
+//  8. anything else             → fall back to public/* lookup, then 404
+
+// URLs that should always be served as static files (assets, fixtures,
+// Vercel's auto 404 page, demo-product templates).
+const STATIC_PREFIXES = ['/assets/', '/lib/', '/templates/', '/css/'];
+const STATIC_FILES    = new Set([
+  '/favicon.svg', '/favicon.ico', '/manifest.webmanifest',
+  '/sandbox.html', '/_nav.html', '/404.html',
+]);
+
+function routeToCmsPage(path) {
+  // Returns the /page/<...>/f/main URL, or null if this path stays static.
+  // Strips trailing slash + ".html" suffix so /docs/themes and
+  // /docs/themes.html both map to page/docs/themes.
+  const norm = path.replace(/\/$/, '').replace(/\.html$/, '');
+
+  if (norm === '' || norm === '/') return '/api?_p=/page/index/f/main';
+
+  const docsM = norm.match(/^\/docs(?:\/(.+))?$/);
+  if (docsM) {
+    const sub = docsM[1] ? '/' + docsM[1] : '';
+    return `/api?_p=/page/docs${sub}/f/main`;
+  }
+
+  if (norm === '/playground') return '/api?_p=/page/playground/f/main';
+  if (norm === '/migrate')    return '/api?_p=/page/migrate/f/main';
+
+  return null;
+}
 
 const server = http.createServer(async (req, res) => {
   try {
     const url  = req.url || '/';
     const path = url.split('?')[0];
+    const qs   = url.includes('?') ? '&' + url.split('?')[1] : '';
 
-    // 1. /static/* prefix (CaseMaster convention) → public/*
+    // 1. /static/<path> prefix (CaseMaster convention) → public/<path>
     const staticMatch = path.match(/^\/static\/(.+)$/);
     if (staticMatch) {
       const abs = join(PUBLIC, staticMatch[1]);
@@ -79,30 +111,35 @@ const server = http.createServer(async (req, res) => {
       res.statusCode = 404; res.end(`not found: ${staticMatch[1]}`); return;
     }
 
-    // 2. /page/* and 3. /api* go to the cms-vercel handler.
+    // 2. /api and /page/* → cms-vercel handler.
     if (path === '/api' || path.startsWith('/api?') || path.startsWith('/api/')) {
       return invokeHandler(req, res);
     }
     if (path.match(/^\/page\/(.+)$/)) {
-      const qs = url.includes('?') ? '&' + url.split('?')[1] : '';
       req.url = `/api?_p=${path}${qs}`;
       return invokeHandler(req, res);
     }
 
-    // 4. Static file under public/?
+    // 3. Probe public/ — any file that exists there wins. Covers asset
+    //    paths nested under /docs/assets/, /playground/assets/, etc.
     const rel = path.replace(/^\//, '');
     if (rel && serveStatic(req, res, join(PUBLIC, rel))) return;
 
-    // 5. Directory index — /docs/ → docs/index.html
-    if (path.endsWith('/') && rel) {
-      if (serveStatic(req, res, join(PUBLIC, rel, 'index.html'))) return;
+    // 4. Friendly URLs map to .cms pages (rooted at known prefixes).
+    const cms = routeToCmsPage(path);
+    if (cms) {
+      req.url = cms + qs.replace(/^&/, '&');
+      return invokeHandler(req, res);
     }
 
-    // 6. Homepage → public/index.html
-    if (path === '/' || path === '') {
-      if (serveStatic(req, res, join(PUBLIC, 'index.html'))) return;
-    }
+    // 5. Trailing-slash directory index from public/.
+    if (path.endsWith('/') && serveStatic(req, res, join(PUBLIC, rel, 'index.html'))) return;
 
+    // 6. 404 — emit the static 404 page if available.
+    if (serveStatic(req, res, join(PUBLIC, '404.html'))) {
+      res.statusCode = 404;
+      return;
+    }
     res.statusCode = 404; res.end(`not found: ${path}`);
   } catch (e) {
     console.error('[dev-server] fatal', e);

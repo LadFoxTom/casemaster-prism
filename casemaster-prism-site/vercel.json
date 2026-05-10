@@ -9,11 +9,21 @@
     "api/index.ts": { "includeFiles": "{app,packages}/**" }
   },
   "rewrites": [
-    { "source": "/page/:path*",   "destination": "/api?_p=/page/:path*" },
-    { "source": "/static/:path*", "destination": "/:path*" }
+    { "source": "/",                       "destination": "/api?_p=/page/index/f/main" },
+    { "source": "/docs",                   "destination": "/api?_p=/page/docs/f/main" },
+    { "source": "/docs/",                  "destination": "/api?_p=/page/docs/f/main" },
+    { "source": "/docs/:path*\\.html",     "destination": "/api?_p=/page/docs/:path*/f/main" },
+    { "source": "/docs/:path*",            "destination": "/api?_p=/page/docs/:path*/f/main" },
+    { "source": "/playground",             "destination": "/api?_p=/page/playground/f/main" },
+    { "source": "/playground/",            "destination": "/api?_p=/page/playground/f/main" },
+    { "source": "/migrate",                "destination": "/api?_p=/page/migrate/f/main" },
+    { "source": "/migrate/",               "destination": "/api?_p=/page/migrate/f/main" },
+    { "source": "/page/:path*",            "destination": "/api?_p=/page/:path*" },
+    { "source": "/static/:path*",          "destination": "/:path*" }
   ],
   "redirects": [
-    { "source": "/favicon.ico", "destination": "/favicon.svg", "permanent": true }
+    { "source": "/favicon.ico", "destination": "/favicon.svg", "permanent": true },
+    { "source": "/index.html",  "destination": "/", "permanent": true }
   ],
   "cleanUrls": false,
   "trailingSlash": false

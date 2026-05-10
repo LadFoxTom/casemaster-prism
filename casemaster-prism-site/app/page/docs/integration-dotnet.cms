@@ -1,4 +1,13 @@
-<!doctype html>
+// Auto-generated from public/ HTML by convert-html-to-cms.mjs.
+// This page is rendered by cms-vercel, themed by casemaster-prism.
+// To edit, edit the source HTML and re-run the converter, or edit
+// this .cms file directly.
+
+inherits 'base'
+
+function main()
+    response.setContentType('text/html; charset=utf-8')
+    response.write(`<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -29,11 +38,11 @@
     <p>Survives <code>git pull</code> of the framework. Works offline. Pinned versions.</p>
     <h3 id='vendor-drop'>1. Drop the bundle</h3>
 <pre><code># PowerShell — adjust the runtime root path for your install
-$src  = "$env:USERPROFILE\.prism-src\node_modules\casemaster-prism\dist"
-$dst  = "C:\Casemaster-WMS\runtime\static\lib\prism"
+$src  = "$env:USERPROFILE\\.prism-src\\node_modules\\casemaster-prism\\dist"
+$dst  = "C:\\Casemaster-WMS\\runtime\\static\\lib\\prism"
 Remove-Item $dst -Recurse -Force -ErrorAction SilentlyContinue
 New-Item   $dst -ItemType Directory | Out-Null
-Copy-Item  "$src\*" $dst -Recurse</code></pre>
+Copy-Item  "$src\\*" $dst -Recurse</code></pre>
     <p>Or vendor the files directly into your app repo once and check them in — they're stable across patch versions.</p>
 
     <h3 id='vendor-css'>2. <code>static/css/app.css</code></h3>
@@ -105,4 +114,5 @@ app.js                ← prism hooks in here</code></pre>
 <script src="assets/docs.js"></script>
 <script src="../assets/nav.js"></script>
 </body>
-</html>
+</html>`)
+end-function

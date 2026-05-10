@@ -1,4 +1,13 @@
-<!doctype html>
+// Auto-generated from public/ HTML by convert-html-to-cms.mjs.
+// This page is rendered by cms-vercel, themed by casemaster-prism.
+// To edit, edit the source HTML and re-run the converter, or edit
+// this .cms file directly.
+
+inherits 'base'
+
+function main()
+    response.setContentType('text/html; charset=utf-8')
+    response.write(`<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -77,4 +86,5 @@
 <script src="../assets/docs.js"></script>
 <script src="../../assets/nav.js"></script>
 </body>
-</html>
+</html>`)
+end-function

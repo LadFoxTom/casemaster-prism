@@ -1,10 +1,19 @@
-<!doctype html>
+// Auto-generated from public/ HTML by convert-html-to-cms.mjs.
+// This page is rendered by cms-vercel, themed by casemaster-prism.
+// To edit, edit the source HTML and re-run the converter, or edit
+// this .cms file directly.
+
+inherits 'base'
+
+function main()
+    response.setContentType('text/html; charset=utf-8')
+    response.write(`<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Modal-link drawer · casemaster-prism docs</title>
-<meta name="description" content="Modal-link drawer — casemaster-prism docs">
+<title>Confirm dialog · casemaster-prism docs</title>
+<meta name="description" content="Confirm dialog — casemaster-prism docs">
 <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 <meta name="theme-color" content="#2563eb">
 <meta property="og:title" content="casemaster-prism">
@@ -18,24 +27,30 @@
 <div id="gnav-host" data-root="../../"></div>
 
 <main class="docs-content">
-    <p class="docs-breadcrumb"><a href="../../">Home</a> &nbsp;/&nbsp; <a href="../index.html">Docs</a> &nbsp;/&nbsp; Enhancers &nbsp;/&nbsp; Modal-link drawer</p>
+    <p class="docs-breadcrumb"><a href="../../">Home</a> &nbsp;/&nbsp; <a href="../index.html">Docs</a> &nbsp;/&nbsp; Enhancers &nbsp;/&nbsp; Confirm dialog</p>
 
-    <h1>Modal-link drawer</h1>
-    <p class="docs-lead">Open detail pages in a slide-in modal instead of a full page navigation.</p>
+    <h1>Confirm dialog</h1>
+    <p class="docs-lead">Intercept clicks on <code>[data-cms-confirm]</code> and require confirmation before continuing.</p>
 
     <h2 id='usage'>Usage</h2>
-<pre><code>&lt;a href="/inventory/42" data-cms-modal-link&gt;View&lt;/a&gt;</code></pre>
-    <p>The fetched page's <code>&lt;main&gt;</code> / <code>&lt;article&gt;</code> / <code>.cms-content</code> body is extracted and rendered in a right-side drawer. The MutationObserver re-runs other enhancers over the new content so tables/forms inside it work.</p>
+<pre><code>&lt;a href="/delete/42" data-cms-confirm="Delete row 42? This cannot be undone."&gt;
+  Delete
+&lt;/a&gt;
 
-    <h2 id='custom-title'>Custom title</h2>
-<pre><code>&lt;a href="/inventory/42"
-   data-cms-modal-link
-   data-cms-modal-title="Item A-100"&gt;View&lt;/a&gt;</code></pre>
+&lt;button form="f"
+        data-cms-confirm="Submit changes?"
+        data-cms-confirm-title="Please confirm"&gt;
+  Save
+&lt;/button&gt;</code></pre>
 
-    <h2 id='conflict'>Coexistence with the .NET runtime's <code>#cmModal</code></h2>
-    <p>The .NET runtime ships its own iframe-modal as <code>#cmModal</code>. Modal-link doesn't touch it — it's strictly opt-in via <code>data-cms-modal-link</code>. Use the runtime's mechanism for one, prism's for the other; they don't interfere.</p>
+    <h2 id='behaviour'>Behaviour</h2>
+    <p>The first click is intercepted and a styled BS4-modal is rendered with two buttons (Cancel / Confirm). Confirm re-fires the original click; Cancel discards. <kbd>Escape</kbd> dismisses.</p>
+    <p>If the modal can't render for any reason, falls back to the native <code>window.confirm()</code> dialog.</p>
 
-    <div class="docs-footer-nav"><a href="./shortcuts.html"><small>← Previous</small>Shortcuts</a><a class="next" href="./inline-edit.html"><small>Next →</small>Inline edit</a></div>
+    <h2 id='config'>Config</h2>
+<pre><code>window.cmsUi = { confirm: false }; // disable globally</code></pre>
+
+    <div class="docs-footer-nav"><a href="./forms.html"><small>← Previous</small>Forms</a><a class="next" href="./loading.html"><small>Next →</small>Loading bar</a></div>
   </main>
 
 <script>
@@ -63,4 +78,5 @@
 <script src="../assets/docs.js"></script>
 <script src="../../assets/nav.js"></script>
 </body>
-</html>
+</html>`)
+end-function
