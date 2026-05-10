@@ -5,7 +5,6 @@
   "functions": {
     "api/index.ts": { "includeFiles": "{app,packages}/**" }
   },
-  "//": "Vercel auto-serves files from public/ at the root. The rewrites below route the .cms-rendered routes to the API and provide the legacy /static/ URL prefix.",
   "rewrites": [
     { "source": "/page/:path*",   "destination": "/api?_p=/page/:path*" },
     { "source": "/static/:path*", "destination": "/:path*" }
