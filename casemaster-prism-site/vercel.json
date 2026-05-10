@@ -10,6 +10,9 @@
     { "source": "/page/:path*",   "destination": "/api?_p=/page/:path*" },
     { "source": "/static/:path*", "destination": "/:path*" }
   ],
+  "redirects": [
+    { "source": "/favicon.ico", "destination": "/favicon.svg", "permanent": true }
+  ],
   "cleanUrls": false,
   "trailingSlash": false
 }

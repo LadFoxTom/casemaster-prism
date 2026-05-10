@@ -1,14 +1,16 @@
 /**
  * casemaster-prism-site — the marketing site, served by cms-vercel.
  *
- * This is the entire backend for the site. cms-vercel parses .cms files
- * under app/page/, renders them, and wraps the body in a default shell
- * that loads prism via the `ui` option below.
+ * The cms-vercel runtime is vendored under ../packages/runtime/dist/
+ * (pre-compiled JS, included in the repo so this site deploys
+ * standalone without an npm-published cms-vercel package).
  *
- * The `prism` package is the same one this site is documenting — we eat
- * our own dog food.
+ * vercel.json declares { includeFiles: "{app,packages}/**" } so the
+ * runtime ships into the serverless bundle.
  */
-import { createHandler } from 'cms-vercel';
+
+// @ts-ignore — vendored runtime ships JS only, no .d.ts at this path
+import { createHandler } from '../packages/runtime/dist/index.js';
 
 export default createHandler({
   ui: {
