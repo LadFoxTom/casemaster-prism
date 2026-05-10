@@ -16,11 +16,21 @@
 
 // @ts-ignore — vendored runtime ships JS only, no .d.ts at this path
 import { createHandler } from './_runtime/index.js';
+import { fileURLToPath } from 'node:url';
+import { dirname, join } from 'node:path';
+
+// Resolve app/ relative to THIS file rather than process.cwd(). On
+// Vercel, process.cwd() is /var/task (the function root), but app/
+// lives at /var/task/casemaster-prism-site/app/. Computing from
+// import.meta.url gives the right path in both local and Vercel.
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const APP_DIR   = join(__dirname, '..', 'app');
 
 let inner: ((req: any, res: any) => Promise<void>) | null = null;
 let initError: unknown = null;
 try {
   inner = createHandler({
+    appDir: APP_DIR,
     ui: {
       theme:     '/static/lib/prism/prism.min.css',
       enhancers: true,
