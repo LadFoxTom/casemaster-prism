@@ -126,9 +126,12 @@ const server = http.createServer(async (req, res) => {
     if (rel && serveStatic(req, res, join(PUBLIC, rel))) return;
 
     // 4. Friendly URLs map to .cms pages (rooted at known prefixes).
+    //    routeToCmsPage already returns a URL with a "?_p=..." query, so
+    //    we just append any extra request query params with the leading
+    //    "&" preserved by qs.
     const cms = routeToCmsPage(path);
     if (cms) {
-      req.url = cms + qs.replace(/^&/, '&');
+      req.url = cms + qs;
       return invokeHandler(req, res);
     }
 

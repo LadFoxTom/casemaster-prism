@@ -83,6 +83,7 @@
   document.querySelectorAll('.comp-block').forEach(async (block) => {
     const tabs = block.querySelector('.comp-tabs');
     const panes = block.querySelectorAll('.comp-pane');
+    if (!tabs) return;
 
     const activate = (name) => {
       tabs.querySelectorAll('button[data-pane]').forEach((b) => {

@@ -25,12 +25,15 @@ function main()
 <style>
   body { background: var(--bg); }
 
+  /* Same outer width as every other page wrapper (1200 px / 2.25 rem)
+   * — see .page-shell in site.css. */
   .pg-shell {
     display: grid;
     grid-template-columns: 280px minmax(0, 1fr);
     gap: 1.25rem;
+    max-width: 1200px;
     margin: 0;
-    padding: 1.25rem 1.75rem 3rem;
+    padding: 1.5rem 2.25rem 4rem;
   }
   @media (max-width: 980px) { .pg-shell { grid-template-columns: 1fr; padding: 4rem 1.25rem 3rem; } }
 

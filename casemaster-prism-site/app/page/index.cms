@@ -657,10 +657,10 @@ $ npx playwright test
   <p>
     casemaster-prism · v0.3.0 · MIT.
     <br>
-    Source: <a href="/">repository root</a> ·
-    Spec: <a href="/AB-ui-package.md">AB-ui-package.md</a> ·
-    .NET integration recipe: <a href="/integrations/dotnet/README.md">dotnet/README.md</a> ·
-    cms-vercel: <a href="/integrations/vercel/README.md">vercel/README.md</a>
+    Source: <a href="https://github.com/LadFoxTom/casemaster-prism" target="_blank" rel="noopener">GitHub</a> ·
+    Getting started: <a href="/docs/getting-started">docs</a> ·
+    .NET integration: <a href="/docs/integration-dotnet">recipe</a> ·
+    cms-vercel: <a href="/docs/integration-vercel">recipe</a>
   </p>
 </footer>
 

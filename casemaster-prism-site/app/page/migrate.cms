@@ -25,11 +25,21 @@ function main()
 <style>
   body { background: var(--bg); }
 
-  .mig-hero {
-    padding: 3rem 2.25rem 1.5rem;
-    text-align: left;
-    max-width: 920px;
+  /* Hero is nested inside main.mig-shell — see body markup. Keeping
+   * the hero inside the same wrapper avoids the body-grid row from
+   * stretching to fill 100vh when there are multiple direct body
+   * children (which is what every other page does). */
+  main.mig-shell {
+    max-width: 1200px;
     margin: 0;
+    padding: 1.5rem 2.25rem 4rem;
+  }
+  @media (max-width: 980px) {
+    main.mig-shell { padding: 4rem 1.25rem 3rem; }
+  }
+
+  .mig-hero {
+    margin: 0 0 2rem;
   }
   .mig-hero h1 {
     font-size: 2.1rem;
@@ -40,21 +50,15 @@ function main()
   .mig-hero .lead {
     font-size: 1.05rem;
     color: var(--muted);
-    margin: 0 0 1.5rem;
-    max-width: 720px;
-  }
-
-  main.mig-shell {
-    max-width: 1100px;
     margin: 0;
-    padding: 0 2.25rem 5rem;
-  }
-  @media (max-width: 980px) {
-    .mig-hero, main.mig-shell { padding-left: 1.25rem; padding-right: 1.25rem; }
+    max-width: 72ch;
   }
 
   .mig-section {
-    margin: 3rem 0;
+    margin: 2.5rem 0;
+  }
+  .mig-section:first-of-type {
+    margin-top: 0;
   }
   .mig-section h2 {
     font-size: 1.5rem;
@@ -65,7 +69,7 @@ function main()
   .mig-section .lead-2 {
     color: var(--muted);
     margin: 0 0 1.5rem;
-    max-width: 760px;
+    max-width: 72ch;
   }
 
   .mig-checklist {
@@ -133,7 +137,34 @@ function main()
   }
   .mig-diff-label .dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; opacity: 0.6; }
   .mig-diff-frame { height: 480px; background: #fff; }
+  [data-theme="dark"] .mig-diff-frame { background: #0b1220; }
   .mig-diff-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+
+  .mig-surface-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    font-size: 0.9rem;
+    box-shadow: var(--shadow);
+  }
+  .mig-surface-table thead { background: var(--surface-2); }
+  .mig-surface-table th {
+    text-align: left;
+    padding: 0.6rem 0.85rem;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .mig-surface-table td {
+    padding: 0.6rem 0.85rem;
+    border-top: 1px solid var(--border);
+  }
 
   .mig-rollback {
     background: var(--surface);
@@ -162,16 +193,16 @@ function main()
 <body>
 <div id="gnav-host" data-root="../"></div>
 
-<section class="mig-hero">
-  <h1>Adopt prism on an existing app — safely.</h1>
-  <p class="lead">
-    A two-line install ships visible improvements without touching
-    your <code>.cms</code> source. This page summarises what changes,
-    what to watch for, and how to roll back if anything looks off.
-  </p>
-</section>
-
 <main class="mig-shell">
+
+  <section class="mig-hero">
+    <h1>Adopt prism on an existing app — safely.</h1>
+    <p class="lead">
+      A two-line install ships visible improvements without touching
+      your <code>.cms</code> source. This page summarises what changes,
+      what to watch for, and how to roll back if anything looks off.
+    </p>
+  </section>
 
   <section class="mig-section">
     <h2>Pre-flight checklist</h2>
@@ -206,22 +237,22 @@ function main()
   <section class="mig-section">
     <h2>What changes — the surface map</h2>
     <p class="lead-2">Every visible delta on a typical CaseMaster page.</p>
-    <table style="width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;font-size:0.9rem;box-shadow:var(--shadow)">
-      <thead style="background:var(--surface-2)">
+    <table class="mig-surface-table">
+      <thead>
         <tr>
-          <th style="text-align:left;padding:0.6rem 0.85rem;border-bottom:1px solid var(--border);font-size:0.72rem;text-transform:uppercase;letter-spacing:0.04em;color:var(--muted);font-weight:600">Surface</th>
-          <th style="text-align:left;padding:0.6rem 0.85rem;border-bottom:1px solid var(--border);font-size:0.72rem;text-transform:uppercase;letter-spacing:0.04em;color:var(--muted);font-weight:600">Before</th>
-          <th style="text-align:left;padding:0.6rem 0.85rem;border-bottom:1px solid var(--border);font-size:0.72rem;text-transform:uppercase;letter-spacing:0.04em;color:var(--muted);font-weight:600">After prism</th>
+          <th>Surface</th>
+          <th>Before</th>
+          <th>After prism</th>
         </tr>
       </thead>
       <tbody>
-        <tr><td style="padding:0.6rem 0.85rem;border-top:1px solid var(--border)">Tables</td><td style="padding:0.6rem 0.85rem;border-top:1px solid var(--border)">Sharp, harsh stripes, blue header.</td><td style="padding:0.6rem 0.85rem;border-top:1px solid var(--border)">Soft surface, muted-grey uppercase header, hover tint, sortable.</td></tr>
-        <tr><td style="padding:0.6rem 0.85rem;border-top:1px solid var(--border)">Buttons</td><td style="padding:0.6rem 0.85rem;border-top:1px solid var(--border)">BS4 default radii (4 px) and saturated colours.</td><td style="padding:0.6rem 0.85rem;border-top:1px solid var(--border)">8 px radii, slightly muted hover, focus rings.</td></tr>
-        <tr><td style="padding:0.6rem 0.85rem;border-top:1px solid var(--border)">Inputs</td><td style="padding:0.6rem 0.85rem;border-top:1px solid var(--border)">BS4 default 4 px radius, blue focus ring.</td><td style="padding:0.6rem 0.85rem;border-top:1px solid var(--border)">8 px radius, primary-coloured focus ring tied to <code>--cms-primary</code>.</td></tr>
-        <tr><td style="padding:0.6rem 0.85rem;border-top:1px solid var(--border)">Cards</td><td style="padding:0.6rem 0.85rem;border-top:1px solid var(--border)">Plain white panel with hairline border.</td><td style="padding:0.6rem 0.85rem;border-top:1px solid var(--border)">Same panel + soft shadow, rounded corners.</td></tr>
-        <tr><td style="padding:0.6rem 0.85rem;border-top:1px solid var(--border)">Navbar</td><td style="padding:0.6rem 0.85rem;border-top:1px solid var(--border)"><code>bg-primary</code> = BS4 blue.</td><td style="padding:0.6rem 0.85rem;border-top:1px solid var(--border)"><code>bg-primary</code> = your <code>--cms-primary</code>.</td></tr>
-        <tr><td style="padding:0.6rem 0.85rem;border-top:1px solid var(--border)">Modals</td><td style="padding:0.6rem 0.85rem;border-top:1px solid var(--border)">Sharp 4 px corners.</td><td style="padding:0.6rem 0.85rem;border-top:1px solid var(--border)">14 px corners, larger drop shadow, blurred backdrop.</td></tr>
-        <tr><td style="padding:0.6rem 0.85rem;border-top:1px solid var(--border)">Pagination</td><td style="padding:0.6rem 0.85rem;border-top:1px solid var(--border)">BS4 attached buttons.</td><td style="padding:0.6rem 0.85rem;border-top:1px solid var(--border)">Detached buttons with subtle borders.</td></tr>
+        <tr><td>Tables</td><td>Sharp, harsh stripes, blue header.</td><td>Soft surface, muted-grey uppercase header, hover tint, sortable.</td></tr>
+        <tr><td>Buttons</td><td>BS4 default radii (4 px) and saturated colours.</td><td>8 px radii, slightly muted hover, focus rings.</td></tr>
+        <tr><td>Inputs</td><td>BS4 default 4 px radius, blue focus ring.</td><td>8 px radius, primary-coloured focus ring tied to <code>--cms-primary</code>.</td></tr>
+        <tr><td>Cards</td><td>Plain white panel with hairline border.</td><td>Same panel + soft shadow, rounded corners.</td></tr>
+        <tr><td>Navbar</td><td><code>bg-primary</code> = BS4 blue.</td><td><code>bg-primary</code> = your <code>--cms-primary</code>.</td></tr>
+        <tr><td>Modals</td><td>Sharp 4 px corners.</td><td>14 px corners, larger drop shadow, blurred backdrop.</td></tr>
+        <tr><td>Pagination</td><td>BS4 attached buttons.</td><td>Detached buttons with subtle borders.</td></tr>
       </tbody>
     </table>
   </section>
