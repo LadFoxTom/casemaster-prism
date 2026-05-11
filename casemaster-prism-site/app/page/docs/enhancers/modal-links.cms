@@ -14,20 +14,20 @@ function main()
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Modal-link drawer · casemaster-prism docs</title>
 <meta name="description" content="Modal-link drawer — casemaster-prism docs">
-<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <meta name="theme-color" content="#2563eb">
 <meta property="og:title" content="casemaster-prism">
 <meta property="og:description" content="Drop-in design system for CaseMaster apps.">
-<meta property="og:image" content="../../assets/og-card.png">
+<meta property="og:image" content="/assets/og-card.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="../../assets/og-card.png">
-<link rel="stylesheet" href="../assets/docs.css">
+<meta name="twitter:image" content="/assets/og-card.png">
+<link rel="stylesheet" href="/docs/assets/docs.css">
 </head>
 <body>
 <div id="gnav-host" data-root="../../"></div>
 
 <main class="docs-content">
-    <p class="docs-breadcrumb"><a href="../../">Home</a> &nbsp;/&nbsp; <a href="../index.html">Docs</a> &nbsp;/&nbsp; Enhancers &nbsp;/&nbsp; Modal-link drawer</p>
+    <p class="docs-breadcrumb"><a href="/">Home</a> &nbsp;/&nbsp; <a href="/docs">Docs</a> &nbsp;/&nbsp; Enhancers &nbsp;/&nbsp; Modal-link drawer</p>
 
     <h1>Modal-link drawer</h1>
     <p class="docs-lead">Open detail pages in a slide-in modal instead of a full page navigation.</p>
@@ -44,7 +44,7 @@ function main()
     <h2 id='conflict'>Coexistence with the .NET runtime's <code>#cmModal</code></h2>
     <p>The .NET runtime ships its own iframe-modal as <code>#cmModal</code>. Modal-link doesn't touch it — it's strictly opt-in via <code>data-cms-modal-link</code>. Use the runtime's mechanism for one, prism's for the other; they don't interfere.</p>
 
-    <div class="docs-footer-nav"><a href="./shortcuts.html"><small>← Previous</small>Shortcuts</a><a class="next" href="./inline-edit.html"><small>Next →</small>Inline edit</a></div>
+    <div class="docs-footer-nav"><a href="/docs/enhancers/shortcuts"><small>← Previous</small>Shortcuts</a><a class="next" href="/docs/enhancers/inline-edit"><small>Next →</small>Inline edit</a></div>
   </main>
 
 <script>
@@ -69,8 +69,8 @@ function main()
     });
   })();
 </script>
-<script src="../assets/docs.js"></script>
-<script src="../../assets/nav.js"></script>
+<script src="/docs/assets/docs.js"></script>
+<script src="/assets/nav.js"></script>
 </body>
 </html>`)
 end-function

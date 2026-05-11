@@ -14,20 +14,20 @@ function main()
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Toasts · casemaster-prism docs</title>
 <meta name="description" content="Toasts — casemaster-prism docs">
-<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <meta name="theme-color" content="#2563eb">
 <meta property="og:title" content="casemaster-prism">
 <meta property="og:description" content="Drop-in design system for CaseMaster apps.">
-<meta property="og:image" content="../../assets/og-card.png">
+<meta property="og:image" content="/assets/og-card.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="../../assets/og-card.png">
-<link rel="stylesheet" href="../assets/docs.css">
+<meta name="twitter:image" content="/assets/og-card.png">
+<link rel="stylesheet" href="/docs/assets/docs.css">
 </head>
 <body>
 <div id="gnav-host" data-root="../../"></div>
 
 <main class="docs-content">
-    <p class="docs-breadcrumb"><a href="../../">Home</a> &nbsp;/&nbsp; <a href="../index.html">Docs</a> &nbsp;/&nbsp; Enhancers &nbsp;/&nbsp; Toasts</p>
+    <p class="docs-breadcrumb"><a href="/">Home</a> &nbsp;/&nbsp; <a href="/docs">Docs</a> &nbsp;/&nbsp; Enhancers &nbsp;/&nbsp; Toasts</p>
 
     <h1>Toasts</h1>
     <p class="docs-lead">Pop-up status messages from server headers, meta tags, custom events, or direct API.</p>
@@ -63,7 +63,7 @@ showToast({
   durationMs: 2000,
 });</code></pre>
 
-    <div class="docs-footer-nav"><a href="./loading.html"><small>← Previous</small>Loading bar</a><a class="next" href="./shortcuts.html"><small>Next →</small>Keyboard shortcuts</a></div>
+    <div class="docs-footer-nav"><a href="/docs/enhancers/loading"><small>← Previous</small>Loading bar</a><a class="next" href="/docs/enhancers/shortcuts"><small>Next →</small>Keyboard shortcuts</a></div>
   </main>
 
 <script>
@@ -88,8 +88,8 @@ showToast({
     });
   })();
 </script>
-<script src="../assets/docs.js"></script>
-<script src="../../assets/nav.js"></script>
+<script src="/docs/assets/docs.js"></script>
+<script src="/assets/nav.js"></script>
 </body>
 </html>`)
 end-function

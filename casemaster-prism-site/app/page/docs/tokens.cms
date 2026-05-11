@@ -14,20 +14,20 @@ function main()
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Design tokens · casemaster-prism docs</title>
 <meta name="description" content="Design tokens — casemaster-prism docs">
-<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <meta name="theme-color" content="#2563eb">
 <meta property="og:title" content="casemaster-prism">
 <meta property="og:description" content="Drop-in design system for CaseMaster apps.">
-<meta property="og:image" content="../assets/og-card.png">
+<meta property="og:image" content="/assets/og-card.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="../assets/og-card.png">
-<link rel="stylesheet" href="assets/docs.css">
+<meta name="twitter:image" content="/assets/og-card.png">
+<link rel="stylesheet" href="/docs/assets/docs.css">
 </head>
 <body>
 <div id="gnav-host" data-root="../"></div>
 
 <main class="docs-content">
-    <p class="docs-breadcrumb"><a href="../">Home</a> &nbsp;/&nbsp; <a href="index.html">Docs</a> &nbsp;/&nbsp; Design tokens</p>
+    <p class="docs-breadcrumb"><a href="/">Home</a> &nbsp;/&nbsp; <a href="/docs">Docs</a> &nbsp;/&nbsp; Design tokens</p>
 
     <h1>Design tokens</h1>
     <p class="docs-lead">Every visual decision in prism is a CSS variable. Override one in your app's CSS and every component picks it up — no recompile, no fork.</p>
@@ -85,7 +85,7 @@ function main()
     <p>Auto mode that follows the OS setting:</p>
 <pre><code>&lt;html data-theme="auto"&gt;</code></pre>
 
-    <div class="docs-footer-nav"><a href="./themes.html"><small>← Previous</small>Preset themes</a><a class="next" href="./variants.html"><small>Next →</small>Variants & density</a></div>
+    <div class="docs-footer-nav"><a href="/docs/themes"><small>← Previous</small>Preset themes</a><a class="next" href="/docs/variants"><small>Next →</small>Variants & density</a></div>
   </main>
 
 <script>
@@ -110,8 +110,8 @@ function main()
     });
   })();
 </script>
-<script src="assets/docs.js"></script>
-<script src="../assets/nav.js"></script>
+<script src="/docs/assets/docs.js"></script>
+<script src="/assets/nav.js"></script>
 </body>
 </html>`)
 end-function

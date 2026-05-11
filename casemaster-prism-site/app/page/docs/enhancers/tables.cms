@@ -14,20 +14,20 @@ function main()
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Tables · casemaster-prism docs</title>
 <meta name="description" content="Tables — casemaster-prism docs">
-<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <meta name="theme-color" content="#2563eb">
 <meta property="og:title" content="casemaster-prism">
 <meta property="og:description" content="Drop-in design system for CaseMaster apps.">
-<meta property="og:image" content="../../assets/og-card.png">
+<meta property="og:image" content="/assets/og-card.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="../../assets/og-card.png">
-<link rel="stylesheet" href="../assets/docs.css">
+<meta name="twitter:image" content="/assets/og-card.png">
+<link rel="stylesheet" href="/docs/assets/docs.css">
 </head>
 <body>
 <div id="gnav-host" data-root="../../"></div>
 
 <main class="docs-content">
-    <p class="docs-breadcrumb"><a href="../../">Home</a> &nbsp;/&nbsp; <a href="../index.html">Docs</a> &nbsp;/&nbsp; Enhancers &nbsp;/&nbsp; Tables</p>
+    <p class="docs-breadcrumb"><a href="/">Home</a> &nbsp;/&nbsp; <a href="/docs">Docs</a> &nbsp;/&nbsp; Enhancers &nbsp;/&nbsp; Tables</p>
 
     <h1>Tables</h1>
     <p class="docs-lead">Sortable headers, filter input, CSV export, column toggle, sticky thead. Auto-detected on every BS4 striped table.</p>
@@ -67,7 +67,7 @@ table.table.table-bordered</code></pre>
   },
 };</code></pre>
 
-    <div class="docs-footer-nav"><a href="../variants.html"><small>← Previous</small>Variants</a><a class="next" href="./forms.html"><small>Next →</small>Forms</a></div>
+    <div class="docs-footer-nav"><a href="/docs/variants"><small>← Previous</small>Variants</a><a class="next" href="/docs/enhancers/forms"><small>Next →</small>Forms</a></div>
   </main>
 
 <script>
@@ -92,8 +92,8 @@ table.table.table-bordered</code></pre>
     });
   })();
 </script>
-<script src="../assets/docs.js"></script>
-<script src="../../assets/nav.js"></script>
+<script src="/docs/assets/docs.js"></script>
+<script src="/assets/nav.js"></script>
 </body>
 </html>`)
 end-function

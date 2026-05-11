@@ -14,14 +14,14 @@ function main()
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Playground · casemaster-prism</title>
 <meta name="description" content="Compose prism class strings interactively and copy them to your clipboard.">
-<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <meta name="theme-color" content="#2563eb">
 <meta property="og:title" content="casemaster-prism">
 <meta property="og:description" content="Drop-in design system for CaseMaster apps.">
-<meta property="og:image" content="../assets/og-card.png">
+<meta property="og:image" content="/assets/og-card.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="../assets/og-card.png">
-<link rel="stylesheet" href="../assets/site.css">
+<meta name="twitter:image" content="/assets/og-card.png">
+<link rel="stylesheet" href="/assets/site.css">
 <style>
   body { background: var(--bg); }
 
@@ -457,9 +457,9 @@ function main()
   refreshFrame();
 </script>
 
-<script src="../assets/site.js"></script>
+<script src="/assets/site.js"></script>
 
-<script src="../assets/nav.js"></script>
+<script src="/assets/nav.js"></script>
 </body>
 </html>
 `)

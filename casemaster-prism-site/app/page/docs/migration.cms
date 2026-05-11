@@ -14,20 +14,20 @@ function main()
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Migration guide · casemaster-prism docs</title>
 <meta name="description" content="Migration guide — casemaster-prism docs">
-<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <meta name="theme-color" content="#2563eb">
 <meta property="og:title" content="casemaster-prism">
 <meta property="og:description" content="Drop-in design system for CaseMaster apps.">
-<meta property="og:image" content="../assets/og-card.png">
+<meta property="og:image" content="/assets/og-card.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="../assets/og-card.png">
-<link rel="stylesheet" href="assets/docs.css">
+<meta name="twitter:image" content="/assets/og-card.png">
+<link rel="stylesheet" href="/docs/assets/docs.css">
 </head>
 <body>
 <div id="gnav-host" data-root="../"></div>
 
 <main class="docs-content">
-    <p class="docs-breadcrumb"><a href="../">Home</a> &nbsp;/&nbsp; <a href="index.html">Docs</a> &nbsp;/&nbsp; Migration guide</p>
+    <p class="docs-breadcrumb"><a href="/">Home</a> &nbsp;/&nbsp; <a href="/docs">Docs</a> &nbsp;/&nbsp; Migration guide</p>
 
     <h1>Migration guide</h1>
     <p class="docs-lead">Adopt prism on an existing CaseMaster app without breaking layouts. What changes, what to watch for, how to roll back.</p>
@@ -91,7 +91,7 @@ function main()
 // document.body.appendChild(s);  // (was the prism injection)</code></pre>
     <p>Hard-reload. The app reverts to bare Bootstrap 4. No leftover state, no migrations to undo.</p>
 
-    <div class="docs-footer-nav"><a href="./integration-vercel.html"><small>← Previous</small>cms-vercel integration</a><a class="next" href="./troubleshooting.html"><small>Next →</small>Troubleshooting</a></div>
+    <div class="docs-footer-nav"><a href="/docs/integration-vercel"><small>← Previous</small>cms-vercel integration</a><a class="next" href="/docs/troubleshooting"><small>Next →</small>Troubleshooting</a></div>
   </main>
 
 <script>
@@ -116,8 +116,8 @@ function main()
     });
   })();
 </script>
-<script src="assets/docs.js"></script>
-<script src="../assets/nav.js"></script>
+<script src="/docs/assets/docs.js"></script>
+<script src="/assets/nav.js"></script>
 </body>
 </html>`)
 end-function

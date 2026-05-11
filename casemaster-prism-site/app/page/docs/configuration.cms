@@ -14,20 +14,20 @@ function main()
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Configuration reference · casemaster-prism docs</title>
 <meta name="description" content="Configuration reference — casemaster-prism docs">
-<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <meta name="theme-color" content="#2563eb">
 <meta property="og:title" content="casemaster-prism">
 <meta property="og:description" content="Drop-in design system for CaseMaster apps.">
-<meta property="og:image" content="../assets/og-card.png">
+<meta property="og:image" content="/assets/og-card.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="../assets/og-card.png">
-<link rel="stylesheet" href="assets/docs.css">
+<meta name="twitter:image" content="/assets/og-card.png">
+<link rel="stylesheet" href="/docs/assets/docs.css">
 </head>
 <body>
 <div id="gnav-host" data-root="../"></div>
 
 <main class="docs-content">
-    <p class="docs-breadcrumb"><a href="../">Home</a> &nbsp;/&nbsp; <a href="index.html">Docs</a> &nbsp;/&nbsp; Configuration reference</p>
+    <p class="docs-breadcrumb"><a href="/">Home</a> &nbsp;/&nbsp; <a href="/docs">Docs</a> &nbsp;/&nbsp; Configuration reference</p>
 
     <h1>Configuration reference</h1>
     <p class="docs-lead">Disable any enhancer at runtime via <code>window.cmsUi</code>. Disable a single element with <code>data-cms-no-enhance</code>.</p>
@@ -97,7 +97,7 @@ function main()
       </tbody>
     </table>
 
-    <div class="docs-footer-nav"><a href="./variants.html"><small>← Previous</small>Variants & density</a><a class="next" href="./integration-dotnet.html"><small>Next →</small>.NET integration</a></div>
+    <div class="docs-footer-nav"><a href="/docs/variants"><small>← Previous</small>Variants & density</a><a class="next" href="/docs/integration-dotnet"><small>Next →</small>.NET integration</a></div>
   </main>
 
 <script>
@@ -122,8 +122,8 @@ function main()
     });
   })();
 </script>
-<script src="assets/docs.js"></script>
-<script src="../assets/nav.js"></script>
+<script src="/docs/assets/docs.js"></script>
+<script src="/assets/nav.js"></script>
 </body>
 </html>`)
 end-function

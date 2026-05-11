@@ -15,16 +15,16 @@ function main()
 <title>casemaster-prism</title>
 <meta name="description" content="casemaster-prism: drop-in design system, variant catalogue, preset themes (Linear / Tabler / Material), and progressive-enhancement JS for CaseMaster apps. Both runtimes, no .cms source changes.">
 
-<link rel="icon" href="./favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="./favicon.svg">
-<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/favicon.svg">
+<link rel="manifest" href="/manifest.webmanifest">
 <meta name="theme-color" content="#2563eb">
 
 <!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="casemaster-prism">
 <meta property="og:description" content="Drop-in design system + progressive-enhancement JS for CaseMaster apps. Three preset themes, variant catalogue, both runtimes.">
-<meta property="og:image" content="./assets/og-card.png">
+<meta property="og:image" content="/assets/og-card.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 
@@ -32,9 +32,9 @@ function main()
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="casemaster-prism">
 <meta name="twitter:description" content="Drop-in design system for CaseMaster apps. Verified on both runtimes.">
-<meta name="twitter:image" content="./assets/og-card.png">
+<meta name="twitter:image" content="/assets/og-card.png">
 
-<link rel="stylesheet" href="./assets/site.css">
+<link rel="stylesheet" href="/assets/site.css">
 </head>
 <body>
 <div id="gnav-host" data-root="./"></div>
@@ -336,7 +336,7 @@ document.body.appendChild(s);
     </p>
 
     <div class="templates-grid">
-      <a class="template-card" href="./templates/dashboard.html">
+      <a class="template-card" href="/templates/dashboard">
         <div class="template-thumb template-thumb-dashboard"></div>
         <div class="template-meta">
           <h3>Dashboard</h3>
@@ -345,7 +345,7 @@ document.body.appendChild(s);
         </div>
       </a>
 
-      <a class="template-card" href="./templates/settings.html">
+      <a class="template-card" href="/templates/settings">
         <div class="template-thumb template-thumb-settings"></div>
         <div class="template-meta">
           <h3>Settings</h3>
@@ -354,7 +354,7 @@ document.body.appendChild(s);
         </div>
       </a>
 
-      <a class="template-card" href="./templates/list-detail.html">
+      <a class="template-card" href="/templates/list-detail">
         <div class="template-thumb template-thumb-listdetail"></div>
         <div class="template-meta">
           <h3>List + detail</h3>
@@ -657,15 +657,15 @@ $ npx playwright test
   <p>
     casemaster-prism · v0.3.0 · MIT.
     <br>
-    Source: <a href="../">repository root</a> ·
-    Spec: <a href="../AB-ui-package.md">AB-ui-package.md</a> ·
-    .NET integration recipe: <a href="../integrations/dotnet/README.md">dotnet/README.md</a> ·
-    cms-vercel: <a href="../integrations/vercel/README.md">vercel/README.md</a>
+    Source: <a href="/">repository root</a> ·
+    Spec: <a href="/AB-ui-package.md">AB-ui-package.md</a> ·
+    .NET integration recipe: <a href="/integrations/dotnet/README.md">dotnet/README.md</a> ·
+    cms-vercel: <a href="/integrations/vercel/README.md">vercel/README.md</a>
   </p>
 </footer>
 
-<script src="./assets/site.js"></script>
-<script src="./assets/nav.js"></script>
+<script src="/assets/site.js"></script>
+<script src="/assets/nav.js"></script>
 </body>
 </html>
 `)

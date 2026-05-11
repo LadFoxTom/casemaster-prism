@@ -14,20 +14,20 @@ function main()
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Preset themes · casemaster-prism docs</title>
 <meta name="description" content="Preset themes — casemaster-prism docs">
-<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <meta name="theme-color" content="#2563eb">
 <meta property="og:title" content="casemaster-prism">
 <meta property="og:description" content="Drop-in design system for CaseMaster apps.">
-<meta property="og:image" content="../assets/og-card.png">
+<meta property="og:image" content="/assets/og-card.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="../assets/og-card.png">
-<link rel="stylesheet" href="assets/docs.css">
+<meta name="twitter:image" content="/assets/og-card.png">
+<link rel="stylesheet" href="/docs/assets/docs.css">
 </head>
 <body>
 <div id="gnav-host" data-root="../"></div>
 
 <main class="docs-content">
-    <p class="docs-breadcrumb"><a href="../">Home</a> &nbsp;/&nbsp; <a href="index.html">Docs</a> &nbsp;/&nbsp; Preset themes</p>
+    <p class="docs-breadcrumb"><a href="/">Home</a> &nbsp;/&nbsp; <a href="/docs">Docs</a> &nbsp;/&nbsp; Preset themes</p>
 
     <h1>Preset themes</h1>
     <p class="docs-lead">Three named brand presets, each one swapping the entire token set with a single attribute on <code>&lt;html&gt;</code>.</p>
@@ -75,7 +75,7 @@ document.documentElement.setAttribute('data-cms-density', 'compact');</code></pr
 }</code></pre>
     <p>Then activate with <code>&lt;html data-cms-theme="acme"&gt;</code>. See <a href='./tokens.html'>Design tokens</a> for the full variable list.</p>
 
-    <div class="docs-footer-nav"><a href="./getting-started.html"><small>← Previous</small>Getting started</a><a class="next" href="./tokens.html"><small>Next →</small>Design tokens</a></div>
+    <div class="docs-footer-nav"><a href="/docs/getting-started"><small>← Previous</small>Getting started</a><a class="next" href="/docs/tokens"><small>Next →</small>Design tokens</a></div>
   </main>
 
 <script>
@@ -100,8 +100,8 @@ document.documentElement.setAttribute('data-cms-density', 'compact');</code></pr
     });
   })();
 </script>
-<script src="assets/docs.js"></script>
-<script src="../assets/nav.js"></script>
+<script src="/docs/assets/docs.js"></script>
+<script src="/assets/nav.js"></script>
 </body>
 </html>`)
 end-function
